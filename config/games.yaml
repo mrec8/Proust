@@ -1,0 +1,32 @@
+# Configuración específica de juegos de Jericho
+
+zork1:
+  description: "Un juego de aventura clásico donde exploras un mundo subterráneo."
+  starting_goal: "Explorar el mundo, recolectar tesoros y sobrevivir."
+  initial_inventory: ["sword", "lantern"]
+  key_locations: ["West of House", "Clearing", "Forest"]
+  key_objects: ["leaflet", "mailbox", "sword", "lantern"]
+  key_characters: ["troll", "thief"]
+  special_commands:
+    - "look"
+    - "inventory"
+    - "examine"
+    - "take"
+    - "drop"
+    - "open"
+    - "close"
+    - "put"
+    - "attack"
+    - "eat"
+    - "drink"
+  progression_milestones:
+    - name: "Entrar en la casa"
+      score: 10
+    - name: "Encontrar el tesoro"
+      score: 25
+    - name: "Derrotar al troll"
+      score: 40
+
+# Se pueden añadir configuraciones para otros juegos de Jericho
+# adventure:
+#   description: ...

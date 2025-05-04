@@ -1,0 +1,12 @@
+jericho>=2.4.1
+numpy>=1.19.5
+gym>=0.20.0
+transformers>=4.12.0
+openai>=0.27.0
+python-dotenv>=0.19.0
+sentence-transformers>=2.2.2
+faiss-cpu>=1.7.3
+pyyaml>=6.0
+colorama>=0.4.4
+tqdm>=4.62.3
+pytest>=6.2.5
