@@ -1,5 +1,5 @@
 """
-Sistema de memoria para el agente.
+Memory system for the agent.
 """
 import os
 import json
@@ -9,38 +9,38 @@ import numpy as np
 
 class Memory:
     """
-    Sistema de memoria para almacenar experiencias y conocimientos del agente.
+    Memory system for storing the agent's experiences and knowledge.
     """
     
     def __init__(self, save_dir: str = 'logs/memory'):
         """
-        Inicializa el sistema de memoria.
+        Initializes the memory system.
         
         Args:
-            save_dir: Directorio para guardar la memoria
+            save_dir: Directory to save the memory
         """
         self.save_dir = save_dir
         os.makedirs(self.save_dir, exist_ok=True)
         
-        # Inicializar componentes de memoria
-        self.episodic_memory = []  # Memoria episódica (experiencias)
-        self.semantic_memory = {}  # Memoria semántica (conocimientos)
-        self.entity_memory = {}    # Memoria de entidades (objetos, personajes, ubicaciones)
+        # Initialize memory components
+        self.episodic_memory = []  # Episodic memory (experiences)
+        self.semantic_memory = {}  # Semantic memory (knowledge)
+        self.entity_memory = {}    # Entity memory (objects, characters, locations)
         
-        # Cargar memoria existente si hay
+        # Load existing memory if any
         self._load_memory()
     
     def add_episode(self, task: str, actions: List[str], result: str, 
                    agent_state: Dict[str, Any], success: bool) -> None:
         """
-        Agrega un episodio a la memoria episódica.
+        Adds an episode to the episodic memory.
         
         Args:
-            task: Tarea realizada
-            actions: Lista de acciones tomadas
-            result: Resultado de las acciones
-            agent_state: Estado del agente al final del episodio
-            success: Si la tarea fue exitosa
+            task: Task performed
+            actions: List of actions taken
+            result: Result of the actions
+            agent_state: Agent's state at the end of the episode
+            success: Whether the task was successful
         """
         episode = {
             'task': task,
@@ -58,66 +58,66 @@ class Memory:
         
         self.episodic_memory.append(episode)
         
-        # Extraer conocimientos del episodio
+        # Extract knowledge from the episode
         self._extract_knowledge(episode)
         
-        # Guardar memoria
+        # Save memory
         self._save_memory()
     
     def add_knowledge(self, concept: str, knowledge: str, source: str = 'inference') -> None:
         """
-        Agrega conocimiento a la memoria semántica.
+        Adds knowledge to the semantic memory.
         
         Args:
-            concept: Concepto o tema del conocimiento
-            knowledge: Descripción del conocimiento
-            source: Fuente del conocimiento
+            concept: Concept or topic of the knowledge
+            knowledge: Description of the knowledge
+            source: Source of the knowledge
         """
-        # Normalizar el concepto (minúsculas)
+        # Normalize the concept (lowercase)
         concept_key = concept.lower()
         
-        # Crear o actualizar entrada de conocimiento
+        # Create or update knowledge entry
         if concept_key not in self.semantic_memory:
             self.semantic_memory[concept_key] = []
         
-        # Agregar el nuevo conocimiento
+        # Add the new knowledge
         knowledge_entry = {
             'description': knowledge,
             'source': source,
             'timestamp': time.time(),
-            'confidence': 0.8  # Valor predeterminado, podría ajustarse
+            'confidence': 0.8  # Default value, could be adjusted
         }
         
-        # Evitar duplicados
+        # Avoid duplicates
         for existing in self.semantic_memory[concept_key]:
             if existing['description'] == knowledge:
-                # Actualizar confianza y timestamp si ya existe
+                # Update confidence and timestamp if it already exists
                 existing['confidence'] = max(existing['confidence'], 0.8)
                 existing['timestamp'] = time.time()
                 return
         
         self.semantic_memory[concept_key].append(knowledge_entry)
         
-        # Guardar memoria
+        # Save memory
         self._save_memory()
     
     def add_entity(self, entity_type: str, name: str, properties: Dict[str, Any]) -> None:
         """
-        Agrega una entidad a la memoria de entidades.
+        Adds an entity to the entity memory.
         
         Args:
-            entity_type: Tipo de entidad (objeto, personaje, ubicación)
-            name: Nombre de la entidad
-            properties: Propiedades de la entidad
+            entity_type: Type of entity (object, character, location)
+            name: Name of the entity
+            properties: Properties of the entity
         """
-        # Normalizar el nombre (minúsculas)
+        # Normalize the name (lowercase)
         entity_key = name.lower()
         
-        # Crear estructura si no existe
+        # Create structure if it doesn't exist
         if entity_type not in self.entity_memory:
             self.entity_memory[entity_type] = {}
         
-        # Crear o actualizar entidad
+        # Create or update entity
         if entity_key not in self.entity_memory[entity_type]:
             self.entity_memory[entity_type][entity_key] = {
                 'name': name,
@@ -127,49 +127,49 @@ class Memory:
                 'sightings': 1
             }
         else:
-            # Actualizar entidad existente
+            # Update existing entity
             entity = self.entity_memory[entity_type][entity_key]
             entity['last_seen'] = time.time()
             entity['sightings'] += 1
             
-            # Actualizar propiedades (mantener las existentes y agregar nuevas)
+            # Update properties (keep existing and add new ones)
             for key, value in properties.items():
                 entity['properties'][key] = value
         
-        # Guardar memoria
+        # Save memory
         self._save_memory()
     
     def get_relevant_memories(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         """
-        Recupera recuerdos relevantes para una consulta.
+        Retrieves relevant memories for a query.
         
         Args:
-            query: Texto de consulta
-            top_k: Número de recuerdos a recuperar
+            query: Query text
+            top_k: Number of memories to retrieve
             
         Returns:
-            Lista de recuerdos relevantes
+            List of relevant memories
         """
-        # Para una implementación simple, buscamos coincidencias de palabras clave
-        # En una implementación más avanzada, se usarían embeddings semánticos
+        # For a simple implementation, we search for keyword matches
+        # In a more advanced implementation, semantic embeddings would be used
         
-        # Normalizar la consulta
+        # Normalize the query
         query_words = set(query.lower().split())
         
-        # Calcular relevancia para cada episodio
+        # Calculate relevance for each episode
         scored_episodes = []
         for episode in self.episodic_memory:
             score = 0
             
-            # Buscar en la tarea
+            # Search in the task
             task_words = set(episode['task'].lower().split())
-            score += len(query_words.intersection(task_words)) * 2  # Peso mayor para tareas
+            score += len(query_words.intersection(task_words)) * 2  # Higher weight for tasks
             
-            # Buscar en el resultado
+            # Search in the result
             result_words = set(episode['result'].lower().split())
             score += len(query_words.intersection(result_words))
             
-            # Buscar en las acciones
+            # Search in the actions
             for action in episode['actions']:
                 action_words = set(action.lower().split())
                 score += len(query_words.intersection(action_words))
@@ -177,37 +177,37 @@ class Memory:
             if score > 0:
                 scored_episodes.append((episode, score))
         
-        # Ordenar por relevancia
+        # Sort by relevance
         scored_episodes.sort(key=lambda x: x[1], reverse=True)
         
-        # Tomar los top_k más relevantes
+        # Take the top_k most relevant
         relevant_episodes = [episode for episode, _ in scored_episodes[:top_k]]
         
         return relevant_episodes
     
     def get_knowledge(self, concept: str) -> List[Dict[str, Any]]:
         """
-        Recupera conocimientos sobre un concepto.
+        Retrieves knowledge about a concept.
         
         Args:
-            concept: Concepto a buscar
+            concept: Concept to search for
             
         Returns:
-            Lista de conocimientos sobre el concepto
+            List of knowledge about the concept
         """
-        # Normalizar el concepto
+        # Normalize the concept
         concept_key = concept.lower()
         
-        # Buscar conocimientos exactos
+        # Search for exact knowledge
         if concept_key in self.semantic_memory:
             return self.semantic_memory[concept_key]
         
-        # Buscar conocimientos parciales
+        # Search for partial knowledge
         partial_matches = []
         for key, knowledge_list in self.semantic_memory.items():
-            # Si el concepto está contenido en la clave o viceversa
+            # If the concept is contained in the key or vice versa
             if concept_key in key or key in concept_key:
-                # Agregar cada conocimiento con una referencia a su concepto original
+                # Add each knowledge with a reference to its original concept
                 for knowledge in knowledge_list:
                     partial_match = knowledge.copy()
                     partial_match['original_concept'] = key
@@ -217,19 +217,19 @@ class Memory:
     
     def get_entity(self, entity_type: str, name: str) -> Optional[Dict[str, Any]]:
         """
-        Recupera una entidad específica.
+        Retrieves a specific entity.
         
         Args:
-            entity_type: Tipo de entidad
-            name: Nombre de la entidad
+            entity_type: Type of entity
+            name: Name of the entity
             
         Returns:
-            Información de la entidad o None si no se encuentra
+            Entity information or None if not found
         """
-        # Normalizar el nombre
+        # Normalize the name
         entity_key = name.lower()
         
-        # Verificar si existe
+        # Check if it exists
         if entity_type in self.entity_memory and entity_key in self.entity_memory[entity_type]:
             return self.entity_memory[entity_type][entity_key]
         
@@ -237,13 +237,13 @@ class Memory:
     
     def get_entities_by_type(self, entity_type: str) -> List[Dict[str, Any]]:
         """
-        Recupera todas las entidades de un tipo específico.
+        Retrieves all entities of a specific type.
         
         Args:
-            entity_type: Tipo de entidad
+            entity_type: Type of entity
             
         Returns:
-            Lista de entidades del tipo especificado
+            List of entities of the specified type
         """
         if entity_type in self.entity_memory:
             return list(self.entity_memory[entity_type].values())
@@ -252,27 +252,27 @@ class Memory:
     
     def generate_summary(self) -> Dict[str, Any]:
         """
-        Genera un resumen del estado actual de la memoria.
+        Generates a summary of the current memory state.
         
         Returns:
-            Resumen de la memoria
+            Memory summary
         """
-        # Contar episodios por resultado
+        # Count episodes by result
         successful_episodes = sum(1 for e in self.episodic_memory if e['success'])
         failed_episodes = len(self.episodic_memory) - successful_episodes
         
-        # Contar entidades por tipo
+        # Count entities by type
         entity_counts = {entity_type: len(entities) 
                         for entity_type, entities in self.entity_memory.items()}
         
-        # Contar conceptos en la memoria semántica
+        # Count concepts in semantic memory
         knowledge_count = len(self.semantic_memory)
         
-        # Calcular estadísticas de tiempo
+        # Calculate time statistics
         current_time = time.time()
         if self.episodic_memory:
             first_episode_time = min(e['timestamp'] for e in self.episodic_memory)
-            elapsed_time = (current_time - first_episode_time) / 3600  # Horas
+            elapsed_time = (current_time - first_episode_time) / 3600  # Hours
         else:
             elapsed_time = 0
         
@@ -291,17 +291,17 @@ class Memory:
     
     def _extract_knowledge(self, episode: Dict[str, Any]) -> None:
         """
-        Extrae conocimientos e información de entidades de un episodio.
+        Extracts knowledge and entity information from an episode.
         
         Args:
-            episode: Episodio del que extraer conocimientos
+            episode: Episode to extract knowledge from
         """
-        # Ejemplo simple: extraer objetos del inventario como entidades
+        # Simple example: extract objects from the inventory as entities
         if 'inventory' in episode['state']:
             inventory_text = episode['state']['inventory']
             
-            # Usar una implementación simple para detectar objetos
-            # En una implementación real, se usaría NLP más avanzado
+            # Use a simple implementation to detect objects
+            # In a real implementation, more advanced NLP would be used
             common_objects = [
                 "sword", "key", "lantern", "book", "scroll", "food", "water",
                 "map", "compass", "torch", "letter", "note", "ring", "gem"
@@ -315,11 +315,11 @@ class Memory:
                         'seen_in_episode': episode['task']
                     })
         
-        # Extraer ubicaciones de la observación
+        # Extract locations from the observation
         if 'observation' in episode['state']:
             observation = episode['state']['observation']
             
-            # Buscar patrones como "You are in [location]"
+            # Search for patterns like "You are in [location]"
             location_patterns = [
                 r"You are in (.*?)\.",
                 r"You are standing (.*?)\.",
@@ -337,37 +337,37 @@ class Memory:
                     })
     
     def _save_memory(self) -> None:
-        """Guarda la memoria en el disco."""
-        # Guardar memoria episódica
+        """Saves the memory to disk."""
+        # Save episodic memory
         episodic_path = os.path.join(self.save_dir, 'episodic_memory.json')
         with open(episodic_path, 'w') as f:
             json.dump(self.episodic_memory, f, indent=2)
         
-        # Guardar memoria semántica
+        # Save semantic memory
         semantic_path = os.path.join(self.save_dir, 'semantic_memory.json')
         with open(semantic_path, 'w') as f:
             json.dump(self.semantic_memory, f, indent=2)
         
-        # Guardar memoria de entidades
+        # Save entity memory
         entity_path = os.path.join(self.save_dir, 'entity_memory.json')
         with open(entity_path, 'w') as f:
             json.dump(self.entity_memory, f, indent=2)
     
     def _load_memory(self) -> None:
-        """Carga la memoria desde el disco."""
-        # Cargar memoria episódica
+        """Loads the memory from disk."""
+        # Load episodic memory
         episodic_path = os.path.join(self.save_dir, 'episodic_memory.json')
         if os.path.exists(episodic_path):
             with open(episodic_path, 'r') as f:
                 self.episodic_memory = json.load(f)
         
-        # Cargar memoria semántica
+        # Load semantic memory
         semantic_path = os.path.join(self.save_dir, 'semantic_memory.json')
         if os.path.exists(semantic_path):
             with open(semantic_path, 'r') as f:
                 self.semantic_memory = json.load(f)
         
-        # Cargar memoria de entidades
+        # Load entity memory
         entity_path = os.path.join(self.save_dir, 'entity_memory.json')
         if os.path.exists(entity_path):
             with open(entity_path, 'r') as f:

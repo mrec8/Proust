@@ -1,5 +1,5 @@
 """
-Punto de entrada principal para el agente narrativo basado en la arquitectura Voyager.
+Main entry point for the narrative agent based on the Voyager architecture.
 """
 import os
 import sys
@@ -21,7 +21,7 @@ from utils.llm_interface import LLMInterface
 from utils.memory import Memory
 from utils.motivation import MotivationModule
 
-# Configurar logging
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -34,175 +34,175 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def main():
-    """Función principal que ejecuta el agente narrativo."""
-    # Parsear argumentos de línea de comandos
-    parser = argparse.ArgumentParser(description='Agente Narrativo Autónomo basado en Voyager')
-    parser.add_argument('--config', type=str, default='config/config.yaml', help='Ruta al archivo de configuración')
-    parser.add_argument('--game_config', type=str, default='config/games.yaml', help='Ruta al archivo de configuración de juegos')
-    parser.add_argument('--max_steps', type=int, default=None, help='Número máximo de pasos (sobreescribe config)')
-    parser.add_argument('--game', type=str, default=None, help='Juego a cargar (sobreescribe config)')
-    parser.add_argument('--autonomous', action='store_true', help='Ejecutar en modo completamente autónomo')
-    parser.add_argument('--interactive', action='store_true', help='Ejecutar en modo interactivo (permite entrada del usuario)')
+    """Main function that runs the narrative agent."""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Autonomous Narrative Agent based on Voyager')
+    parser.add_argument('--config', type=str, default='config/config.yaml', help='Path to the configuration file')
+    parser.add_argument('--game_config', type=str, default='config/games.yaml', help='Path to the game configuration file')
+    parser.add_argument('--max_steps', type=int, default=None, help='Maximum number of steps (overrides config)')
+    parser.add_argument('--game', type=str, default=None, help='Game to load (overrides config)')
+    parser.add_argument('--autonomous', action='store_true', help='Run in fully autonomous mode')
+    parser.add_argument('--interactive', action='store_true', help='Run in interactive mode (allows user input)')
     args = parser.parse_args()
     
-    # Cargar configuración
+    # Load configuration
     with open(args.config, 'r') as f:
         config = yaml.safe_load(f)
     
-    # Sobreescribir configuración si se especifican argumentos
+    # Override configuration if arguments are specified
     if args.max_steps:
         config['environment']['max_steps'] = args.max_steps
     if args.game:
         config['environment']['game'] = args.game
     
-    # Crear directorios necesarios
+    # Create necessary directories
     os.makedirs('logs', exist_ok=True)
     os.makedirs('skills/vector_db', exist_ok=True)
     
-    # Inicializar componentes
-    logger.info("Inicializando componentes...")
+    # Initialize components
+    logger.info("Initializing components...")
     
-    # Inicializar LLM
+    # Initialize LLM
     llm = LLMInterface(args.config)
     
-    # Inicializar modelo de embedding
+    # Initialize embedding model
     embedding_model = SentenceTransformer(config['skill_library']['embedding_model'])
     
-    # Inicializar memoria
+    # Initialize memory
     memory = Memory()
     
-    # Inicializar entorno Jericho
+    # Initialize Jericho environment
     env = JerichoEnvironment(config['environment']['game'])
     env.max_steps = config['environment']['max_steps']
     
-    # Inicializar parser de observaciones
+    # Initialize observation parser
     obs_parser = ObservationParser()
     
-    # Inicializar agentes
+    # Initialize agents
     curriculum_agent = CurriculumAgent(args.config, args.game_config, llm)
     action_agent = ActionAgent(args.config, args.game_config, llm)
     critic_agent = CriticAgent(args.config, args.game_config, llm)
     skill_manager = SkillManager(args.config, llm, embedding_model)
     
-    # Inicializar módulo de motivación
+    # Initialize motivation module
     motivation_module = MotivationModule(args.config, llm, memory)
     
-    # Bucle principal
-    logger.info(f"Iniciando agente narrativo en el juego {config['environment']['game']}...")
+    # Main loop
+    logger.info(f"Starting narrative agent in the game {config['environment']['game']}...")
     
-    # Inicializar entorno
+    # Initialize environment
     agent_state = env.reset()
     
-    # Variables de seguimiento
+    # Tracking variables
     steps = 0
     max_steps = config['environment']['max_steps']
     score = 0
     current_task = None
     task_actions = []
     
-    # Modo interactivo permite al usuario ingresar comandos o dejar que el agente actúe
+    # Interactive mode allows the user to input commands or let the agent act
     interactive = args.interactive
     
     try:
         while steps < max_steps:
-            # Mostrar estado actual
+            # Display current state
             print("\n" + "="*80)
-            print(f"Paso: {steps}/{max_steps} | Puntuación: {score}")
-            print(f"Observación: {agent_state['observation']}")
-            print(f"Inventario: {agent_state['inventory']}")
+            print(f"Step: {steps}/{max_steps} | Score: {score}")
+            print(f"Observation: {agent_state['observation']}")
+            print(f"Inventory: {agent_state['inventory']}")
             
-            # Si no hay tarea actual o la última tarea fue completada/fallida
+            # If there is no current task or the last task was completed/failed
             if current_task is None:
-                # Mostrar estado motivacional
+                # Display motivational state
                 motivational_state = motivation_module.get_motivational_state()
-                print("\nEstado Motivacional:")
-                print(f"Rol: {motivational_state['role'] or 'Indefinido'} (Confianza: {motivational_state['role_confidence']:.2f})")
-                print(f"Curiosidad: {motivational_state['curiosity']:.2f}, Maestría: {motivational_state['mastery']:.2f}, Autonomía: {motivational_state['autonomy']:.2f}")
+                print("\nMotivational State:")
+                print(f"Role: {motivational_state['role'] or 'Undefined'} (Confidence: {motivational_state['role_confidence']:.2f})")
+                print(f"Curiosity: {motivational_state['curiosity']:.2f}, Mastery: {motivational_state['mastery']:.2f}, Autonomy: {motivational_state['autonomy']:.2f}")
                 
-                # Generar objetivo intrínseco si estamos en modo autónomo
+                # Generate intrinsic goal if in autonomous mode
                 if args.autonomous:
                     intrinsic_goal = motivation_module.generate_intrinsic_goal(agent_state)
-                    print(f"\nObjetivo Intrínseco: {intrinsic_goal}")
+                    print(f"\nIntrinsic Goal: {intrinsic_goal}")
                     
-                # Proponer la siguiente tarea
+                # Propose the next task
                 current_task = curriculum_agent.propose_next_task(agent_state)
-                print(f"\nTarea Propuesta: {current_task}")
+                print(f"\nProposed Task: {current_task}")
                 task_actions = []
                 
-                # En modo interactivo, permitir al usuario aceptar, rechazar o modificar la tarea
+                # In interactive mode, allow the user to accept, reject, or modify the task
                 if interactive:
-                    user_input = input("\n¿Aceptar esta tarea? (s/n/modificar): ").strip().lower()
+                    user_input = input("\nAccept this task? (y/n/modify): ").strip().lower()
                     if user_input == 'n':
                         current_task = None
                         continue
                     elif user_input.startswith('m'):
-                        current_task = input("Ingrese la tarea modificada: ").strip()
-                        print(f"Tarea modificada: {current_task}")
+                        current_task = input("Enter the modified task: ").strip()
+                        print(f"Modified Task: {current_task}")
             
-            # Ejecutar un paso de la tarea actual
-            print(f"\nEjecutando tarea: {current_task}")
+            # Execute a step of the current task
+            print(f"\nExecuting task: {current_task}")
             
-            # Obtener habilidades relevantes
+            # Retrieve relevant skills
             relevant_skills = skill_manager.retrieve_skills(current_task, agent_state)
             if relevant_skills:
-                print("\nHabilidades relevantes recuperadas:")
+                print("\nRelevant skills retrieved:")
                 for i, skill in enumerate(relevant_skills):
                     print(f"{i+1}. {skill['description']}")
             
-            # Generar acción
+            # Generate action
             action = action_agent.generate_action(current_task, agent_state, relevant_skills)
-            print(f"Acción generada: {action}")
+            print(f"Generated action: {action}")
             
-            # En modo interactivo, permitir al usuario aceptar, rechazar o modificar la acción
+            # In interactive mode, allow the user to accept, reject, or modify the action
             if interactive:
-                user_input = input("\n¿Ejecutar esta acción? (s/n/modificar/manual): ").strip().lower()
+                user_input = input("\nExecute this action? (y/n/modify/manual): ").strip().lower()
                 if user_input == 'n':
-                    # Refinar la acción
+                    # Refine the action
                     action = action_agent.refine_action(action, current_task, agent_state, 
-                                                       "El usuario rechazó esta acción")
-                    print(f"Acción refinada: {action}")
+                                                       "The user rejected this action")
+                    print(f"Refined action: {action}")
                 elif user_input.startswith('m'):
-                    action = input("Ingrese la acción modificada: ").strip()
-                    print(f"Acción modificada: {action}")
+                    action = input("Enter the modified action: ").strip()
+                    print(f"Modified action: {action}")
                 elif user_input == 'manual':
-                    action = input("Ingrese un comando manual: ").strip()
-                    print(f"Comando manual: {action}")
+                    action = input("Enter a manual command: ").strip()
+                    print(f"Manual command: {action}")
             
-            # Ejecutar acción en el entorno
+            # Execute action in the environment
             task_actions.append(action)
             next_state, reward, done, info = env.step(action)
             
-            # Actualizar variables de seguimiento
+            # Update tracking variables
             steps += 1
             old_score = score
             score = next_state['score']
             agent_state = next_state
             
-            # Mostrar resultado
-            print(f"\nResultado: {agent_state['observation']}")
+            # Display result
+            print(f"\nResult: {agent_state['observation']}")
             if score > old_score:
-                print(f"¡Puntuación aumentada! +{score - old_score} puntos")
+                print(f"Score increased! +{score - old_score} points")
             
-            # Verificar si la tarea se ha completado
-            if steps % 3 == 0 or reward > 0:  # Verificar cada 3 pasos o si hay recompensa
+            # Check if the task has been completed
+            if steps % 3 == 0 or reward > 0:  # Check every 3 steps or if there is a reward
                 success, critique = critic_agent.check_task_success(current_task, agent_state, 
                                                                   [(current_task, a) for a in task_actions])
                 
                 if success:
-                    print(f"\n✅ Tarea completada con éxito: {current_task}")
+                    print(f"\n✅ Task successfully completed: {current_task}")
                     
-                    # Agregar habilidad al gestor
+                    # Add skill to the manager
                     skill = skill_manager.add_skill(current_task, task_actions, 
                                                    agent_state['observation'], True)
                     
-                    # Agregar episodio a la memoria
+                    # Add episode to memory
                     memory.add_episode(current_task, task_actions, agent_state['observation'], 
                                       agent_state, True)
                     
-                    # Actualizar agente de currículo
+                    # Update curriculum agent
                     curriculum_agent.add_completed_task(current_task)
                     
-                    # Actualizar módulo de motivación
+                    # Update motivation module
                     motivation_module.update_motivation({
                         'task': current_task,
                         'actions': task_actions,
@@ -210,22 +210,22 @@ def main():
                         'success': True
                     })
                     
-                    # Reiniciar variables de tarea
+                    # Reset task variables
                     current_task = None
                     task_actions = []
                     
-                elif len(task_actions) >= 5:  # Si llevamos muchas acciones sin éxito
-                    print(f"\n❌ Tarea fallida: {current_task}")
-                    print(f"Crítica: {critique}")
+                elif len(task_actions) >= 5:  # If too many actions without success
+                    print(f"\n❌ Task failed: {current_task}")
+                    print(f"Critique: {critique}")
                     
-                    # Agregar episodio a la memoria
+                    # Add episode to memory
                     memory.add_episode(current_task, task_actions, agent_state['observation'], 
                                       agent_state, False)
                     
-                    # Actualizar agente de currículo
+                    # Update curriculum agent
                     curriculum_agent.add_failed_task(current_task)
                     
-                    # Actualizar módulo de motivación
+                    # Update motivation module
                     motivation_module.update_motivation({
                         'task': current_task,
                         'actions': task_actions,
@@ -233,51 +233,51 @@ def main():
                         'success': False
                     })
                     
-                    # Reiniciar variables de tarea
+                    # Reset task variables
                     current_task = None
                     task_actions = []
             
-            # Verificar si el juego ha terminado
+            # Check if the game is over
             if done:
-                print("\n¡Juego terminado!")
+                print("\nGame over!")
                 break
             
-            # Pausa para legibilidad
+            # Pause for readability
             if not interactive:
                 time.sleep(1)
         
-        # Mostrar resumen final
+        # Display final summary
         print("\n" + "="*80)
-        print("Resumen de la sesión:")
-        print(f"Pasos totales: {steps}")
-        print(f"Puntuación final: {score}")
-        print(f"Tareas completadas: {len(curriculum_agent.get_completed_tasks())}")
-        print(f"Tareas fallidas: {len(curriculum_agent.get_failed_tasks())}")
+        print("Session summary:")
+        print(f"Total steps: {steps}")
+        print(f"Final score: {score}")
+        print(f"Tasks completed: {len(curriculum_agent.get_completed_tasks())}")
+        print(f"Tasks failed: {len(curriculum_agent.get_failed_tasks())}")
         
-        # Mostrar rol emergente
+        # Display emerging role
         motivational_state = motivation_module.get_motivational_state()
         if motivational_state['role']:
-            print(f"\nRol emergente: {motivational_state['role']} (Confianza: {motivational_state['role_confidence']:.2f})")
+            print(f"\nEmerging role: {motivational_state['role']} (Confidence: {motivational_state['role_confidence']:.2f})")
             print(motivation_module.get_role_description())
         
-        # Mostrar resumen de memoria
+        # Display memory summary
         memory_summary = memory.generate_summary()
-        print("\nResumen de memoria:")
-        print(f"Episodios: {memory_summary['episodic_memory']['total']} (Éxitos: {memory_summary['episodic_memory']['successful']}, Fallos: {memory_summary['episodic_memory']['failed']})")
-        print(f"Conceptos aprendidos: {memory_summary['semantic_memory']['concepts']}")
-        print(f"Entidades descubiertas: {sum(memory_summary['entity_memory'].values())}")
+        print("\nMemory summary:")
+        print(f"Episodes: {memory_summary['episodic_memory']['total']} (Successes: {memory_summary['episodic_memory']['successful']}, Failures: {memory_summary['episodic_memory']['failed']})")
+        print(f"Learned concepts: {memory_summary['semantic_memory']['concepts']}")
+        print(f"Discovered entities: {sum(memory_summary['entity_memory'].values())}")
         
     except KeyboardInterrupt:
-        print("\n\nInterrumpido por el usuario. Guardando estado...")
+        print("\n\nInterrupted by user. Saving state...")
     
     finally:
-        # Cerrar entorno
+        # Close environment
         env.close()
-        print("\nEntorno cerrado. ¡Hasta la próxima aventura!")
+        print("\nEnvironment closed. Until the next adventure!")
 
 def run_interactive_mode():
-    """Ejecuta el agente en modo interactivo con mayor control del usuario."""
-    # Implementar en una futura versión
+    """Runs the agent in interactive mode with greater user control."""
+    # Implement in a future version
     pass
 
 if __name__ == "__main__":

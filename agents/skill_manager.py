@@ -1,5 +1,5 @@
 """
-Gestor de Biblioteca de Habilidades para almacenar y recuperar habilidades.
+Skill Library Manager to store and retrieve skills.
 """
 import os
 import yaml
@@ -13,60 +13,60 @@ from utils.llm_interface import LLMInterface
 
 class SkillManager:
     """
-    Gestor que maneja la biblioteca de habilidades del agente.
+    Manager that handles the agent's skill library.
     """
     
     def __init__(self, config_path: str, llm: LLMInterface, embedding_model):
         """
-        Inicializa el gestor de biblioteca de habilidades.
+        Initializes the skill library manager.
         
         Args:
-            config_path: Ruta al archivo de configuración
-            llm: Interfaz con el modelo de lenguaje
-            embedding_model: Modelo para generar embeddings
+            config_path: Path to the configuration file
+            llm: Interface with the language model
+            embedding_model: Model to generate embeddings
         """
-        # Cargar configuración
+        # Load configuration
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
         self.llm = llm
         self.embedding_model = embedding_model
         
-        # Configuraciones específicas
+        # Specific configurations
         self.embedding_dim = self.config['skill_library'].get('embedding_dim', 384)
         self.top_k = self.config['skill_library'].get('top_k_retrievals', 5)
         
-        # Inicializar la biblioteca de habilidades (memoria in-memory por ahora)
+        # Initialize the skill library (in-memory for now)
         self.skills = []
         self.skill_embeddings = []
         
-        # Directorio para guardar/cargar
+        # Directory to save/load
         self.save_dir = os.path.join('skills', 'vector_db')
         os.makedirs(self.save_dir, exist_ok=True)
         
-        # Cargar habilidades existentes si hay
+        # Load existing skills if any
         self._load_skills()
     
     def add_skill(self, task: str, actions: List[str], result: str, was_successful: bool) -> None:
         """
-        Agrega una nueva habilidad a la biblioteca.
+        Adds a new skill to the library.
         
         Args:
-            task: Descripción de la tarea
-            actions: Lista de acciones/comandos utilizados
-            result: Resultado de la ejecución de las acciones
-            was_successful: Indica si la habilidad completó la tarea con éxito
+            task: Description of the task
+            actions: List of actions/commands used
+            result: Result of executing the actions
+            was_successful: Indicates if the skill successfully completed the task
         """
         if not was_successful:
-            return  # No almacenar habilidades que no tuvieron éxito
+            return  # Do not store skills that were not successful
         
-        # Generar una descripción de la habilidad
+        # Generate a description of the skill
         skill_description = self._generate_skill_description(task, actions, result)
         
-        # Generar el embedding para la descripción
+        # Generate the embedding for the description
         embedding = self._generate_embedding(skill_description)
         
-        # Crear el objeto de habilidad
+        # Create the skill object
         skill = {
             'task': task,
             'description': skill_description,
@@ -76,11 +76,11 @@ class SkillManager:
             'uses': 0
         }
         
-        # Agregar a la biblioteca
+        # Add to the library
         self.skills.append(skill)
         self.skill_embeddings.append(embedding)
         
-        # Guardar la biblioteca actualizada
+        # Save the updated library
         self._save_skills()
         
         return skill
@@ -88,92 +88,92 @@ class SkillManager:
     def retrieve_skills(self, task: str, agent_state: Dict[str, Any], 
                        top_k: Optional[int] = None) -> List[Dict[str, Any]]:
         """
-        Recupera habilidades relevantes para una tarea dada.
+        Retrieves relevant skills for a given task.
         
         Args:
-            task: Descripción de la tarea
-            agent_state: Estado actual del agente
-            top_k: Número de habilidades a recuperar (usa el valor predeterminado si None)
+            task: Description of the task
+            agent_state: Current state of the agent
+            top_k: Number of skills to retrieve (uses default value if None)
             
         Returns:
-            Lista de habilidades relevantes
+            List of relevant skills
         """
         if not self.skills:
             return []
         
-        # Usar el top_k configurado si no se especifica
+        # Use the configured top_k if not specified
         if top_k is None:
             top_k = self.top_k
         
-        # Crear un contexto de consulta enriquecido
+        # Create an enriched query context
         query_context = self._build_query_context(task, agent_state)
         
-        # Generar embedding para el contexto de consulta
+        # Generate embedding for the query context
         query_embedding = self._generate_embedding(query_context)
         
-        # Calcular similitudes
+        # Calculate similarities
         similarities = self._calculate_similarities(query_embedding)
         
-        # Obtener los índices de las top_k habilidades más similares
+        # Get the indices of the top_k most similar skills
         if len(similarities) <= top_k:
             top_indices = np.argsort(similarities)[::-1]
         else:
             top_indices = np.argsort(similarities)[::-1][:top_k]
         
-        # Recopilar las habilidades relevantes
+        # Collect the relevant skills
         relevant_skills = [self.skills[idx] for idx in top_indices]
         
-        # Actualizar el contador de usos
+        # Update the usage counter
         for idx in top_indices:
             self.skills[idx]['uses'] += 1
         
-        # Guardar la biblioteca actualizada
+        # Save the updated library
         self._save_skills()
         
         return relevant_skills
     
     def _generate_skill_description(self, task: str, actions: List[str], result: str) -> str:
         """
-        Genera una descripción concisa de una habilidad.
+        Generates a concise description of a skill.
         
         Args:
-            task: Descripción de la tarea
-            actions: Lista de acciones/comandos utilizados
-            result: Resultado de la ejecución de las acciones
+            task: Description of the task
+            actions: List of actions/commands used
+            result: Result of executing the actions
             
         Returns:
-            Descripción de la habilidad
+            Description of the skill
         """
-        # Construir el prompt
+        # Build the prompt
         prompt = f"""
-        Genera una descripción concisa de una habilidad en un juego de ficción interactiva.
+        Generate a concise description of a skill in an interactive fiction game.
         
-        TAREA:
+        TASK:
         {task}
         
-        ACCIONES REALIZADAS:
+        ACTIONS TAKEN:
         {', '.join(actions)}
         
-        RESULTADO:
+        RESULT:
         {result}
         
-        INSTRUCCIONES:
-        1. Crea una descripción clara y concisa de esta habilidad (1-2 oraciones).
-        2. La descripción debe ser útil para reutilizar esta habilidad en situaciones similares.
-        3. No incluyas detalles específicos como nombres propios o ubicaciones exactas.
-        4. Usa un formato general que describa la secuencia de acciones y su propósito.
-        5. La descripción debe empezar con un verbo en infinitivo (ej. "Abrir", "Conseguir").
+        INSTRUCTIONS:
+        1. Create a clear and concise description of this skill (1-2 sentences).
+        2. The description should be useful for reusing this skill in similar situations.
+        3. Do not include specific details like proper names or exact locations.
+        4. Use a general format that describes the sequence of actions and their purpose.
+        5. The description should start with an infinitive verb (e.g., "Open", "Obtain").
         
-        DESCRIPCIÓN DE LA HABILIDAD:
+        SKILL DESCRIPTION:
         """
         
-        # Generar la descripción
+        # Generate the description
         response = self.llm.generate(prompt, temperature=0.4, max_tokens=100)
         
-        # Limpiar la respuesta
+        # Clean the response
         description = response.strip()
         
-        # Limitar la longitud de la descripción
+        # Limit the length of the description
         if len(description.split()) > 20:
             words = description.split()
             description = ' '.join(words[:20])
@@ -182,111 +182,111 @@ class SkillManager:
     
     def _generate_embedding(self, text: str) -> np.ndarray:
         """
-        Genera un embedding vectorial para un texto.
+        Generates a vector embedding for a text.
         
         Args:
-            text: Texto a embeber
+            text: Text to embed
             
         Returns:
-            Vector de embedding
+            Embedding vector
         """
-        # Usar el modelo de embedding para generar el vector
+        # Use the embedding model to generate the vector
         embedding = self.embedding_model.encode(text)
         
-        # Normalizar el embedding (opcional pero recomendado para comparaciones de similitud)
+        # Normalize the embedding (optional but recommended for similarity comparisons)
         normalized_embedding = embedding / np.linalg.norm(embedding)
         
         return normalized_embedding
     
     def _calculate_similarities(self, query_embedding: np.ndarray) -> np.ndarray:
         """
-        Calcula similitudes entre un embedding de consulta y los embeddings de la biblioteca.
+        Calculates similarities between a query embedding and the library embeddings.
         
         Args:
-            query_embedding: Embedding de la consulta
+            query_embedding: Query embedding
             
         Returns:
-            Array de similitudes
+            Array of similarities
         """
-        # Convertir la lista de embeddings a una matriz numpy
+        # Convert the list of embeddings to a numpy matrix
         skill_embeddings_matrix = np.array(self.skill_embeddings)
         
-        # Calcular la similitud de coseno
+        # Calculate cosine similarity
         similarities = np.dot(skill_embeddings_matrix, query_embedding)
         
         return similarities
     
     def _build_query_context(self, task: str, agent_state: Dict[str, Any]) -> str:
         """
-        Construye un contexto de consulta enriquecido.
+        Builds an enriched query context.
         
         Args:
-            task: Descripción de la tarea
-            agent_state: Estado actual del agente
+            task: Description of the task
+            agent_state: Current state of the agent
             
         Returns:
-            Contexto de consulta enriquecido
+            Enriched query context
         """
-        # Extraer información relevante del estado
+        # Extract relevant information from the state
         observation = agent_state.get('observation', '')
         inventory = agent_state.get('inventory', '')
         
-        # Generar una consulta mejorada que considere el contexto
+        # Generate an enhanced query that considers the context
         prompt = f"""
-        Dada una tarea en un juego de ficción interactiva, genera una consulta enriquecida
-        que pueda usarse para buscar habilidades relevantes en una biblioteca.
+        Given a task in an interactive fiction game, generate an enriched query
+        that can be used to search for relevant skills in a library.
         
-        TAREA:
+        TASK:
         {task}
         
-        OBSERVACIÓN ACTUAL:
+        CURRENT OBSERVATION:
         {observation}
         
-        INVENTARIO:
+        INVENTORY:
         {inventory}
         
-        INSTRUCCIONES:
-        1. Analiza la tarea y el contexto.
-        2. Identifica los objetivos, acciones, objetos y localizaciones clave.
-        3. Genera una consulta ampliada que capture la esencia de lo que se necesita hacer.
-        4. Incluye sinónimos o términos relacionados para mejorar la recuperación.
-        5. Mantén la consulta concisa pero informativa (2-3 oraciones).
+        INSTRUCTIONS:
+        1. Analyze the task and context.
+        2. Identify key objectives, actions, objects, and locations.
+        3. Generate an expanded query that captures the essence of what needs to be done.
+        4. Include synonyms or related terms to improve retrieval.
+        5. Keep the query concise but informative (2-3 sentences).
         
-        CONSULTA ENRIQUECIDA:
+        ENRICHED QUERY:
         """
         
-        # Generar la consulta enriquecida
+        # Generate the enriched query
         response = self.llm.generate(prompt, temperature=0.4, max_tokens=150)
         
-        # Limpiar la respuesta
+        # Clean the response
         query_context = response.strip()
         
         return f"{task} {query_context}"
     
     def _save_skills(self) -> None:
-        """Guarda la biblioteca de habilidades en el disco."""
+        """Saves the skill library to disk."""
         skills_path = os.path.join(self.save_dir, 'skills.json')
         embeddings_path = os.path.join(self.save_dir, 'embeddings.npy')
         
-        # Guardar habilidades
+        # Save skills
         with open(skills_path, 'w') as f:
             json.dump(self.skills, f, indent=2)
         
-        # Guardar embeddings
+        # Save embeddings
         if self.skill_embeddings:
             np.save(embeddings_path, np.array(self.skill_embeddings))
     
     def _load_skills(self) -> None:
-        """Carga la biblioteca de habilidades desde el disco."""
+        """Loads the skill library from disk."""
         skills_path = os.path.join(self.save_dir, 'skills.json')
         embeddings_path = os.path.join(self.save_dir, 'embeddings.npy')
         
-        # Cargar habilidades si existen
+        # Load skills if they exist
         if os.path.exists(skills_path):
             with open(skills_path, 'r') as f:
                 self.skills = json.load(f)
         
-        # Cargar embeddings si existen
+        # Load embeddings if they exist
         if os.path.exists(embeddings_path):
             embeddings = np.load(embeddings_path)
             self.skill_embeddings = [embedding for embedding in embeddings]

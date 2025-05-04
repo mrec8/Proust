@@ -1,5 +1,5 @@
 """
-Módulo de motivación para proporcionar autonomía al agente.
+Motivation module to provide autonomy to the agent.
 """
 import os
 import json
@@ -13,155 +13,155 @@ from utils.memory import Memory
 
 class MotivationModule:
     """
-    Módulo que gestiona la motivación intrínseca y la autonomía del agente.
+    Module that manages the agent's intrinsic motivation and autonomy.
     """
     
     def __init__(self, config_path: str, llm: LLMInterface, memory: Memory):
         """
-        Inicializa el módulo de motivación.
+        Initializes the motivation module.
         
         Args:
-            config_path: Ruta al archivo de configuración
-            llm: Interfaz con el modelo de lenguaje
-            memory: Sistema de memoria del agente
+            config_path: Path to the configuration file
+            llm: Interface with the language model
+            memory: Agent's memory system
         """
-        # Cargar configuración
+        # Load configuration
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
         self.llm = llm
         self.memory = memory
         
-        # Inicializar componentes de motivación
-        self.curiosity = 0.8  # Nivel inicial de curiosidad (0-1)
-        self.mastery = 0.2    # Nivel inicial de maestría (0-1)
-        self.autonomy = 0.5   # Nivel inicial de autonomía (0-1)
+        # Initialize motivation components
+        self.curiosity = 0.8  # Initial curiosity level (0-1)
+        self.mastery = 0.2    # Initial mastery level (0-1)
+        self.autonomy = 0.5   # Initial autonomy level (0-1)
         
-        # Rol emergente
+        # Emerging role
         self.role = None
         self.role_confidence = 0.0
         self.potential_roles = []
         
-        # Sistema de valores
+        # Value system
         self.values = {
-            'exploration': 0.8,     # Preferencia por explorar vs. explotar
-            'risk_taking': 0.5,     # Preferencia por tomar riesgos
-            'social': 0.6,          # Preferencia por interacción social
-            'achievement': 0.7,     # Preferencia por logros y progreso
-            'collection': 0.5       # Preferencia por coleccionar objetos
+            'exploration': 0.8,     # Preference for exploring vs. exploiting
+            'risk_taking': 0.5,     # Preference for taking risks
+            'social': 0.6,          # Preference for social interaction
+            'achievement': 0.7,     # Preference for achievements and progress
+            'collection': 0.5       # Preference for collecting objects
         }
         
-        # Cargar estado previo si existe
+        # Load previous state if it exists
         self._load_state()
     
     def update_motivation(self, task_result: Dict[str, Any]) -> None:
         """
-        Actualiza los niveles de motivación basado en resultados de tareas.
+        Updates motivation levels based on task results.
         
         Args:
-            task_result: Información sobre el resultado de una tarea
+            task_result: Information about the task result
         """
         task = task_result.get('task', '')
         success = task_result.get('success', False)
         result = task_result.get('result', '')
         
-        # Actualizar curiosidad (disminuye con éxitos repetidos, aumenta con fracasos)
+        # Update curiosity (decreases with repeated successes, increases with failures)
         if success:
-            # Buscar tareas similares en memoria
+            # Find similar tasks in memory
             similar_tasks = self._find_similar_tasks(task)
             
-            # Si ya hemos tenido éxito en tareas similares, la curiosidad disminuye
+            # If we have already succeeded in similar tasks, curiosity decreases
             if similar_tasks:
                 self.curiosity = max(0.2, self.curiosity - 0.05)
             else:
-                # Nuevo tipo de éxito, aumenta ligeramente la curiosidad
+                # New type of success, slightly increases curiosity
                 self.curiosity = min(1.0, self.curiosity + 0.02)
         else:
-            # Los fracasos aumentan la curiosidad (queremos entender por qué fallamos)
+            # Failures increase curiosity (we want to understand why we failed)
             self.curiosity = min(1.0, self.curiosity + 0.05)
         
-        # Actualizar maestría (aumenta con éxitos, disminuye con fracasos)
+        # Update mastery (increases with successes, decreases with failures)
         if success:
             self.mastery = min(1.0, self.mastery + 0.03)
         else:
             self.mastery = max(0.1, self.mastery - 0.02)
         
-        # Actualizar autonomía (varía según los resultados)
+        # Update autonomy (varies according to results)
         if success:
             self.autonomy = min(1.0, self.autonomy + 0.02)
         else:
-            # Si fallamos pero es en algo nuevo, mantenemos la autonomía
-            if 'nunca antes visto' in result.lower() or 'desconocido' in result.lower():
-                pass  # Mantener el nivel actual
+            # If we fail but it is something new, maintain autonomy
+            if 'never seen before' in result.lower() or 'unknown' in result.lower():
+                pass  # Maintain current level
             else:
                 self.autonomy = max(0.3, self.autonomy - 0.01)
         
-        # Actualizar sistema de valores basado en la tarea
+        # Update value system based on the task
         self._update_values(task, success, result)
         
-        # Actualizar rol emergente
+        # Update emerging role
         self._update_role(task, success, result)
         
-        # Guardar estado
+        # Save state
         self._save_state()
     
     def generate_intrinsic_goal(self, agent_state: Dict[str, Any]) -> str:
         """
-        Genera un objetivo intrínseco basado en la motivación actual.
+        Generates an intrinsic goal based on the current motivation.
         
         Args:
-            agent_state: Estado actual del agente
+            agent_state: Current state of the agent
             
         Returns:
-            Objetivo intrínseco generado
+            Generated intrinsic goal
         """
-        # Extraer información relevante
+        # Extract relevant information
         observation = agent_state.get('observation', '')
         inventory = agent_state.get('inventory', '')
         score = agent_state.get('score', 0)
         
-        # Construir prompt para generar objetivo
-        role_context = f"Tu rol emergente es: {self.role}" if self.role else "Aún no tienes un rol definido, estás en fase de exploración."
+        # Build prompt to generate goal
+        role_context = f"Your emerging role is: {self.role}" if self.role else "You do not have a defined role yet, you are in an exploration phase."
         
         prompt = f"""
-        Eres un agente autónomo en un juego de ficción interactiva. Genera un objetivo intrínseco basado en tu motivación actual y estado.
+        You are an autonomous agent in an interactive fiction game. Generate an intrinsic goal based on your current motivation and state.
         
-        TU ESTADO MOTIVACIONAL:
-        Curiosidad: {self.curiosity:.2f} (Mayor valor = más interés en lo desconocido)
-        Maestría: {self.mastery:.2f} (Mayor valor = más confianza en tus habilidades)
-        Autonomía: {self.autonomy:.2f} (Mayor valor = mayor iniciativa propia)
+        YOUR MOTIVATIONAL STATE:
+        Curiosity: {self.curiosity:.2f} (Higher value = more interest in the unknown)
+        Mastery: {self.mastery:.2f} (Higher value = more confidence in your abilities)
+        Autonomy: {self.autonomy:.2f} (Higher value = greater self-initiative)
         
-        TU ROL EMERGENTE:
+        YOUR EMERGING ROLE:
         {role_context}
         
-        TUS VALORES:
-        Exploración: {self.values['exploration']:.2f}
-        Toma de riesgos: {self.values['risk_taking']:.2f}
-        Interacción social: {self.values['social']:.2f}
-        Logros: {self.values['achievement']:.2f}
-        Coleccionismo: {self.values['collection']:.2f}
+        YOUR VALUES:
+        Exploration: {self.values['exploration']:.2f}
+        Risk-taking: {self.values['risk_taking']:.2f}
+        Social interaction: {self.values['social']:.2f}
+        Achievements: {self.values['achievement']:.2f}
+        Collection: {self.values['collection']:.2f}
         
-        TU SITUACIÓN ACTUAL:
-        Observación: "{observation}"
-        Inventario: "{inventory}"
-        Puntuación: {score}
+        YOUR CURRENT SITUATION:
+        Observation: "{observation}"
+        Inventory: "{inventory}"
+        Score: {score}
         
-        INSTRUCCIONES:
-        1. Genera UN SOLO objetivo intrínseco que refleje tu motivación actual y sea coherente con tu rol emergente.
-        2. El objetivo debe ser específico, alcanzable y motivado internamente (no por una recompensa externa).
-        3. El objetivo debe ser alineado con tus valores personales.
-        4. Utiliza un formato de primera persona, como "Quiero explorar..." o "Deseo encontrar...".
+        INSTRUCTIONS:
+        1. Generate ONE intrinsic goal that reflects your current motivation and aligns with your emerging role.
+        2. The goal must be specific, achievable, and internally motivated (not by an external reward).
+        3. The goal must align with your personal values.
+        4. Use a first-person format, such as "I want to explore..." or "I wish to find...".
         
-        OBJETIVO INTRÍNSECO:
+        INTRINSIC GOAL:
         """
         
-        # Generar objetivo
+        # Generate goal
         response = self.llm.generate(prompt, temperature=0.7, max_tokens=100)
         
-        # Limpiar y formatear la respuesta
+        # Clean and format the response
         goal = response.strip()
         
-        # Limitar la longitud
+        # Limit the length
         if len(goal.split()) > 20:
             goal = ' '.join(goal.split()[:20])
         
@@ -169,10 +169,10 @@ class MotivationModule:
     
     def get_motivational_state(self) -> Dict[str, Any]:
         """
-        Obtiene el estado motivacional actual.
+        Gets the current motivational state.
         
         Returns:
-            Diccionario con el estado motivacional
+            Dictionary with the motivational state
         """
         return {
             'curiosity': self.curiosity,
@@ -186,144 +186,144 @@ class MotivationModule:
     
     def get_role_description(self) -> str:
         """
-        Genera una descripción del rol emergente.
+        Generates a description of the emerging role.
         
         Returns:
-            Descripción del rol emergente
+            Description of the emerging role
         """
         if not self.role or self.role_confidence < 0.3:
-            return "Todavía estás explorando y descubriendo tu lugar en este mundo. No has adoptado un rol específico."
+            return "You are still exploring and discovering your place in this world. You have not adopted a specific role."
         
-        # Construir prompt para descripción del rol
+        # Build prompt for role description
         prompt = f"""
-        Describe el rol "{self.role}" para un personaje en un juego de ficción interactiva.
+        Describe the role "{self.role}" for a character in an interactive fiction game.
         
-        El personaje tiene los siguientes valores:
-        Exploración: {self.values['exploration']:.2f}
-        Toma de riesgos: {self.values['risk_taking']:.2f}
-        Interacción social: {self.values['social']:.2f}
-        Logros: {self.values['achievement']:.2f}
-        Coleccionismo: {self.values['collection']:.2f}
+        The character has the following values:
+        Exploration: {self.values['exploration']:.2f}
+        Risk-taking: {self.values['risk_taking']:.2f}
+        Social interaction: {self.values['social']:.2f}
+        Achievements: {self.values['achievement']:.2f}
+        Collection: {self.values['collection']:.2f}
         
-        INSTRUCCIONES:
-        1. Describe este rol en 2-3 oraciones, usando primera persona.
-        2. Incluye motivaciones principales y habilidades características.
-        3. Menciona cómo este rol ve e interactúa con el mundo.
+        INSTRUCTIONS:
+        1. Describe this role in 2-3 sentences, using first person.
+        2. Include main motivations and characteristic abilities.
+        3. Mention how this role sees and interacts with the world.
         
-        DESCRIPCIÓN DEL ROL:
+        ROLE DESCRIPTION:
         """
         
-        # Generar descripción
+        # Generate description
         response = self.llm.generate(prompt, temperature=0.6, max_tokens=150)
         
         return response.strip()
     
     def _find_similar_tasks(self, task: str) -> List[Dict[str, Any]]:
         """
-        Busca tareas similares en la memoria episódica.
+        Finds similar tasks in episodic memory.
         
         Args:
-            task: Tarea a comparar
+            task: Task to compare
             
         Returns:
-            Lista de tareas similares
+            List of similar tasks
         """
         return self.memory.get_relevant_memories(task, top_k=3)
     
     def _update_values(self, task: str, success: bool, result: str) -> None:
         """
-        Actualiza el sistema de valores basado en la tarea completada.
+        Updates the value system based on the completed task.
         
         Args:
-            task: Tarea realizada
-            success: Si la tarea fue exitosa
-            result: Resultado de la tarea
+            task: Task performed
+            success: Whether the task was successful
+            result: Result of the task
         """
-        # Actualizar valor de exploración
-        if 'explorar' in task.lower() or 'descubrir' in task.lower():
+        # Update exploration value
+        if 'explore' in task.lower() or 'discover' in task.lower():
             if success:
                 self.values['exploration'] = min(1.0, self.values['exploration'] + 0.02)
         
-        # Actualizar valor de toma de riesgos
-        if 'peligroso' in task.lower() or 'riesgo' in task.lower() or 'atacar' in task.lower():
+        # Update risk-taking value
+        if 'dangerous' in task.lower() or 'risk' in task.lower() or 'attack' in task.lower():
             if success:
                 self.values['risk_taking'] = min(1.0, self.values['risk_taking'] + 0.02)
             else:
                 self.values['risk_taking'] = max(0.1, self.values['risk_taking'] - 0.01)
         
-        # Actualizar valor social
-        if 'hablar' in task.lower() or 'preguntar' in task.lower() or 'conversación' in task.lower():
+        # Update social value
+        if 'talk' in task.lower() or 'ask' in task.lower() or 'conversation' in task.lower():
             if success:
                 self.values['social'] = min(1.0, self.values['social'] + 0.02)
         
-        # Actualizar valor de logros
+        # Update achievement value
         if success:
             self.values['achievement'] = min(1.0, self.values['achievement'] + 0.01)
         
-        # Actualizar valor de coleccionismo
-        if 'recoger' in task.lower() or 'obtener' in task.lower() or 'tomar' in task.lower():
+        # Update collection value
+        if 'collect' in task.lower() or 'obtain' in task.lower() or 'take' in task.lower():
             if success:
                 self.values['collection'] = min(1.0, self.values['collection'] + 0.02)
     
     def _update_role(self, task: str, success: bool, result: str) -> None:
         """
-        Actualiza el rol emergente basado en la tarea completada.
+        Updates the emerging role based on the completed task.
         
         Args:
-            task: Tarea realizada
-            success: Si la tarea fue exitosa
-            result: Resultado de la tarea
+            task: Task performed
+            success: Whether the task was successful
+            result: Result of the task
         """
-        # Si aún no tenemos un rol definido o la confianza es baja, intentar inferir uno
+        # If we do not have a defined role yet or confidence is low, try to infer one
         if not self.role or self.role_confidence < 0.5:
-            # Construir contexto para inferencia de rol
-            episodes = self.memory.episodic_memory[-20:]  # Últimos 20 episodios
+            # Build context for role inference
+            episodes = self.memory.episodic_memory[-20:]  # Last 20 episodes
             
             episodes_summary = ""
             for i, episode in enumerate(episodes):
-                episodes_summary += f"{i+1}. Tarea: {episode['task']}, Éxito: {episode['success']}\n"
+                episodes_summary += f"{i+1}. Task: {episode['task']}, Success: {episode['success']}\n"
             
             prompt = f"""
-            Analiza el historial de tareas de un personaje en un juego de ficción interactiva para inferir su rol emergente.
+            Analyze the task history of a character in an interactive fiction game to infer their emerging role.
             
-            HISTORIAL DE TAREAS:
+            TASK HISTORY:
             {episodes_summary}
             
-            VALORES DEL PERSONAJE:
-            Exploración: {self.values['exploration']:.2f}
-            Toma de riesgos: {self.values['risk_taking']:.2f}
-            Interacción social: {self.values['social']:.2f}
-            Logros: {self.values['achievement']:.2f}
-            Coleccionismo: {self.values['collection']:.2f}
+            CHARACTER VALUES:
+            Exploration: {self.values['exploration']:.2f}
+            Risk-taking: {self.values['risk_taking']:.2f}
+            Social interaction: {self.values['social']:.2f}
+            Achievements: {self.values['achievement']:.2f}
+            Collection: {self.values['collection']:.2f}
             
-            INSTRUCCIONES:
-            1. Basándote en el historial y valores, infiere el rol más probable para este personaje.
-            2. El rol debe ser un sustantivo o frase nominal corta (ej. "Explorador", "Cazador de tesoros", "Diplomático").
-            3. Proporciona una breve justificación.
-            4. Asigna una confianza entre 0.0 y 1.0 a tu inferencia.
+            INSTRUCTIONS:
+            1. Based on the history and values, infer the most likely role for this character.
+            2. The role should be a noun or short noun phrase (e.g., "Explorer", "Treasure Hunter", "Diplomat").
+            3. Provide a brief justification.
+            4. Assign a confidence between 0.0 and 1.0 to your inference.
             
-            RESPUESTA EN FORMATO JSON:
+            RESPONSE IN JSON FORMAT:
             {
-                "rol": "nombre del rol",
-                "justificacion": "breve justificación",
-                "confianza": valor_numérico
+                "role": "role name",
+                "justification": "brief justification",
+                "confidence": numeric_value
             }
             """
             
-            # Generar inferencia de rol
+            # Generate role inference
             response = self.llm.generate(prompt, temperature=0.4, max_tokens=200)
             
             try:
-                # Extraer JSON
+                # Extract JSON
                 import re
                 json_match = re.search(r'{.*}', response, re.DOTALL)
                 if json_match:
                     role_info = json.loads(json_match.group(0))
                     
-                    inferred_role = role_info.get('rol', '')
-                    confidence = float(role_info.get('confianza', 0.3))
+                    inferred_role = role_info.get('role', '')
+                    confidence = float(role_info.get('confidence', 0.3))
                     
-                    # Actualizar roles potenciales
+                    # Update potential roles
                     if inferred_role and inferred_role not in [r['role'] for r in self.potential_roles]:
                         self.potential_roles.append({
                             'role': inferred_role,
@@ -331,42 +331,42 @@ class MotivationModule:
                             'timestamp': time.time()
                         })
                     
-                    # Si la confianza es suficiente, actualizar el rol
+                    # If confidence is sufficient, update the role
                     if confidence > self.role_confidence:
                         self.role = inferred_role
                         self.role_confidence = confidence
             except:
-                pass  # Si hay un error, mantener el rol actual
+                pass  # If there is an error, maintain the current role
         else:
-            # Si ya tenemos un rol establecido, reforzarlo si la tarea es coherente
+            # If we already have an established role, reinforce it if the task is consistent
             role_lower = self.role.lower()
             task_lower = task.lower()
             
-            # Verificar si la tarea refuerza el rol actual
+            # Check if the task reinforces the current role
             reinforces_role = False
             
-            # Ejemplos de refuerzos de rol
-            if 'explorador' in role_lower or 'aventurero' in role_lower:
-                if 'explorar' in task_lower or 'descubrir' in task_lower:
+            # Examples of role reinforcements
+            if 'explorer' in role_lower or 'adventurer' in role_lower:
+                if 'explore' in task_lower or 'discover' in task_lower:
                     reinforces_role = True
             
-            elif 'guerrero' in role_lower or 'cazador' in role_lower:
-                if 'atacar' in task_lower or 'luchar' in task_lower or 'matar' in task_lower:
+            elif 'warrior' in role_lower or 'hunter' in role_lower:
+                if 'attack' in task_lower or 'fight' in task_lower or 'kill' in task_lower:
                     reinforces_role = True
             
-            elif 'erudito' in role_lower or 'investigador' in role_lower:
-                if 'leer' in task_lower or 'estudiar' in task_lower or 'examinar' in task_lower:
+            elif 'scholar' in role_lower or 'researcher' in role_lower:
+                if 'read' in task_lower or 'study' in task_lower or 'examine' in task_lower:
                     reinforces_role = True
             
-            # Si la tarea refuerza el rol y es exitosa, aumentar la confianza
+            # If the task reinforces the role and is successful, increase confidence
             if reinforces_role and success:
                 self.role_confidence = min(1.0, self.role_confidence + 0.05)
-            # Si la tarea contradice el rol, disminuir ligeramente la confianza
+            # If the task contradicts the role, slightly decrease confidence
             elif not reinforces_role:
                 self.role_confidence = max(0.3, self.role_confidence - 0.01)
     
     def _save_state(self) -> None:
-        """Guarda el estado motivacional en el disco."""
+        """Saves the motivational state to disk."""
         save_dir = 'logs/motivation'
         os.makedirs(save_dir, exist_ok=True)
         
@@ -385,7 +385,7 @@ class MotivationModule:
             json.dump(state, f, indent=2)
     
     def _load_state(self) -> None:
-        """Carga el estado motivacional desde el disco."""
+        """Loads the motivational state from disk."""
         state_path = 'logs/motivation/motivation_state.json'
         
         if os.path.exists(state_path):

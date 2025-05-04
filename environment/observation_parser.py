@@ -1,38 +1,38 @@
 """
-Módulo para analizar y estructurar las observaciones textuales de Jericho.
+Module to analyze and structure textual observations from Jericho.
 """
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any
 
 class ObservationParser:
     """
-    Clase para parsear y estructurar las observaciones textuales de los juegos Jericho.
+    Class to parse and structure textual observations from Jericho games.
     """
     
     def __init__(self):
-        """Inicializa el parser con expresiones regulares y patrones comunes."""
-        # Patrones para detectar ubicaciones
+        """Initializes the parser with regular expressions and common patterns."""
+        # Patterns to detect locations
         self.location_patterns = [
             r"You are in (.*?)\.",
             r"You are standing (.*?)\.",
             r"You're in (.*?)\.",
         ]
         
-        # Patrones para detectar objetos
+        # Patterns to detect objects
         self.object_patterns = [
             r"You can see (.*?) here\.",
             r"There is (.*?) here\.",
             r"There's (.*?) here\.",
         ]
         
-        # Patrones para detectar salidas/direcciones
+        # Patterns to detect exits/directions
         self.exit_patterns = [
             r"Exits: (.*?)\.",
             r"You can go: (.*?)\.",
             r"Obvious exits: (.*?)\.",
         ]
         
-        # Patrones para detectar resultados de acciones
+        # Patterns to detect action results
         self.action_result_patterns = {
             "take": [r"Taken\.", r"You pick up (.*?)\.", r"You take (.*?)\."],
             "drop": [r"Dropped\.", r"You drop (.*?)\.", r"Dropped\."],
@@ -42,7 +42,7 @@ class ObservationParser:
             "inventory": [r"You are carrying (.*?)\.", r"You're carrying (.*?)\."],
         }
         
-        # Lista de objetos comunes en juegos de aventura
+        # List of common objects in adventure games
         self.common_objects = {
             "sword", "knife", "key", "lamp", "lantern", "book", "scroll", "coin", 
             "gold", "silver", "bottle", "flask", "food", "water", "map", "compass",
@@ -54,7 +54,7 @@ class ObservationParser:
             "creature", "beast", "goblin", "troll", "ogre", "ghost", "skeleton"
         }
         
-        # Direcciones comunes
+        # Common directions
         self.directions = {
             "north", "south", "east", "west", "northeast", "northwest", 
             "southeast", "southwest", "up", "down", "in", "out"
@@ -62,13 +62,13 @@ class ObservationParser:
     
     def parse_observation(self, observation: str) -> Dict[str, Any]:
         """
-        Analiza una observación textual para extraer información estructurada.
+        Analyzes a textual observation to extract structured information.
         
         Args:
-            observation: Texto de observación del juego
+            observation: Text observation from the game
             
         Returns:
-            Diccionario con información estructurada extraída de la observación
+            Dictionary with structured information extracted from the observation
         """
         result = {
             'raw_text': observation,
@@ -83,13 +83,13 @@ class ObservationParser:
         return result
     
     def _extract_location(self, text: str) -> str:
-        """Extrae la descripción de la ubicación actual."""
+        """Extracts the description of the current location."""
         for pattern in self.location_patterns:
             match = re.search(pattern, text)
             if match:
                 return match.group(1).strip()
         
-        # Si no encontramos un patrón explícito, usamos la primera línea como ubicación
+        # If no explicit pattern is found, use the first line as the location
         lines = text.split('\n')
         if lines:
             return lines[0].strip()
@@ -97,19 +97,19 @@ class ObservationParser:
         return ""
     
     def _extract_objects(self, text: str) -> List[str]:
-        """Extrae objetos mencionados en la observación."""
+        """Extracts objects mentioned in the observation."""
         objects = []
         
-        # Usando patrones explícitos
+        # Using explicit patterns
         for pattern in self.object_patterns:
             match = re.search(pattern, text)
             if match:
                 object_text = match.group(1).strip()
-                # Separar objetos si hay listas (separadas por comas y/o "and")
+                # Separate objects if there are lists (separated by commas and/or "and")
                 items = re.split(r',\s*|\s+and\s+', object_text)
                 objects.extend(items)
         
-        # Buscando objetos comunes en el texto
+        # Searching for common objects in the text
         for obj in self.common_objects:
             if re.search(r'\b' + obj + r'\b', text.lower()):
                 if obj not in objects:
@@ -118,19 +118,19 @@ class ObservationParser:
         return objects
     
     def _extract_exits(self, text: str) -> List[str]:
-        """Extrae las salidas o direcciones disponibles."""
+        """Extracts available exits or directions."""
         exits = []
         
-        # Usando patrones explícitos
+        # Using explicit patterns
         for pattern in self.exit_patterns:
             match = re.search(pattern, text)
             if match:
                 exit_text = match.group(1).strip()
-                # Separar direcciones si hay listas
+                # Separate directions if there are lists
                 directions = re.split(r',\s*|\s+and\s+|\s+or\s+', exit_text)
                 exits.extend(directions)
         
-        # Buscando direcciones comunes en el texto
+        # Searching for common directions in the text
         for direction in self.directions:
             if re.search(r'\b' + direction + r'\b', text.lower()):
                 if direction not in exits:
@@ -139,7 +139,7 @@ class ObservationParser:
         return exits
     
     def _extract_action_results(self, text: str) -> Dict[str, str]:
-        """Extrae los resultados de acciones específicas."""
+        """Extracts the results of specific actions."""
         results = {}
         
         for action, patterns in self.action_result_patterns.items():
@@ -154,8 +154,8 @@ class ObservationParser:
         return results
     
     def _extract_entities(self, text: str) -> List[str]:
-        """Extrae entidades o personajes mencionados."""
-        # Lista de entidades comunes en juegos de aventura
+        """Extracts entities or characters mentioned."""
+        # List of common entities in adventure games
         entities = [
             "guard", "soldier", "knight", "king", "queen", "prince", "princess",
             "wizard", "witch", "sorcerer", "sorceress", "merchant", "shopkeeper",
@@ -172,8 +172,8 @@ class ObservationParser:
         return found_entities
     
     def _extract_messages(self, text: str) -> List[str]:
-        """Extrae mensajes importantes o alertas."""
-        # Patrones para mensajes importantes
+        """Extracts important messages or alerts."""
+        # Patterns for important messages
         message_patterns = [
             r"(\w+) says, \"(.*?)\"",
             r"A voice (.*?) says",
@@ -195,17 +195,17 @@ class ObservationParser:
     
     def parse_inventory(self, inventory_text: str) -> List[str]:
         """
-        Parsea el texto de inventario para extraer la lista de objetos.
+        Parses the inventory text to extract the list of objects.
         
         Args:
-            inventory_text: Texto que describe el inventario
+            inventory_text: Text describing the inventory
             
         Returns:
-            Lista de objetos en el inventario
+            List of objects in the inventory
         """
         items = []
         
-        # Patrones comunes para texto de inventario
+        # Common patterns for inventory text
         patterns = [
             r"You are carrying (.*?)\.",
             r"You're carrying (.*?)\.",
@@ -216,15 +216,15 @@ class ObservationParser:
             match = re.search(pattern, inventory_text)
             if match:
                 items_text = match.group(1).strip()
-                # Si el texto termina con "nothing", el inventario está vacío
+                # If the text ends with "nothing", the inventory is empty
                 if items_text.lower() == "nothing":
                     return []
-                # Separar objetos si hay listas
+                # Separate objects if there are lists
                 item_list = re.split(r',\s*|\s+and\s+', items_text)
                 items.extend(item_list)
                 break
         
-        # Si no encontramos un patrón explícito, buscamos líneas con objetos
+        # If no explicit pattern is found, look for lines with objects
         if not items:
             lines = inventory_text.split('\n')
             for line in lines:

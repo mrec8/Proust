@@ -1,5 +1,5 @@
 """
-Agente de Acción para generar comandos ejecutables en el entorno Jericho.
+Action Agent to generate executable commands in the Jericho environment.
 """
 import os
 import re
@@ -11,19 +11,19 @@ from environment.observation_parser import ObservationParser
 
 class ActionAgent:
     """
-    Agente que genera comandos/acciones ejecutables en el entorno Jericho.
+    Agent that generates executable commands/actions in the Jericho environment.
     """
     
     def __init__(self, config_path: str, game_config_path: str, llm: LLMInterface):
         """
-        Inicializa el agente de acción.
+        Initializes the action agent.
         
         Args:
-            config_path: Ruta al archivo de configuración
-            game_config_path: Ruta al archivo de configuración del juego
-            llm: Interfaz con el modelo de lenguaje
+            config_path: Path to the configuration file
+            game_config_path: Path to the game configuration file
+            llm: Interface with the language model
         """
-        # Cargar configuraciones
+        # Load configurations
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
@@ -32,53 +32,53 @@ class ActionAgent:
         
         self.llm = llm
         
-        # Configuraciones específicas
+        # Specific configurations
         self.game_name = self.config['environment']['game']
         self.game_specific_config = self.game_config.get(self.game_name, {})
         
-        # Parámetros del agente de acción
+        # Action agent parameters
         self.max_refinement_iterations = self.config['agents']['action_agent'].get('max_refinement_iterations', 3)
         
-        # Inicializar el parser de observaciones
+        # Initialize the observation parser
         self.obs_parser = ObservationParser()
         
-        # Almacenar comandos especiales del juego
+        # Store special commands for the game
         self.special_commands = self.game_specific_config.get('special_commands', [])
         
-        # Historial de acciones
+        # Action history
         self.action_history = []
     
     def generate_action(self, task: str, agent_state: Dict[str, Any], 
                        skills: Optional[List[Dict[str, Any]]] = None) -> str:
         """
-        Genera un comando/acción ejecutable para la tarea dada.
+        Generates an executable command/action for the given task.
         
         Args:
-            task: Tarea actual
-            agent_state: Estado actual del agente
-            skills: Lista de habilidades relevantes de la biblioteca
+            task: Current task
+            agent_state: Current state of the agent
+            skills: List of relevant skills from the library
             
         Returns:
-            Comando/acción ejecutable
+            Executable command/action
         """
-        # Procesar la observación
+        # Process the observation
         parsed_observation = self.obs_parser.parse_observation(agent_state.get('observation', ''))
         
-        # Procesar el inventario
+        # Process the inventory
         inventory = agent_state.get('inventory', '')
         parsed_inventory = self.obs_parser.parse_inventory(inventory)
         
-        # Construir prompt para el LLM
+        # Build prompt for the LLM
         prompt = self._build_action_generation_prompt(task, parsed_observation, 
                                                      parsed_inventory, agent_state, skills)
         
-        # Generar acción
+        # Generate action
         response = self.llm.generate(prompt, temperature=0.7)
         
-        # Extraer acción del texto generado
+        # Extract action from the generated text
         action = self._extract_action_from_response(response)
         
-        # Registrar la acción en el historial
+        # Log the action in the history
         self._add_to_history(task, action)
         
         return action
@@ -86,36 +86,36 @@ class ActionAgent:
     def refine_action(self, previous_action: str, task: str, agent_state: Dict[str, Any], 
                      error_message: Optional[str] = None) -> str:
         """
-        Refina una acción previa que no tuvo éxito.
+        Refines a previous action that was not successful.
         
         Args:
-            previous_action: Acción anterior que se desea refinar
-            task: Tarea actual
-            agent_state: Estado actual del agente
-            error_message: Mensaje de error o resultado de la acción anterior
+            previous_action: Previous action to be refined
+            task: Current task
+            agent_state: Current state of the agent
+            error_message: Error message or result of the previous action
             
         Returns:
-            Comando/acción refinado
+            Refined command/action
         """
-        # Procesar la observación
+        # Process the observation
         parsed_observation = self.obs_parser.parse_observation(agent_state.get('observation', ''))
         
-        # Procesar el inventario
+        # Process the inventory
         inventory = agent_state.get('inventory', '')
         parsed_inventory = self.obs_parser.parse_inventory(inventory)
         
-        # Construir prompt para refinar
+        # Build prompt for refinement
         prompt = self._build_action_refinement_prompt(previous_action, task, 
                                                      parsed_observation, parsed_inventory, 
                                                      agent_state, error_message)
         
-        # Generar acción refinada
+        # Generate refined action
         response = self.llm.generate(prompt, temperature=0.7)
         
-        # Extraer acción del texto generado
+        # Extract action from the generated text
         action = self._extract_action_from_response(response)
         
-        # Registrar la acción refinada en el historial
+        # Log the refined action in the history
         self._add_to_history(task, action, is_refinement=True)
         
         return action
@@ -124,62 +124,62 @@ class ActionAgent:
                                        parsed_inventory: List[str], agent_state: Dict[str, Any], 
                                        skills: Optional[List[Dict[str, Any]]] = None) -> str:
         """
-        Construye el prompt para generar una acción.
+        Builds the prompt to generate an action.
         
         Args:
-            task: Tarea actual
-            parsed_observation: Observación procesada
-            parsed_inventory: Inventario procesado
-            agent_state: Estado actual del agente
-            skills: Lista de habilidades relevantes
+            task: Current task
+            parsed_observation: Processed observation
+            parsed_inventory: Processed inventory
+            agent_state: Current state of the agent
+            skills: List of relevant skills
             
         Returns:
-            Prompt para el LLM
+            Prompt for the LLM
         """
-        # Extraer información relevante
+        # Extract relevant information
         location = parsed_observation.get('location', '')
         objects = parsed_observation.get('objects', [])
         exits = parsed_observation.get('exits', [])
         entities = parsed_observation.get('entities', [])
         messages = parsed_observation.get('messages', [])
         
-        # Construir contexto de habilidades relevantes
+        # Build relevant skills context
         skills_context = ""
         if skills:
-            skills_context = "HABILIDADES RELEVANTES:\n"
+            skills_context = "RELEVANT SKILLS:\n"
             for skill in skills:
                 skills_context += f"- {skill['description']}\n"
         
-        # Construir historial reciente
+        # Build recent history
         recent_history = ""
         if self.action_history:
-            recent_history = "ACCIONES RECIENTES:\n"
-            for i, (t, a) in enumerate(self.action_history[-5:]):  # Últimas 5 acciones
-                recent_history += f"{i+1}. Tarea: {t} -> Acción: {a}\n"
+            recent_history = "RECENT ACTIONS:\n"
+            for i, (t, a) in enumerate(self.action_history[-5:]):  # Last 5 actions
+                recent_history += f"{i+1}. Task: {t} -> Action: {a}\n"
         
-        # Construir lista de comandos especiales
+        # Build list of special commands
         special_commands_str = ""
         if self.special_commands:
-            special_commands_str = "COMANDOS ESPECIALES DISPONIBLES:\n"
+            special_commands_str = "AVAILABLE SPECIAL COMMANDS:\n"
             special_commands_str += ', '.join(self.special_commands)
         
-        # Construir el prompt
+        # Build the prompt
         prompt = f"""
-        Eres un agente experto en juegos de ficción interactiva como {self.game_name}.
-        Tu tarea es generar UN SOLO comando de texto para lograr un objetivo específico.
+        You are an expert agent in interactive fiction games like {self.game_name}.
+        Your task is to generate ONE SINGLE text command to achieve a specific objective.
         
-        TAREA ACTUAL:
+        CURRENT TASK:
         {task}
         
-        ESTADO ACTUAL:
-        Ubicación: {location}
-        Objetos visibles: {', '.join(objects) if objects else 'Ninguno'}
-        Salidas: {', '.join(exits) if exits else 'Ninguna visible'}
-        Entidades: {', '.join(entities) if entities else 'Ninguna'}
-        Mensajes: {', '.join(messages) if messages else 'Ninguno'}
+        CURRENT STATE:
+        Location: {location}
+        Visible objects: {', '.join(objects) if objects else 'None'}
+        Exits: {', '.join(exits) if exits else 'None visible'}
+        Entities: {', '.join(entities) if entities else 'None'}
+        Messages: {', '.join(messages) if messages else 'None'}
         
-        INVENTARIO:
-        {', '.join(parsed_inventory) if parsed_inventory else 'Vacío'}
+        INVENTORY:
+        {', '.join(parsed_inventory) if parsed_inventory else 'Empty'}
         
         {skills_context}
         
@@ -187,14 +187,14 @@ class ActionAgent:
         
         {special_commands_str}
         
-        INSTRUCCIONES:
-        1. Genera UN SOLO comando de texto para avanzar hacia el objetivo.
-        2. Los comandos deben ser concisos y seguir la sintaxis estándar de juegos de aventura.
-        3. Usa verbos en infinitivo seguidos de sustantivos (ej. "examinar llave").
-        4. No uses comillas, puntos ni signos de exclamación en el comando.
-        5. No incluyas explicaciones ni razonamientos en tu respuesta.
+        INSTRUCTIONS:
+        1. Generate ONE SINGLE text command to progress towards the objective.
+        2. Commands must be concise and follow the standard syntax of adventure games.
+        3. Use infinitive verbs followed by nouns (e.g., "examine key").
+        4. Do not use quotes, periods, or exclamation marks in the command.
+        5. Do not include explanations or reasoning in your response.
         
-        COMANDO:
+        COMMAND:
         """
         
         return prompt
@@ -205,90 +205,90 @@ class ActionAgent:
                                        agent_state: Dict[str, Any], 
                                        error_message: Optional[str] = None) -> str:
         """
-        Construye el prompt para refinar una acción previa.
+        Builds the prompt to refine a previous action.
         
         Args:
-            previous_action: Acción anterior que se desea refinar
-            task: Tarea actual
-            parsed_observation: Observación procesada
-            parsed_inventory: Inventario procesado
-            agent_state: Estado actual del agente
-            error_message: Mensaje de error o resultado de la acción anterior
+            previous_action: Previous action to be refined
+            task: Current task
+            parsed_observation: Processed observation
+            parsed_inventory: Processed inventory
+            agent_state: Current state of the agent
+            error_message: Error message or result of the previous action
             
         Returns:
-            Prompt para el LLM
+            Prompt for the LLM
         """
-        # Extraer información relevante
+        # Extract relevant information
         location = parsed_observation.get('location', '')
         objects = parsed_observation.get('objects', [])
         exits = parsed_observation.get('exits', [])
         entities = parsed_observation.get('entities', [])
         messages = parsed_observation.get('messages', [])
         
-        # Construir contexto de error
+        # Build error context
         error_context = ""
         if error_message:
             error_context = f"""
-            RESULTADO DE LA ACCIÓN ANTERIOR:
-            Comando: {previous_action}
-            Resultado: {error_message}
+            RESULT OF THE PREVIOUS ACTION:
+            Command: {previous_action}
+            Result: {error_message}
             """
         
-        # Construir el prompt
+        # Build the prompt
         prompt = f"""
-        Eres un agente experto en juegos de ficción interactiva como {self.game_name}.
-        Tu tarea es REFINAR un comando previo que no tuvo éxito.
+        You are an expert agent in interactive fiction games like {self.game_name}.
+        Your task is to REFINE a previous command that was not successful.
         
-        TAREA ACTUAL:
+        CURRENT TASK:
         {task}
         
-        COMANDO ANTERIOR:
+        PREVIOUS COMMAND:
         {previous_action}
         
         {error_context}
         
-        ESTADO ACTUAL:
-        Ubicación: {location}
-        Objetos visibles: {', '.join(objects) if objects else 'Ninguno'}
-        Salidas: {', '.join(exits) if exits else 'Ninguna visible'}
-        Entidades: {', '.join(entities) if entities else 'Ninguna'}
-        Mensajes: {', '.join(messages) if messages else 'Ninguno'}
+        CURRENT STATE:
+        Location: {location}
+        Visible objects: {', '.join(objects) if objects else 'None'}
+        Exits: {', '.join(exits) if exits else 'None visible'}
+        Entities: {', '.join(entities) if entities else 'None'}
+        Messages: {', '.join(messages) if messages else 'None'}
         
-        INVENTARIO:
-        {', '.join(parsed_inventory) if parsed_inventory else 'Vacío'}
+        INVENTORY:
+        {', '.join(parsed_inventory) if parsed_inventory else 'Empty'}
         
-        INSTRUCCIONES PARA REFINAMIENTO:
-        1. Analiza por qué el comando anterior no funcionó.
-        2. Genera UN SOLO comando alternativo que pueda funcionar mejor.
-        3. Los comandos deben ser concisos y seguir la sintaxis estándar de juegos de aventura.
-        4. Prueba diferentes verbos o nombres si es necesario.
-        5. No uses comillas, puntos ni signos de exclamación en el comando.
-        6. No incluyas explicaciones ni razonamientos en tu respuesta.
+        INSTRUCTIONS FOR REFINEMENT:
+        1. Analyze why the previous command did not work.
+        2. Generate ONE SINGLE alternative command that might work better.
+        3. Commands must be concise and follow the standard syntax of adventure games.
+        4. Try different verbs or nouns if necessary.
+        5. Do not use quotes, periods, or exclamation marks in the command.
+        6. Do not include explanations or reasoning in your response.
         
-        COMANDO REFINADO:
+        REFINED COMMAND:
         """
         
         return prompt
     
     def _extract_action_from_response(self, response: str) -> str:
         """
-        Extrae la acción del texto generado por el LLM.
+        Extracts the action from the text generated by the LLM.
         
         Args:
-            response: Texto completo generado por el LLM
+            response: Full text generated by the LLM
             
         Returns:
-            Acción extraída
+            Extracted action
         """
-        # Limpiar y formatear la respuesta
+        # Clean and format the response
         action = response.strip()
         
-        # Eliminar prefijos comunes que el LLM podría generar
+        # Remove common prefixes that the LLM might generate
         prefixes = [
-            "El comando es:",
-            "Comando:",
-            "Acción:",
-            "Comando refinado:",
+            "The command is:",
+            "Command:",
+            "Action:",
+            "Refined command:",
             ">",
             "$"
         ]
@@ -297,28 +297,28 @@ class ActionAgent:
             if action.startswith(prefix):
                 action = action[len(prefix):].strip()
         
-        # Eliminar comillas si las hay
+        # Remove quotes if any
         action = action.strip('"\'')
         
-        # Eliminar puntuación final
+        # Remove final punctuation
         action = re.sub(r'[.!?]$', '', action).strip()
         
-        # Convertir a minúsculas para consistencia
+        # Convert to lowercase for consistency
         action = action.lower()
         
         return action
     
     def _add_to_history(self, task: str, action: str, is_refinement: bool = False) -> None:
         """
-        Agrega una acción al historial.
+        Adds an action to the history.
         
         Args:
-            task: Tarea para la que se generó la acción
-            action: Acción generada
-            is_refinement: Indica si es un refinamiento de una acción previa
+            task: Task for which the action was generated
+            action: Generated action
+            is_refinement: Indicates if it is a refinement of a previous action
         """
         self.action_history.append((task, action))
         
-        # Limitar el tamaño del historial (mantener las últimas 100 acciones)
+        # Limit the size of the history (keep the last 100 actions)
         if len(self.action_history) > 100:
             self.action_history = self.action_history[-100:]

@@ -1,5 +1,5 @@
 """
-Agente de Currículo Automático para proponer tareas adaptadas al progreso.
+Automatic Curriculum Agent to propose tasks adapted to progress.
 """
 import os
 import yaml
@@ -11,19 +11,19 @@ from utils.llm_interface import LLMInterface
 
 class CurriculumAgent:
     """
-    Agente que propone tareas adaptadas al progreso del agente y al contexto narrativo.
+    Agent that proposes tasks adapted to the agent's progress and narrative context.
     """
     
     def __init__(self, config_path: str, game_config_path: str, llm: LLMInterface):
         """
-        Inicializa el agente de currículo.
+        Initializes the curriculum agent.
         
         Args:
-            config_path: Ruta al archivo de configuración
-            game_config_path: Ruta al archivo de configuración del juego
-            llm: Interfaz con el modelo de lenguaje
+            config_path: Path to the configuration file
+            game_config_path: Path to the game configuration file
+            llm: Interface with the language model
         """
-        # Cargar configuraciones
+        # Load configurations
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
@@ -32,122 +32,122 @@ class CurriculumAgent:
         
         self.llm = llm
         
-        # Configuraciones específicas
+        # Specific configurations
         self.game_name = self.config['environment']['game']
         self.game_specific_config = self.game_config.get(self.game_name, {})
         
-        # Inicializar histórico de tareas
+        # Initialize task history
         self.completed_tasks = []
         self.failed_tasks = []
         self.current_task = None
         
-        # Parámetros de dificultad
+        # Difficulty parameters
         self.difficulty_scaling = self.config['agents']['curriculum_agent'].get('task_difficulty_scaling', 1.2)
         self.max_failed_tasks = self.config['agents']['curriculum_agent'].get('max_failed_tasks_memory', 10)
         
-        # Inicializar con objetivos del juego si están disponibles
+        # Initialize with game objectives if available
         self.progression_milestones = self.game_specific_config.get('progression_milestones', [])
         
-        # Almacenar la tarea inicial si está disponible
+        # Store the initial task if available
         self.initial_goal = self.game_specific_config.get('starting_goal', 
-                                                         "Explorar el mundo y descubrir su funcionamiento")
+                                                         "Explore the world and discover its mechanics")
     
     def propose_next_task(self, agent_state: Dict[str, Any]) -> str:
         """
-        Propone la siguiente tarea basada en el estado actual y el progreso.
+        Proposes the next task based on the current state and progress.
         
         Args:
-            agent_state: Estado actual del agente
+            agent_state: Current state of the agent
             
         Returns:
-            Descripción de la siguiente tarea a realizar
+            Description of the next task to perform
         """
-        # Si es la primera tarea, utilizar el objetivo inicial
+        # If it is the first task, use the initial goal
         if not self.completed_tasks and not self.failed_tasks:
             self.current_task = self._generate_initial_task()
             return self.current_task
         
-        # Obtener información relevante para generar la siguiente tarea
+        # Get relevant information to generate the next task
         exploration_progress = self._get_exploration_progress()
         
-        # Construir prompt para el LLM
+        # Build prompt for the LLM
         prompt = self._build_task_proposal_prompt(agent_state, exploration_progress)
         
-        # Generar la siguiente tarea usando el LLM
+        # Generate the next task using the LLM
         response = self.llm.generate(prompt, temperature=0.7)
         
-        # Extraer la tarea del texto generado
+        # Extract the task from the generated text
         task = self._extract_task_from_response(response)
         
-        # Actualizar la tarea actual
+        # Update the current task
         self.current_task = task
         
         return task
     
     def _generate_initial_task(self) -> str:
         """
-        Genera la primera tarea para el agente.
+        Generates the first task for the agent.
         
         Returns:
-            Descripción de la tarea inicial
+            Description of the initial task
         """
-        # Si hay un objetivo inicial en la configuración, usarlo
+        # If there is an initial goal in the configuration, use it
         if self.initial_goal:
-            # Descomponer el objetivo inicial en una tarea específica
+            # Decompose the initial goal into a specific task
             prompt = f"""
-            En el juego '{self.game_name}', el objetivo general es: "{self.initial_goal}".
+            In the game '{self.game_name}', the general objective is: "{self.initial_goal}".
             
-            Como primera tarea específica y concreta para empezar, el agente debería:
+            As a first specific and concrete task to start, the agent should:
             """
             response = self.llm.generate(prompt, temperature=0.5, max_tokens=50)
             initial_task = response.strip()
             
-            # Si la respuesta es demasiado genérica, usar una tarea predeterminada
+            # If the response is too generic, use a default task
             if len(initial_task.split()) < 3:
                 if self.game_name == "zork1":
-                    return "Explorar los alrededores de la casa blanca"
+                    return "Explore the surroundings of the white house"
                 else:
-                    return f"Explorar la ubicación inicial y examinar el entorno"
+                    return f"Explore the initial location and examine the environment"
             
             return initial_task
         
-        # Si no hay objetivo inicial, generar una tarea inicial básica
-        return "Explorar los alrededores y familiarizarse con el entorno"
+        # If there is no initial goal, generate a basic initial task
+        return "Explore the surroundings and familiarize yourself with the environment"
     
     def _get_exploration_progress(self) -> Dict[str, Any]:
         """
-        Calcula métricas de progreso de exploración basadas en tareas completadas y fallidas.
+        Calculates exploration progress metrics based on completed and failed tasks.
         
         Returns:
-            Diccionario con métricas de progreso
+            Dictionary with progress metrics
         """
-        # Contar tareas por categoría
+        # Count tasks by category
         task_categories = {
-            "exploration": 0,  # Exploración de lugares
-            "collection": 0,   # Recolección de objetos
-            "interaction": 0,  # Interacción con objetos
-            "puzzle": 0,       # Resolver puzzles
-            "combat": 0,       # Combate con entidades
-            "conversation": 0  # Conversación con NPCs
+            "exploration": 0,  # Exploration of places
+            "collection": 0,   # Collection of objects
+            "interaction": 0,  # Interaction with objects
+            "puzzle": 0,       # Solving puzzles
+            "combat": 0,       # Combat with entities
+            "conversation": 0  # Conversation with NPCs
         }
         
-        # Clasificar tareas completadas
+        # Classify completed tasks
         for task in self.completed_tasks:
             task_lower = task.lower()
-            if any(word in task_lower for word in ["explorar", "ir", "visitar", "encontrar lugar"]):
+            if any(word in task_lower for word in ["explore", "go", "visit", "find place"]):
                 task_categories["exploration"] += 1
-            elif any(word in task_lower for word in ["obtener", "recoger", "tomar"]):
+            elif any(word in task_lower for word in ["get", "collect", "take"]):
                 task_categories["collection"] += 1
-            elif any(word in task_lower for word in ["usar", "abrir", "cerrar", "mover", "empujar", "tirar"]):
+            elif any(word in task_lower for word in ["use", "open", "close", "move", "push", "pull"]):
                 task_categories["interaction"] += 1
-            elif any(word in task_lower for word in ["resolver", "desbloquear", "descifrar"]):
+            elif any(word in task_lower for word in ["solve", "unlock", "decipher"]):
                 task_categories["puzzle"] += 1
-            elif any(word in task_lower for word in ["atacar", "matar", "luchar"]):
+            elif any(word in task_lower for word in ["attack", "kill", "fight"]):
                 task_categories["combat"] += 1
-            elif any(word in task_lower for word in ["hablar", "preguntar", "responder"]):
+            elif any(word in task_lower for word in ["talk", "ask", "answer"]):
                 task_categories["conversation"] += 1
         
-        # Calcular tasa de éxito
+        # Calculate success rate
         total_tasks = len(self.completed_tasks) + len(self.failed_tasks)
         success_rate = len(self.completed_tasks) / total_tasks if total_tasks > 0 else 0
         
@@ -156,29 +156,29 @@ class CurriculumAgent:
             "failed_tasks_count": len(self.failed_tasks),
             "success_rate": success_rate,
             "task_categories": task_categories,
-            "completed_tasks": self.completed_tasks[-5:],  # Últimas 5 tareas completadas
-            "failed_tasks": self.failed_tasks[-5:]         # Últimas 5 tareas fallidas
+            "completed_tasks": self.completed_tasks[-5:],  # Last 5 completed tasks
+            "failed_tasks": self.failed_tasks[-5:]         # Last 5 failed tasks
         }
     
     def _build_task_proposal_prompt(self, agent_state: Dict[str, Any], 
                                    exploration_progress: Dict[str, Any]) -> str:
         """
-        Construye el prompt para generar la próxima tarea.
+        Builds the prompt to generate the next task.
         
         Args:
-            agent_state: Estado actual del agente
-            exploration_progress: Métricas de progreso de exploración
+            agent_state: Current state of the agent
+            exploration_progress: Exploration progress metrics
             
         Returns:
-            Prompt para el LLM
+            Prompt for the LLM
         """
-        # Extraer información relevante del estado
+        # Extract relevant information from the state
         observation = agent_state.get('observation', '')
         inventory = agent_state.get('inventory', '')
         score = agent_state.get('score', 0)
         moves = agent_state.get('moves', 0)
         
-        # Extraer información de progreso
+        # Extract progress information
         completed_count = exploration_progress["completed_tasks_count"]
         failed_count = exploration_progress["failed_tasks_count"]
         success_rate = exploration_progress["success_rate"]
@@ -186,89 +186,89 @@ class CurriculumAgent:
         recent_completed = exploration_progress["completed_tasks"]
         recent_failed = exploration_progress["failed_tasks"]
         
-        # Construir el prompt
+        # Build the prompt
         prompt = f"""
-        Eres un agente de currículo inteligente para un juego de ficción interactiva llamado {self.game_name}.
-        Tu tarea es proponer el siguiente objetivo inmediato para un agente que está explorando este mundo narrativo.
+        You are an intelligent curriculum agent for an interactive fiction game called {self.game_name}.
+        Your task is to propose the next immediate objective for an agent exploring this narrative world.
         
-        INFORMACIÓN DEL JUEGO:
-        {self.game_specific_config.get('description', 'Un juego de aventura textual.')}
+        GAME INFORMATION:
+        {self.game_specific_config.get('description', 'A text adventure game.')}
         
-        ESTADO ACTUAL DEL AGENTE:
-        Observación actual: "{observation}"
-        Inventario actual: "{inventory}"
-        Puntuación actual: {score}
-        Movimientos realizados: {moves}
+        CURRENT AGENT STATE:
+        Current observation: "{observation}"
+        Current inventory: "{inventory}"
+        Current score: {score}
+        Moves made: {moves}
         
-        PROGRESO DE EXPLORACIÓN:
-        Tareas completadas hasta ahora: {completed_count}
-        Tareas fallidas hasta ahora: {failed_count}
-        Tasa de éxito: {success_rate:.2f}
+        EXPLORATION PROGRESS:
+        Tasks completed so far: {completed_count}
+        Tasks failed so far: {failed_count}
+        Success rate: {success_rate:.2f}
         
-        Categorías de tareas completadas:
-        - Exploración: {task_categories["exploration"]}
-        - Recolección: {task_categories["collection"]}
-        - Interacción: {task_categories["interaction"]}
+        Categories of completed tasks:
+        - Exploration: {task_categories["exploration"]}
+        - Collection: {task_categories["collection"]}
+        - Interaction: {task_categories["interaction"]}
         - Puzzles: {task_categories["puzzle"]}
-        - Combate: {task_categories["combat"]}
-        - Conversación: {task_categories["conversation"]}
+        - Combat: {task_categories["combat"]}
+        - Conversation: {task_categories["conversation"]}
         
-        Tareas completadas recientemente:
-        {', '.join(recent_completed) if recent_completed else 'Ninguna'}
+        Recently completed tasks:
+        {', '.join(recent_completed) if recent_completed else 'None'}
         
-        Tareas fallidas recientemente:
-        {', '.join(recent_failed) if recent_failed else 'Ninguna'}
+        Recently failed tasks:
+        {', '.join(recent_failed) if recent_failed else 'None'}
         
-        CRITERIOS PARA LA PRÓXIMA TAREA:
-        1. La tarea debe ser específica, concreta y verificable.
-        2. La tarea debe ser alcanzable con el estado y recursos actuales del agente.
-        3. La tarea debe adaptarse al nivel de habilidad actual del agente.
-        4. La tarea debe contribuir a la exploración y progreso en el juego.
-        5. La tarea no debe repetir exactamente algo que el agente acaba de fallar.
-        6. La tarea debe mantener coherencia narrativa con el mundo del juego.
+        CRITERIA FOR THE NEXT TASK:
+        1. The task must be specific, concrete, and verifiable.
+        2. The task must be achievable with the agent's current state and resources.
+        3. The task must be adapted to the agent's current skill level.
+        4. The task must contribute to exploration and progress in the game.
+        5. The task must not exactly repeat something the agent just failed.
+        6. The task must maintain narrative coherence with the game world.
         
-        INSTRUCCIONES:
-        Propón UNA SOLA tarea específica que el agente debería intentar a continuación.
-        La tarea debe ser breve y empezar con un verbo en infinitivo (p.ej., "Explorar", "Recoger", "Abrir").
-        No incluyas explicaciones, justificaciones ni instrucciones adicionales.
+        INSTRUCTIONS:
+        Propose ONE specific task that the agent should attempt next.
+        The task should be brief and start with an infinitive verb (e.g., "Explore", "Collect", "Open").
+        Do not include explanations, justifications, or additional instructions.
         
-        PRÓXIMA TAREA:
+        NEXT TASK:
         """
         
         return prompt
     
     def _extract_task_from_response(self, response: str) -> str:
         """
-        Extrae la tarea del texto generado por el LLM.
+        Extracts the task from the text generated by the LLM.
         
         Args:
-            response: Texto completo generado por el LLM
+            response: Full text generated by the LLM
             
         Returns:
-            Tarea extraída
+            Extracted task
         """
-        # Limpiar y formatear la respuesta
+        # Clean and format the response
         task = response.strip()
         
-        # Eliminar prefijos comunes que el LLM podría generar
+        # Remove common prefixes that the LLM might generate
         prefixes = [
-            "La próxima tarea es:",
-            "Próxima tarea:",
-            "Tarea:",
-            "La tarea es:"
+            "The next task is:",
+            "Next task:",
+            "Task:",
+            "The task is:"
         ]
         
         for prefix in prefixes:
             if task.startswith(prefix):
                 task = task[len(prefix):].strip()
         
-        # Limitar la longitud de la tarea para que sea concisa
+        # Limit the length of the task to be concise
         if len(task.split()) > 10:
-            # Tomar solo las primeras 10 palabras
+            # Take only the first 10 words
             words = task.split()
             task = ' '.join(words[:10])
             
-            # Asegurarse de que termina con un signo de puntuación
+            # Ensure it ends with a punctuation mark
             if not task.endswith(('.', '!', '?')):
                 task += '.'
         
@@ -276,50 +276,50 @@ class CurriculumAgent:
     
     def add_completed_task(self, task: str) -> None:
         """
-        Registra una tarea como completada.
+        Registers a task as completed.
         
         Args:
-            task: Descripción de la tarea completada
+            task: Description of the completed task
         """
-        # Agregar a la lista de tareas completadas
+        # Add to the list of completed tasks
         self.completed_tasks.append(task)
         
-        # Si era la tarea actual, limpiar
+        # If it was the current task, clear it
         if self.current_task == task:
             self.current_task = None
     
     def add_failed_task(self, task: str) -> None:
         """
-        Registra una tarea como fallida.
+        Registers a task as failed.
         
         Args:
-            task: Descripción de la tarea fallida
+            task: Description of the failed task
         """
-        # Agregar a la lista de tareas fallidas
+        # Add to the list of failed tasks
         self.failed_tasks.append(task)
         
-        # Limitar el número de tareas fallidas recordadas
+        # Limit the number of remembered failed tasks
         if len(self.failed_tasks) > self.max_failed_tasks:
             self.failed_tasks = self.failed_tasks[-self.max_failed_tasks:]
         
-        # Si era la tarea actual, limpiar
+        # If it was the current task, clear it
         if self.current_task == task:
             self.current_task = None
     
     def get_completed_tasks(self) -> List[str]:
         """
-        Devuelve la lista de tareas completadas.
+        Returns the list of completed tasks.
         
         Returns:
-            Lista de tareas completadas
+            List of completed tasks
         """
         return self.completed_tasks
     
     def get_failed_tasks(self) -> List[str]:
         """
-        Devuelve la lista de tareas fallidas.
+        Returns the list of failed tasks.
         
         Returns:
-            Lista de tareas fallidas
+            List of failed tasks
         """
         return self.failed_tasks

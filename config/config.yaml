@@ -1,43 +1,43 @@
-# Configuración general del agente narrativo
+# General configuration for the narrative agent
 
-# Configuración del entorno
+# Environment configuration
 environment:
-  # Juego de Jericho a utilizar
+  # Jericho game to use
   game: "zork1"
-  # Máximo de turnos por episodio
+  # Maximum turns per episode
   max_steps: 100
-  # Umbral de puntuación para considerar éxito
+  # Score threshold to consider success
   score_threshold: 10
 
-# Configuración de agentes
+# Agent configuration
 agents:
-  # Modelo LLM a utilizar
+  # LLM model to use
   llm_model: "gpt-3.5-turbo"
-  # Temperatura para generación
+  # Temperature for generation
   temperature: 0.7
-  # Máximo tokens para generar
+  # Maximum tokens to generate
   max_tokens: 1024
-  
-  # Parámetros específicos del agente de currículo
+
+  # Specific parameters for the curriculum agent
   curriculum_agent:
     task_difficulty_scaling: 1.2
     max_failed_tasks_memory: 10
-  
-  # Parámetros específicos del agente de acción
+
+  # Specific parameters for the action agent
   action_agent:
     max_refinement_iterations: 3
-  
-  # Parámetros específicos del agente crítico
+
+  # Specific parameters for the critic agent
   critic_agent:
     strictness: 0.8
 
-# Configuración de biblioteca de habilidades
+# Skill library configuration
 skill_library:
   embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
   embedding_dim: 384
   top_k_retrievals: 5
 
-# Logging y monitoreo
+# Logging and monitoring
 logging:
   level: "INFO"
   save_dir: "logs/"

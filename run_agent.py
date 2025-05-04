@@ -1,5 +1,5 @@
 """
-Script simplificado para ejecutar el agente narrativo.
+Simplified script to run the narrative agent.
 """
 import os
 import sys
@@ -7,43 +7,43 @@ import argparse
 import subprocess
 
 def main():
-    """Función principal que ejecuta el agente narrativo con opciones simplificadas."""
-    # Parsear argumentos de línea de comandos
-    parser = argparse.ArgumentParser(description='Ejecutar el Agente Narrativo Autónomo')
+    """Main function that runs the narrative agent with simplified options."""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Run the Autonomous Narrative Agent')
     parser.add_argument('--game', type=str, default='zork1', 
-                      help='Juego a ejecutar (por defecto: zork1)')
+                      help='Game to run (default: zork1)')
     parser.add_argument('--steps', type=int, default=100, 
-                      help='Número máximo de pasos (por defecto: 100)')
+                      help='Maximum number of steps (default: 100)')
     parser.add_argument('--auto', action='store_true', 
-                      help='Ejecutar en modo completamente autónomo')
+                      help='Run in fully autonomous mode')
     parser.add_argument('--interactive', action='store_true',
-                      help='Ejecutar en modo interactivo (permite entrada del usuario)')
+                      help='Run in interactive mode (allows user input)')
     args = parser.parse_args()
     
-    # Verificar que existen los directorios necesarios
+    # Verify that required directories exist
     required_dirs = [
         'config', 'agents', 'environment', 'skills', 'utils', 'logs'
     ]
     
     for directory in required_dirs:
         if not os.path.exists(directory):
-            print(f"Error: No se encuentra el directorio '{directory}'")
-            print("Asegúrate de estar en el directorio raíz del proyecto.")
+            print(f"Error: Directory '{directory}' not found")
+            print("Make sure you are in the project's root directory.")
             return 1
     
-    # Verificar que existen los archivos de configuración
+    # Verify that configuration files exist
     if not os.path.exists('config/config.yaml'):
-        print("Error: No se encuentra el archivo 'config/config.yaml'")
+        print("Error: File 'config/config.yaml' not found")
         return 1
     
     if not os.path.exists('config/games.yaml'):
-        print("Error: No se encuentra el archivo 'config/games.yaml'")
+        print("Error: File 'config/games.yaml' not found")
         return 1
     
-    # Construir comando para ejecutar main.py
+    # Build command to run main.py
     cmd = [sys.executable, 'main.py']
     
-    # Agregar opciones
+    # Add options
     cmd.extend(['--game', args.game])
     cmd.extend(['--max_steps', str(args.steps)])
     
@@ -53,12 +53,12 @@ def main():
     if args.interactive:
         cmd.append('--interactive')
     
-    # Ejecutar el comando
+    # Execute the command
     try:
         subprocess.run(cmd)
         return 0
     except Exception as e:
-        print(f"Error al ejecutar el agente: {e}")
+        print(f"Error running the agent: {e}")
         return 1
 
 if __name__ == "__main__":

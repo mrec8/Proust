@@ -1,5 +1,5 @@
 """
-Agente Crítico para la auto-verificación del éxito en tareas.
+Critical Agent for self-verification of task success.
 """
 import os
 import yaml
@@ -12,19 +12,19 @@ from environment.observation_parser import ObservationParser
 
 class CriticAgent:
     """
-    Agente que evalúa el éxito de las tareas y proporciona retroalimentación.
+    Agent that evaluates task success and provides feedback.
     """
     
     def __init__(self, config_path: str, game_config_path: str, llm: LLMInterface):
         """
-        Inicializa el agente crítico.
+        Initializes the critic agent.
         
         Args:
-            config_path: Ruta al archivo de configuración
-            game_config_path: Ruta al archivo de configuración del juego
-            llm: Interfaz con el modelo de lenguaje
+            config_path: Path to the configuration file
+            game_config_path: Path to the game configuration file
+            llm: Interface with the language model
         """
-        # Cargar configuraciones
+        # Load configurations
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
         
@@ -33,54 +33,53 @@ class CriticAgent:
         
         self.llm = llm
         
-        # Configuraciones específicas
+        # Specific configurations
         self.game_name = self.config['environment']['game']
         self.game_specific_config = self.game_config.get(self.game_name, {})
         
-        # Parámetros del agente crítico
+        # Critic agent parameters
         self.strictness = self.config['agents']['critic_agent'].get('strictness', 0.8)
         
-        # Inicializar el parser de observaciones
+        # Initialize the observation parser
         self.obs_parser = ObservationParser()
         
-        # Historial de evaluaciones
+        # Evaluation history
         self.evaluation_history = []
     
     def check_task_success(self, task: str, agent_state: Dict[str, Any], 
                           action_history: Optional[List[Tuple[str, str]]] = None) -> Tuple[bool, str]:
         """
-        Verifica si una tarea se ha completado con éxito.
+        Verifies if a task has been successfully completed.
         
         Args:
-            task: Tarea a evaluar
-            agent_state: Estado actual del agente
-            action_history: Historial de acciones (tarea, acción)
+            task: Task to evaluate
+            agent_state: Current state of the agent
+            action_history: Action history (task, action)
             
         Returns:
-            Tupla (éxito, crítica)
+            Tuple (success, critique)
         """
-        # Procesar la observación
+        # Process observation
         parsed_observation = self.obs_parser.parse_observation(agent_state.get('observation', ''))
         
-        # Procesar el inventario
+        # Process inventory
         inventory = agent_state.get('inventory', '')
         parsed_inventory = self.obs_parser.parse_inventory(inventory)
         
-        # Extraer información adicional
+        # Extract additional information
         
-        
-        # Construir el prompt para verificación
+        # Build verification prompt
         prompt = self._build_verification_prompt(task, parsed_observation, 
                                                parsed_inventory, agent_state, 
                                                action_history)
         
-        # Generar evaluación
+        # Generate evaluation
         response = self.llm.generate(prompt, temperature=0.4)
         
-        # Extraer resultado de la evaluación
+        # Extract evaluation result
         success, critique = self._extract_evaluation_result(response)
         
-        # Registrar la evaluación
+        # Log evaluation
         self._add_to_history(task, success, critique)
         
         return success, critique
@@ -89,19 +88,19 @@ class CriticAgent:
                                   parsed_inventory: List[str], agent_state: Dict[str, Any], 
                                   action_history: Optional[List[Tuple[str, str]]] = None) -> str:
         """
-        Construye el prompt para verificar el éxito de una tarea.
+        Builds the prompt to verify the success of a task.
         
         Args:
-            task: Tarea a evaluar
-            parsed_observation: Observación procesada
-            parsed_inventory: Inventario procesado
-            agent_state: Estado actual del agente
-            action_history: Historial de acciones
+            task: Task to evaluate
+            parsed_observation: Processed observation
+            parsed_inventory: Processed inventory
+            agent_state: Current state of the agent
+            action_history: Action history
             
         Returns:
-            Prompt para el LLM
+            Prompt for the LLM
         """
-        # Extraer información relevante
+        # Extract relevant information
         location = parsed_observation.get('location', '')
         objects = parsed_observation.get('objects', [])
         exits = parsed_observation.get('exits', [])
@@ -111,48 +110,48 @@ class CriticAgent:
         score = agent_state.get('score', 0)
         moves = agent_state.get('moves', 0)
         
-        # Construir historial reciente
+        # Build recent history
         recent_history = ""
         if action_history:
-            recent_history = "ACCIONES RECIENTES:\n"
-            for i, (t, a) in enumerate(action_history[-5:]):  # Últimas 5 acciones
-                recent_history += f"{i+1}. Tarea: {t} -> Acción: {a}\n"
+            recent_history = "RECENT ACTIONS:\n"
+            for i, (t, a) in enumerate(action_history[-5:]):  # Last 5 actions
+                recent_history += f"{i+1}. Task: {t} -> Action: {a}\n"
         
-        # Construir el prompt
+        # Build the prompt
         prompt = f"""
-        Eres un crítico experto en juegos de ficción interactiva como {self.game_name}.
-        Tu tarea es evaluar si un agente ha completado con éxito una tarea específica.
-        Debes ser preciso y estricto en tu evaluación.
+        You are an expert critic in interactive fiction games like {self.game_name}.
+        Your task is to evaluate whether an agent has successfully completed a specific task.
+        You must be precise and strict in your evaluation.
         
-        TAREA A EVALUAR:
+        TASK TO EVALUATE:
         {task}
         
-        ESTADO ACTUAL DEL AGENTE:
-        Ubicación: {location}
-        Objetos visibles: {', '.join(objects) if objects else 'Ninguno'}
-        Salidas: {', '.join(exits) if exits else 'Ninguna visible'}
-        Entidades: {', '.join(entities) if entities else 'Ninguna'}
-        Mensajes: {', '.join(messages) if messages else 'Ninguno'}
+        CURRENT STATE OF THE AGENT:
+        Location: {location}
+        Visible objects: {', '.join(objects) if objects else 'None'}
+        Exits: {', '.join(exits) if exits else 'None visible'}
+        Entities: {', '.join(entities) if entities else 'None'}
+        Messages: {', '.join(messages) if messages else 'None'}
         
-        INVENTARIO:
-        {', '.join(parsed_inventory) if parsed_inventory else 'Vacío'}
+        INVENTORY:
+        {', '.join(parsed_inventory) if parsed_inventory else 'Empty'}
         
-        Puntuación: {score}
-        Movimientos: {moves}
+        Score: {score}
+        Moves: {moves}
         
         {recent_history}
         
-        INSTRUCCIONES:
-        1. Evalúa si la tarea se ha completado con éxito basándote en el estado actual.
-        2. Considera los cambios en el inventario, la ubicación, los objetos visibles y los mensajes.
-        3. Si la tarea no se ha completado, proporciona una crítica constructiva.
-        4. Sé estricto pero justo en tu evaluación.
+        INSTRUCTIONS:
+        1. Evaluate if the task has been successfully completed based on the current state.
+        2. Consider changes in inventory, location, visible objects, and messages.
+        3. If the task has not been completed, provide constructive critique.
+        4. Be strict but fair in your evaluation.
         
-        Responde con el siguiente formato JSON:
+        Respond in the following JSON format:
         {{
-          "razonamiento": "tu análisis detallado",
-          "exito": true/false,
-          "critica": "crítica constructiva si no tuvo éxito, o vacío si tuvo éxito"
+          "reasoning": "your detailed analysis",
+          "success": true/false,
+          "critique": "constructive critique if unsuccessful, or empty if successful"
         }}
         """
         
@@ -160,17 +159,17 @@ class CriticAgent:
     
     def _extract_evaluation_result(self, response: str) -> Tuple[bool, str]:
         """
-        Extrae el resultado de la evaluación del texto generado por el LLM.
+        Extracts the evaluation result from the text generated by the LLM.
         
         Args:
-            response: Texto completo generado por el LLM
+            response: Full text generated by the LLM
             
         Returns:
-            Tupla (éxito, crítica)
+            Tuple (success, critique)
         """
         try:
-            # Intentar extraer JSON
-            # Buscar el primer '{' y el último '}'
+            # Attempt to extract JSON
+            # Find the first '{' and the last '}'
             start = response.find('{')
             end = response.rfind('}') + 1
             
@@ -178,26 +177,24 @@ class CriticAgent:
                 json_str = response[start:end]
                 result = json.loads(json_str)
                 
-                success = result.get('exito', False)
-                critique = result.get('critica', '')
+                success = result.get('success', False)
+                critique = result.get('critique', '')
                 
                 return success, critique
             
         except json.JSONDecodeError:
-            # Si falla la extracción de JSON, intentar un enfoque basado en patrones
+            # If JSON extraction fails, attempt a pattern-based approach
             pass
         
-        # Enfoque de respaldo basado en patrones
-        if "exito: true" in response.lower() or "éxito: true" in response.lower():
+        # Backup pattern-based approach
+        if "success: true" in response.lower():
             return True, ""
         
-        # Buscar una crítica
+        # Search for a critique
         critique = ""
         critique_patterns = [
-            r"critica: \"(.*?)\"",
-            r"crítica: \"(.*?)\"",
-            r"crítica:(.*?)(?:\"|$)",
-            r"critica:(.*?)(?:\"|$)"
+            r"critique: \"(.*?)\"",
+            r"critique:(.*?)(?:\"|$)"
         ]
         
         for pattern in critique_patterns:
@@ -210,12 +207,12 @@ class CriticAgent:
     
     def _add_to_history(self, task: str, success: bool, critique: str) -> None:
         """
-        Agrega una evaluación al historial.
+        Adds an evaluation to the history.
         
         Args:
-            task: Tarea evaluada
-            success: Resultado de la evaluación
-            critique: Crítica proporcionada
+            task: Evaluated task
+            success: Evaluation result
+            critique: Provided critique
         """
         self.evaluation_history.append({
             'task': task,
@@ -223,6 +220,6 @@ class CriticAgent:
             'critique': critique
         })
         
-        # Limitar el tamaño del historial (mantener las últimas 50 evaluaciones)
+        # Limit the size of the history (keep the last 50 evaluations)
         if len(self.evaluation_history) > 50:
             self.evaluation_history = self.evaluation_history[-50:]
