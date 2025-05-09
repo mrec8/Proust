@@ -1,11 +1,9 @@
 """
 Automatic Curriculum Agent to propose tasks adapted to progress.
 """
-import os
+import logging
+from typing import Dict, List, Any, Optional
 import yaml
-import json
-import random
-from typing import Dict, List, Tuple, Set, Any, Optional
 
 from utils.llm_interface import LLMInterface
 
@@ -14,23 +12,20 @@ class CurriculumAgent:
     Agent that proposes tasks adapted to the agent's progress and narrative context.
     """
     
-    def __init__(self, config_path: str, game_config_path: str, llm: LLMInterface):
+    def __init__(self, config: Dict[str, Any], game_config: Dict[str, Any], 
+                llm: LLMInterface):
         """
         Initializes the curriculum agent.
         
         Args:
-            config_path: Path to the configuration file
-            game_config_path: Path to the game configuration file
+            config: General configuration dictionary
+            game_config: Game-specific configuration dictionary
             llm: Interface with the language model
         """
-        # Load configurations
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
-        
-        with open(game_config_path, 'r') as f:
-            self.game_config = yaml.safe_load(f)
-        
+        self.config = config
+        self.game_config = game_config
         self.llm = llm
+        self.logger = logging.getLogger(__name__)
         
         # Specific configurations
         self.game_name = self.config['environment']['game']
@@ -42,15 +37,14 @@ class CurriculumAgent:
         self.current_task = None
         
         # Difficulty parameters
-        self.difficulty_scaling = self.config['agents']['curriculum_agent'].get('task_difficulty_scaling', 1.2)
-        self.max_failed_tasks = self.config['agents']['curriculum_agent'].get('max_failed_tasks_memory', 10)
-        
-        # Initialize with game objectives if available
-        self.progression_milestones = self.game_specific_config.get('progression_milestones', [])
+        self.difficulty_scaling = self.config.get('curriculum_agent', {}).get('task_difficulty_scaling', 1.2)
+        self.max_failed_tasks = self.config.get('curriculum_agent', {}).get('max_failed_tasks_memory', 10)
         
         # Store the initial task if available
         self.initial_goal = self.game_specific_config.get('starting_goal', 
                                                          "Explore the world and discover its mechanics")
+        
+        self.logger.info(f"Curriculum agent initialized with game: {self.game_name}")
     
     def propose_next_task(self, agent_state: Dict[str, Any]) -> str:
         """
@@ -81,6 +75,7 @@ class CurriculumAgent:
         
         # Update the current task
         self.current_task = task
+        self.logger.info(f"Proposed new task: {task}")
         
         return task
     
@@ -95,24 +90,26 @@ class CurriculumAgent:
         if self.initial_goal:
             # Decompose the initial goal into a specific task
             prompt = f"""
-            In the game '{self.game_name}', the general objective is: "{self.initial_goal}".
+            In the text adventure game '{self.game_name}', the general objective is: "{self.initial_goal}".
             
-            As a first specific and concrete task to start, the agent should:
+            As a first specific and concrete task to start exploring this game, the agent should:
             """
             response = self.llm.generate(prompt, temperature=0.5, max_tokens=50)
             initial_task = response.strip()
             
             # If the response is too generic, use a default task
             if len(initial_task.split()) < 3:
-                if self.game_name == "zork1":
-                    return "Explore the surroundings of the white house"
+                # Game-specific defaults
+                if "zork" in self.game_name.lower():
+                    return "Look around the current location and examine visible objects"
                 else:
-                    return f"Explore the initial location and examine the environment"
+                    return "Explore the initial location and examine the environment"
             
+            self.logger.info(f"Generated initial task: {initial_task}")
             return initial_task
         
         # If there is no initial goal, generate a basic initial task
-        return "Explore the surroundings and familiarize yourself with the environment"
+        return "Look around and examine your surroundings"
     
     def _get_exploration_progress(self) -> Dict[str, Any]:
         """
@@ -124,27 +121,24 @@ class CurriculumAgent:
         # Count tasks by category
         task_categories = {
             "exploration": 0,  # Exploration of places
-            "collection": 0,   # Collection of objects
+            "inventory": 0,    # Managing inventory
             "interaction": 0,  # Interaction with objects
             "puzzle": 0,       # Solving puzzles
-            "combat": 0,       # Combat with entities
             "conversation": 0  # Conversation with NPCs
         }
         
         # Classify completed tasks
         for task in self.completed_tasks:
             task_lower = task.lower()
-            if any(word in task_lower for word in ["explore", "go", "visit", "find place"]):
+            if any(word in task_lower for word in ["explore", "go", "move", "look", "search"]):
                 task_categories["exploration"] += 1
-            elif any(word in task_lower for word in ["get", "collect", "take"]):
-                task_categories["collection"] += 1
-            elif any(word in task_lower for word in ["use", "open", "close", "move", "push", "pull"]):
+            elif any(word in task_lower for word in ["get", "take", "drop", "inventory"]):
+                task_categories["inventory"] += 1
+            elif any(word in task_lower for word in ["use", "open", "close", "push", "pull"]):
                 task_categories["interaction"] += 1
-            elif any(word in task_lower for word in ["solve", "unlock", "decipher"]):
+            elif any(word in task_lower for word in ["solve", "unlock", "find", "figure"]):
                 task_categories["puzzle"] += 1
-            elif any(word in task_lower for word in ["attack", "kill", "fight"]):
-                task_categories["combat"] += 1
-            elif any(word in task_lower for word in ["talk", "ask", "answer"]):
+            elif any(word in task_lower for word in ["talk", "ask", "tell", "answer"]):
                 task_categories["conversation"] += 1
         
         # Calculate success rate
@@ -175,8 +169,6 @@ class CurriculumAgent:
         # Extract relevant information from the state
         observation = agent_state.get('observation', '')
         inventory = agent_state.get('inventory', '')
-        score = agent_state.get('score', 0)
-        moves = agent_state.get('moves', 0)
         
         # Extract progress information
         completed_count = exploration_progress["completed_tasks_count"]
@@ -188,17 +180,12 @@ class CurriculumAgent:
         
         # Build the prompt
         prompt = f"""
-        You are an intelligent curriculum agent for an interactive fiction game called {self.game_name}.
+        You are an intelligent curriculum agent for a text adventure game called {self.game_name}.
         Your task is to propose the next immediate objective for an agent exploring this narrative world.
         
-        GAME INFORMATION:
-        {self.game_specific_config.get('description', 'A text adventure game.')}
-        
-        CURRENT AGENT STATE:
+        CURRENT GAME STATE:
         Current observation: "{observation}"
         Current inventory: "{inventory}"
-        Current score: {score}
-        Moves made: {moves}
         
         EXPLORATION PROGRESS:
         Tasks completed so far: {completed_count}
@@ -207,10 +194,9 @@ class CurriculumAgent:
         
         Categories of completed tasks:
         - Exploration: {task_categories["exploration"]}
-        - Collection: {task_categories["collection"]}
-        - Interaction: {task_categories["interaction"]}
+        - Inventory management: {task_categories["inventory"]}
+        - Object interaction: {task_categories["interaction"]}
         - Puzzles: {task_categories["puzzle"]}
-        - Combat: {task_categories["combat"]}
         - Conversation: {task_categories["conversation"]}
         
         Recently completed tasks:
@@ -229,7 +215,7 @@ class CurriculumAgent:
         
         INSTRUCTIONS:
         Propose ONE specific task that the agent should attempt next.
-        The task should be brief and start with an infinitive verb (e.g., "Explore", "Collect", "Open").
+        The task should be brief and start with a verb (e.g., "Examine", "Take", "Open").
         Do not include explanations, justifications, or additional instructions.
         
         NEXT TASK:
@@ -283,6 +269,7 @@ class CurriculumAgent:
         """
         # Add to the list of completed tasks
         self.completed_tasks.append(task)
+        self.logger.info(f"Task completed: {task}")
         
         # If it was the current task, clear it
         if self.current_task == task:
@@ -297,6 +284,7 @@ class CurriculumAgent:
         """
         # Add to the list of failed tasks
         self.failed_tasks.append(task)
+        self.logger.info(f"Task failed: {task}")
         
         # Limit the number of remembered failed tasks
         if len(self.failed_tasks) > self.max_failed_tasks:

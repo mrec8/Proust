@@ -3,7 +3,7 @@ Interface to interact with large language models (LLM).
 """
 import os
 import time
-import yaml
+import logging
 import json
 from typing import Dict, List, Any, Optional, Union
 from dotenv import load_dotenv
@@ -14,15 +14,17 @@ class LLMInterface:
     Class to interact with large language models.
     """
     
-    def __init__(self, config_path: str):
+    def __init__(self, config: Dict[str, Any]):
         """
         Initializes the LLM interface.
         
         Args:
-            config_path: Path to the configuration file
+            config: Configuration dictionary
         """
         # Load environment variables
         load_dotenv()
+        
+        self.logger = logging.getLogger(__name__)
         
         # Get the API key
         self.api_key = os.getenv('OPENAI_API_KEY')
@@ -32,22 +34,25 @@ class LLMInterface:
         # Configure client
         openai.api_key = self.api_key
         
-        # Load configuration
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
+        # Load LLM config
+        self.config = config
+        llm_config = self.config.get('llm', {})
         
         # Specific configurations
-        self.model = self.config['agents'].get('llm_model', 'gpt-3.5-turbo')
-        self.default_temperature = self.config['agents'].get('temperature', 0.7)
-        self.default_max_tokens = self.config['agents'].get('max_tokens', 1024)
+        self.model = llm_config.get('model', 'gpt-3.5-turbo')
+        self.default_temperature = llm_config.get('temperature', 0.7)
+        self.default_max_tokens = llm_config.get('max_tokens', 1024)
+        self.request_timeout = llm_config.get('request_timeout', 30)
         
         # Initialize call counter and cache
         self.call_count = 0
         self.cache = {}
         
         # Configure rate limit parameters
-        self.rate_limit_per_minute = 20  # Adjust based on your plan
+        self.rate_limit_per_minute = llm_config.get('rate_limit_per_minute', 20)
         self.last_call_timestamp = 0
+        
+        self.logger.info(f"LLM interface initialized with model: {self.model}")
     
     def generate(self, prompt: str, temperature: Optional[float] = None, 
                 max_tokens: Optional[int] = None, use_cache: bool = True) -> str:
@@ -70,6 +75,7 @@ class LLMInterface:
         # Check if the result is in cache
         cache_key = f"{prompt}_{temp}_{tokens}"
         if use_cache and cache_key in self.cache:
+            self.logger.debug("Using cached response")
             return self.cache[cache_key]
         
         # Manage rate limit
@@ -77,6 +83,8 @@ class LLMInterface:
         
         try:
             # Make the API call
+            self.logger.debug(f"Sending request to LLM (model={self.model}, temp={temp}, tokens={tokens})")
+            
             response = openai.ChatCompletion.create(
                 model=self.model,
                 messages=[
@@ -84,7 +92,8 @@ class LLMInterface:
                     {"role": "user", "content": prompt}
                 ],
                 temperature=temp,
-                max_tokens=tokens
+                max_tokens=tokens,
+                timeout=self.request_timeout
             )
             
             # Extract the generated text
@@ -98,10 +107,11 @@ class LLMInterface:
             if use_cache:
                 self.cache[cache_key] = generated_text
             
+            self.logger.debug(f"LLM response received (length={len(generated_text)})")
             return generated_text
         
         except Exception as e:
-            print(f"Error generating text: {e}")
+            self.logger.error(f"Error generating text: {str(e)}")
             # Return an error message or a default response
             return f"Error: Unable to generate text due to: {str(e)}"
     
@@ -117,9 +127,44 @@ class LLMInterface:
         if time_since_last_call < 60 and self.call_count >= self.rate_limit_per_minute:
             # Calculate necessary wait time
             wait_time = 60 - time_since_last_call
-            print(f"Waiting {wait_time:.2f} seconds to respect API limits...")
+            self.logger.info(f"Rate limit approaching. Waiting {wait_time:.2f} seconds")
             time.sleep(wait_time)
         
         # Reset counter if more than a minute has passed
         if time_since_last_call >= 60:
             self.call_count = 0
+    
+    def clear_cache(self) -> None:
+        """Clears the response cache."""
+        self.cache = {}
+        self.logger.info("LLM cache cleared")
+    
+    def get_embedding(self, text: str) -> List[float]:
+        """
+        Gets the embedding vector for a text.
+        
+        Args:
+            text: Text to embed
+            
+        Returns:
+            Embedding vector
+        """
+        try:
+            # Manage rate limit
+            self._manage_rate_limit()
+            
+            response = openai.Embedding.create(
+                model="text-embedding-ada-002",
+                input=text
+            )
+            
+            # Update call counter and timestamp
+            self.call_count += 1
+            self.last_call_timestamp = time.time()
+            
+            return response["data"][0]["embedding"]
+        
+        except Exception as e:
+            self.logger.error(f"Error getting embedding: {str(e)}")
+            # Return a zero vector as fallback
+            return [0.0] * 1536  # Default size for ada-002 embeddings
