@@ -14,7 +14,7 @@ class ActionAgent:
     Agent that generates executable commands/actions in the Jericho environment.
     """
     
-    def __init__(self, config_path: str, game_config_path: str, llm: LLMInterface):
+    def __init__(self, config: Dict[str, Any], game_config: Dict[str, Any], llm: LLMInterface):
         """
         Initializes the action agent.
         
@@ -24,11 +24,10 @@ class ActionAgent:
             llm: Interface with the language model
         """
         # Load configurations
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
         
-        with open(game_config_path, 'r') as f:
-            self.game_config = yaml.safe_load(f)
+        self.config = config
+        
+        self.game_config = game_config
         
         self.llm = llm
         

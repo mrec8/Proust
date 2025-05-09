@@ -80,12 +80,12 @@ def main():
         logger.info(f"Environment initialized with game: {game_name}")
         
         # Skill Manager
-        skill_manager = SkillManager(config)
+        skill_manager = SkillManager(config, llm)
         logger.info("Skill Manager initialized")
         
         # Agents
-        curriculum_agent = CurriculumAgent(config, game_config, llm, skill_manager)
-        action_agent = ActionAgent(config, game_config, llm, skill_manager)
+        curriculum_agent = CurriculumAgent(config, game_config, llm)
+        action_agent = ActionAgent(config, game_config, llm)
         critic_agent = CriticAgent(config, game_config, llm)
         logger.info("Agents initialized")
         

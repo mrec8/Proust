@@ -2,15 +2,13 @@
 Module to interact with the Jericho environment.
 """
 import os
-import gym
 import jericho
-import numpy as np
 import logging
 from typing import Dict, List, Tuple, Optional, Any
 
 class JerichoEnvironment:
     """
-    Wrapper to interact with interactive fiction games through Jericho.
+    Wrapper to interact with interactive fiction games through Jericho directly.
     """
     
     def __init__(self, game_name: str, seed: int = 0):
@@ -18,28 +16,35 @@ class JerichoEnvironment:
         Initializes the Jericho environment with the specified game.
         
         Args:
-            game_name: Name of the game to load
-            seed: Seed for reproducibility
+            game_name: Name of the game to load or path to the game file
+            seed: Seed for reproducibility (not used in direct Jericho implementation)
         """
         self.logger = logging.getLogger(__name__)
         
-        # Build the path to the game file
-        self.game_path = os.path.join(jericho.DATA_PATH, f"{game_name}.z5")
-        if not os.path.exists(self.game_path):
-            self.game_path = os.path.join(jericho.DATA_PATH, f"{game_name}.z6")
-            if not os.path.exists(self.game_path):
-                self.game_path = os.path.join(jericho.DATA_PATH, f"{game_name}.z8")
-                if not os.path.exists(self.game_path):
-                    raise FileNotFoundError(f"Game not found: {game_name}")
+        # Try to find the game file
+        self.game_path = self._find_game_file(game_name)
+        if not self.game_path:
+            raise FileNotFoundError(f"Game not found: {game_name}")
         
-        # Initialize the Jericho environment
-        self.env = gym.make(f"jericho/{game_name}-v0")
-        self.env.seed(seed)
+        # Initialize the Jericho environment directly
+        self.env = jericho.FrotzEnv(self.game_path)
         
         # Store information about the current game
         self.game_name = game_name
-        self.max_word_length = self.env.get_dictionary_max_length()
-        self.vocab = self.env.get_dictionary()
+        
+        # Get dictionary details - adapting to the current API
+        try:
+            # For newer Jericho versions
+            self.max_word_length = 20  # Default value if not available
+            self.vocab = self.env.get_dictionary()
+            if isinstance(self.vocab, list) and self.vocab and hasattr(self.vocab[0], 'decode'):
+                # Convert binary strings to text if needed
+                self.vocab = [word.decode('cp1252') for word in self.vocab]
+        except AttributeError:
+            # Fall back to safe defaults if methods don't exist
+            self.logger.warning("Could not access dictionary methods, using defaults")
+            self.max_word_length = 20
+            self.vocab = []
         
         # History and state
         self.steps = 0
@@ -50,6 +55,46 @@ class JerichoEnvironment:
         
         self.logger.info(f"Jericho environment initialized with game: {game_name}")
     
+    def _find_game_file(self, game_name: str) -> Optional[str]:
+        """
+        Tries to find the game file.
+        
+        Args:
+            game_name: Name of the game to find or direct path
+            
+        Returns:
+            Path to the game file or None if not found
+        """
+        # If game_name is a direct path to a file
+        if os.path.isfile(game_name):
+            self.logger.info(f"Found direct file: {game_name}")
+            return game_name
+        
+        # Common extensions for interactive fiction games
+        extensions = ['.z1', '.z2', '.z3', '.z4', '.z5', '.z6', '.z7', '.z8', '']
+        
+        # Common locations to look for game files
+        search_paths = [
+            '.',  # Current directory
+            './games/roms',  # Project's game ROMs directory
+            os.path.expanduser('~/.jericho/roms'),  # User's Jericho directory
+            os.path.join(os.path.dirname(jericho.__file__), 'frotz', 'roms')  # Jericho package directory
+        ]
+        
+        # Try to find the game file with exact name first
+        for path in search_paths:
+            if os.path.exists(path):
+                for ext in extensions:
+                    full_path = os.path.join(path, f"{game_name}{ext}")
+                    if os.path.exists(full_path):
+                        self.logger.info(f"Found game file at: {full_path}")
+                        return full_path
+        
+        # If not found, return None
+        self.logger.error(f"Could not find game file for: {game_name}")
+        self.logger.info(f"Searched in: {search_paths}")
+        return None
+    
     def reset(self) -> Dict[str, Any]:
         """
         Resets the environment and returns the initial observation.
@@ -57,10 +102,24 @@ class JerichoEnvironment:
         Returns:
             Initial state with observation, inventory, score, etc.
         """
-        obs, info = self.env.reset()
+        # Reset is handled differently in newer Jericho
+        try:
+            obs, info = self.env.reset()
+        except (TypeError, ValueError):
+            # For older Jericho versions
+            self.env.reset()
+            obs, _, _, info = self.env.step('')  # Empty command to get initial observation
+        
         self.steps = 0
         self.history = []
-        self.score = info['score']
+        
+        # Extract score from info if available
+        if isinstance(info, dict) and 'score' in info:
+            self.score = info['score']
+        else:
+            # Try to extract score from observation
+            self.score = 0
+        
         self.done = False
         
         # Get inventory
@@ -96,14 +155,26 @@ class JerichoEnvironment:
             whether it has finished and additional information
         """
         # Execute the action
-        observation, score, done, info = self.env.step(action)
+        try:
+            # For newer Jericho versions
+            observation, reward, done, info = self.env.step(action)
+        except ValueError:
+            # For older Jericho versions that don't return info
+            observation, reward, done = self.env.step(action)
+            info = {}
         
         # Increment the step counter
         self.steps += 1
         
-        # Calculate the reward (score difference)
-        reward = score - self.score
-        self.score = score
+        # Update score from info if available
+        if isinstance(info, dict) and 'score' in info:
+            new_score = info['score']
+            reward = new_score - self.score
+            self.score = new_score
+        else:
+            # Use the provided reward
+            self.score += reward
+            
         self.done = done
         
         # Get inventory
@@ -113,7 +184,7 @@ class JerichoEnvironment:
         state = {
             'observation': observation,
             'inventory': inventory,
-            'score': score,
+            'score': self.score,
             'moves': self.steps,
             'game_over': done
         }
@@ -122,11 +193,11 @@ class JerichoEnvironment:
         self.history.append({
             'action': action,
             'observation': observation,
-            'score': score
+            'score': self.score
         })
         
         # Log step information
-        self.logger.debug(f"Step {self.steps}: Action='{action}', Score={score}, Reward={reward}, Done={done}")
+        self.logger.debug(f"Step {self.steps}: Action='{action}', Score={self.score}, Reward={reward}, Done={done}")
         
         # If we reach the maximum number of steps, we finish
         if self.steps >= self.max_steps:
@@ -143,10 +214,28 @@ class JerichoEnvironment:
         Returns:
             Text describing the inventory
         """
-        # Execute the inventory command
-        obs, _, _, _ = self.env.step("inventory")
-        
-        return obs
+        # Save the current state before executing inventory command
+        try:
+            state = self.env.get_state()
+            
+            # Execute the inventory command
+            obs, _, _, _ = self.env.step("inventory")
+            
+            # Restore the previous state to avoid advancing the game
+            self.env.set_state(state)
+            
+            return obs
+        except (AttributeError, TypeError):
+            # If get_state/set_state not available, use a basic approach
+            self.logger.warning("State saving not available, inventory command may advance the game")
+            try:
+                # Try to execute inventory command without saving state
+                obs, _, _, _ = self.env.step("inventory")
+                return obs
+            except ValueError:
+                # For older Jericho that doesn't return info
+                obs, _, _ = self.env.step("inventory")
+                return obs
     
     def get_valid_actions(self) -> List[str]:
         """
@@ -155,7 +244,12 @@ class JerichoEnvironment:
         Returns:
             List of valid commands
         """
-        return self.env.get_valid_actions()
+        try:
+            return self.env.get_valid_actions()
+        except AttributeError:
+            # If method not available, return basic commands
+            self.logger.warning("get_valid_actions not available, returning basic commands")
+            return ["look", "inventory", "north", "south", "east", "west", "up", "down"]
     
     def get_world_state_description(self) -> Dict[str, Any]:
         """
@@ -164,9 +258,21 @@ class JerichoEnvironment:
         Returns:
             Dictionary with detailed state information
         """
-        # Execute several commands to get more information about the state
-        look_obs, _, _, _ = self.env.step("look")
-        inv_obs, _, _, _ = self.env.step("inventory")
+        try:
+            # Save the current state
+            state = self.env.get_state()
+            
+            # Execute several commands to get more information about the state
+            look_obs, _, _, _ = self.env.step("look")
+            inv_obs = self._get_inventory()
+            
+            # Restore the previous state
+            self.env.set_state(state)
+        except (AttributeError, TypeError):
+            # If state saving not available, use what we have
+            self.logger.warning("State saving not available, using current observation as room description")
+            look_obs = self.history[-1]['observation'] if self.history else "No description available"
+            inv_obs = self._get_inventory()
         
         return {
             'room_description': look_obs,
@@ -178,7 +284,8 @@ class JerichoEnvironment:
     
     def close(self):
         """Closes the environment."""
-        self.env.close()
+        if hasattr(self.env, 'close'):
+            self.env.close()
         self.logger.info("Environment closed")
     
     def get_walkthrough(self) -> Optional[List[str]]:
@@ -202,7 +309,7 @@ class JerichoEnvironment:
         return {
             'game_name': self.game_name,
             'max_word_length': self.max_word_length,
-            'vocab_size': len(self.vocab),
+            'vocab_size': len(self.vocab) if self.vocab else 0,
             'walkthrough_available': hasattr(self.env, 'get_walkthrough'),
             'steps': self.steps,
             'max_steps': self.max_steps,
