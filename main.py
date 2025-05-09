@@ -10,13 +10,13 @@ import logging
 from typing import Dict, List, Any, Optional
 
 # Import our components (to be implemented)
-from environment.jericho_env import JerichoEnvironment
+from environment.jericho_wrapper import JerichoEnvironment
 from agent.curriculum_agent import CurriculumAgent
 from agent.action_agent import ActionAgent
 from agent.critic_agent import CriticAgent
 from utils.llm_interface import LLMInterface
 from agent.skill_manager import SkillManager
-from utils.logging_utils import setup_logging
+from utils.logging import setup_logging
 
 def parse_arguments():
     """Parse command line arguments."""
