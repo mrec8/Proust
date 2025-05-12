@@ -9,8 +9,6 @@ from typing import Dict, List, Any, Optional, Union
 from dotenv import load_dotenv
 from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-
 class LLMInterface:
     """
     Class to interact with large language models.
@@ -30,10 +28,20 @@ class LLMInterface:
 
         # Get the API key
         self.api_key = os.getenv('OPENAI_API_KEY')
+        
+        # If API key not in environment, check config
+        if not self.api_key and 'llm' in config and 'api_key' in config['llm']:
+            self.api_key = config['llm']['api_key']
+            
+        # If still no API key, prompt the user
         if not self.api_key:
-            raise ValueError("OpenAI API key not found. Set the OPENAI_API_KEY environment variable.")
-
+            self.logger.warning("OpenAI API key not found in environment or config")
+            self.api_key = input("Please enter your OpenAI API key: ")
+            if not self.api_key:
+                raise ValueError("OpenAI API key is required to continue")
+        
         # Configure client
+        self.client = OpenAI(api_key=self.api_key)
 
         # Load LLM config
         self.config = config
@@ -86,7 +94,7 @@ class LLMInterface:
             # Make the API call
             self.logger.debug(f"Sending request to LLM (model={self.model}, temp={temp}, tokens={tokens})")
 
-            response = client.chat.completions.create(model=self.model,
+            response = self.client.chat.completions.create(model=self.model,
             messages=[
                 {"role": "system", "content": "You are a helpful and accurate assistant."},
                 {"role": "user", "content": prompt}
@@ -152,8 +160,10 @@ class LLMInterface:
             # Manage rate limit
             self._manage_rate_limit()
 
-            response = client.embeddings.create(model="text-embedding-ada-002",
-            input=text)
+            response = self.client.embeddings.create(
+                model="text-embedding-ada-002",
+                input=text
+            )
 
             # Update call counter and timestamp
             self.call_count += 1
