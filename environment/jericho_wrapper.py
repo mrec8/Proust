@@ -196,8 +196,8 @@ class JerichoEnvironment:
             'score': self.score
         })
         
-        # Log step information
-        self.logger.debug(f"Step {self.steps}: Action='{action}', Score={self.score}, Reward={reward}, Done={done}")
+        # Log step information with more detail
+        self.logger.info(f"Action '{action}' produced response: '{observation}'")
         
         # If we reach the maximum number of steps, we finish
         if self.steps >= self.max_steps:

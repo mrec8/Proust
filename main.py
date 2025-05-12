@@ -151,17 +151,21 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             # Retrieve relevant skills
             relevant_skills = skill_manager.retrieve_skills(current_task, agent_state)
             if relevant_skills:
+                skill_descriptions = [skill.description for skill in relevant_skills]
                 logger.info(f"Relevant skills retrieved for task '{current_task}':")
-                if interactive: print("\nRelevant skills retrieved:")
-                for i, skill in enumerate(relevant_skills):
-                    logger.info(f"{i+1}. {skill.description}")
-                    if interactive: print(f"{i+1}. {skill.description}")
+                for i, desc in enumerate(skill_descriptions):
+                    logger.info(f"{i+1}. \"{desc}\"")
+                if interactive: 
+                    print("\nRelevant skills retrieved:")
+                    for i, desc in enumerate(skill_descriptions):
+                        print(f"{i+1}. \"{desc}\"")
             
-            # Generate action
+            # Generate a single action
             action = action_agent.generate_action(current_task, agent_state, critique, relevant_skills)
-            logger.info(f"Generated action: {action}")
+            logger.info(f"Generated action: '{action}'")
+            
             if interactive:
-                print(f"Generated action: {action}")
+                print(f"Generated action: '{action}'")
                 
                 # Allow user intervention in interactive mode
                 user_input = input("\nExecute this action? (y/n/modify/manual): ").strip().lower()
@@ -180,6 +184,9 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             # Execute action in the environment
             task_actions.append(action)
             next_state, reward, done, info = env.step(action)
+            
+            # Log the response from the environment
+            logger.info(f"Environment response: {next_state['observation']}")
             
             # Update tracking variables
             steps += 1

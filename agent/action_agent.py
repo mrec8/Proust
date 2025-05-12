@@ -8,6 +8,7 @@ from typing import Dict, List, Tuple, Set, Any, Optional
 
 from utils.llm_interface import LLMInterface
 from environment.observation_parser import ObservationParser
+from agent.skill_manager import Skill
 
 class ActionAgent:
     """
@@ -120,9 +121,9 @@ class ActionAgent:
         return action
     
     def _build_action_generation_prompt(self, task: str, parsed_observation: Dict[str, Any], 
-                                       parsed_inventory: List[str], agent_state: Dict[str, Any], 
-                                       critique: str,
-                                       skills: Optional[List[Dict[str, Any]]] = None) -> str:
+                                        parsed_inventory: List[str], agent_state: Dict[str, Any], 
+                                        critique: str,
+                                        skills: Optional[List[Skill]] = None) -> str:
         """
         Builds the prompt to generate an action.
         
@@ -151,19 +152,21 @@ class ActionAgent:
             for skill in skills:
                 # Access skill attributes using dot notation, not dictionary subscription
                 skills_context += f"- {skill.description}\n"
-            
-        # Build recent history
-        recent_history = ""
-        if self.action_history:
-            recent_history = "RECENT ACTIONS:\n"
-            for i, (t, a) in enumerate(self.action_history[-5:]):  # Last 5 actions
-                recent_history += f"{i+1}. Task: {t} -> Action: {a}\n"
         
-        # Build list of special commands
-        special_commands_str = ""
-        if self.special_commands:
-            special_commands_str = "AVAILABLE SPECIAL COMMANDS:\n"
-            special_commands_str += ', '.join(self.special_commands)
+        # Extract suggestions from critique
+        critique_suggestions = ""
+        if critique and critique != "None":
+            # Format critique more prominently
+            critique_suggestions = f"""
+            CRITIC FEEDBACK (VERY IMPORTANT):
+            {critique}
+            
+            KEY PRINCIPLES FROM FEEDBACK:
+            1. Do not repeat failed approaches
+            2. Be specific in commands
+            3. Pay attention to the game's responses
+            4. Try recommended alternatives from the critique
+            """
         
         # Build the prompt
         prompt = f"""
@@ -173,8 +176,7 @@ class ActionAgent:
         CURRENT TASK:
         {task}
 
-        CRITIQUE OF PREVIOUS ACTION:
-        {critique}
+        {critique_suggestions}
 
         CURRENT STATE:
         Location: {location}
@@ -185,6 +187,8 @@ class ActionAgent:
 
         INVENTORY:
         {', '.join(parsed_inventory) if parsed_inventory else 'Empty'}
+
+        {skills_context}
 
         VALID COMMANDS FOR THIS GAME:
         {', '.join(self.special_commands)}

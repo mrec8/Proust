@@ -173,6 +173,7 @@ class SkillManager:
         self.logger.info(f"Retrieved {len(top_skills)} skills for task: {task}")
         return top_skills
     
+
     def _generate_skill_description(self, task: str, commands: List[str], result: str) -> str:
         """
         Generate a description for a skill.
@@ -185,36 +186,45 @@ class SkillManager:
         Returns:
             A description of the skill
         """
+        # Extract the key command - usually the first or last command is most relevant
+        key_command = commands[-1] if commands else "unknown"
+        
         # Build prompt for skill description
         prompt = f"""
         Create a brief, clear description of this skill in a text adventure game:
 
         Task: {task}
         Commands used: {', '.join(commands)}
+        Final command: {key_command}
         Result: {result}
 
         The description should:
-        1. Start with a verb in present tense (e.g., "Opens", "Navigates", "Acquires")
-        2. Clearly state what the skill accomplishes
-        3. Include the specific object or location if applicable
+        1. Start with a verb in present tense (e.g., "Opens", "Takes", "Moves")
+        2. Clearly state what the skill ACTUALLY ACCOMPLISHES (the outcome, not the intent)
+        3. Include the specific object or location involved
         4. Be concise (under 10 words)
-        5. Be generic enough to apply in similar situations
-        6. Focus on the outcome, not the method
+        5. Focus on what actually happened, not what was intended
+        6. Be an accurate descriptor of what the commands achieved
 
         Example good descriptions:
+        - "Takes leaflet from mailbox"
         - "Opens mailbox to reveal contents"
-        - "Navigates north to the forest"
-        - "Acquires leaflet from mailbox"
-        - "Examines surroundings at starting location"
+        - "Navigates north to forest clearing"
+        - "Reads message on small leaflet"
+
+        Bad examples (too vague or inaccurate):
+        - "Checks for leaflet availability" (too vague)
+        - "Examines surrounding environment" (too general)
+        - "Completes task of opening mailbox" (uses meta-language)
 
         Description:
         """
         
         # Generate description
-        description = self.llm.generate(prompt, temperature=0.4, max_tokens=50)
+        response = self.llm.generate(prompt, temperature=0.4, max_tokens=50)
         
         # Clean and format the description
-        description = description.strip()
+        description = response.strip()
         
         # Limit length
         if len(description.split()) > 15:

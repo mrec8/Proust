@@ -69,11 +69,27 @@ class CurriculumAgent:
         # Build prompt for the LLM
         prompt = self._build_task_proposal_prompt(agent_state, exploration_progress)
         
-        # Generate the next task using the LLM
-        response = self.llm.generate(prompt, temperature=0.7)
         
-        # Extract the task from the generated text
-        task = self._extract_task_from_response(response)
+
+        # Extra check to prevent repeating failed tasks
+        max_attempts = 3
+        attempts = 0
+        
+        while attempts < max_attempts:
+            # Generate the next task using the LLM
+            response = self.llm.generate(prompt, temperature=0.7)
+            
+            # Extract the task from the generated text
+            task = self._extract_task_from_response(response)
+            # Check if this is a repeat of a recently failed task
+            if not self._is_similar_to_failed_task(task):
+                break
+                
+            attempts += 1
+            self.logger.info(f"Rejected task '{task}' as similar to a recently failed task. Attempt {attempts}/{max_attempts}")
+        
+        # Ensure task is concise
+        task = self._format_task(task)
         
         # Update the current task
         self.current_task = task
@@ -210,14 +226,16 @@ class CurriculumAgent:
         2. The task MUST be achievable with a few simple commands
         3. The task MUST be simple for beginners if the success rate is low
         4. The task MUST be a single action or a simple sequence 
-        5. The task MUST NOT repeat a recently failed task
+        5. The task MUST NOT repeat ANY recently failed task - DO NOT propose the same task again
         6. The task MUST be expressed in 5-10 words maximum
+        7. The task MUST be very different from failed tasks - try a completely new direction
 
         Your response must be ONLY the task itself (e.g., "Examine the mailbox", "Go north", "Take the leaflet").
         DO NOT include explanations, steps, or any additional text.
 
         NEXT TASK:
         """
+        
         
         return prompt
     
@@ -257,6 +275,60 @@ class CurriculumAgent:
                 task += '.'
         
         return task
+    
+    def _is_similar_to_failed_task(self, task: str) -> bool:
+        """Check if the proposed task is similar to a recently failed task."""
+        if not self.failed_tasks:
+            return False
+            
+        task_lower = task.lower()
+        
+        # Check the most recent failed tasks (last 5)
+        recent_failures = self.failed_tasks[-5:]
+        
+        for failed_task in recent_failures:
+            failed_lower = failed_task.lower()
+            
+            # Direct match
+            if task_lower == failed_lower:
+                return True
+                
+            # Significant word overlap
+            task_words = set(task_lower.split())
+            failed_words = set(failed_lower.split())
+            
+            if len(task_words.intersection(failed_words)) >= 2:  # If 2+ shared words
+                return True
+        
+        return False
+
+    def _format_task(self, task: str) -> str:
+        """Format the task to be concise and clean."""
+        # Remove common prefixes
+        prefixes = [
+            "The next task is:",
+            "Next task:",
+            "Task:",
+            "The task is:"
+        ]
+        
+        for prefix in prefixes:
+            if task.startswith(prefix):
+                task = task[len(prefix):].strip()
+        
+        # Truncate to the first sentence if multiple exist
+        if '.' in task:
+            sentences = task.split('.')
+            task = sentences[0].strip() + '.'
+            
+        # Ensure reasonable length (max 10 words)
+        words = task.split()
+        if len(words) > 10:
+            task = ' '.join(words[:10])
+            if not task.endswith(('.', '!', '?')):
+                task += '.'
+                
+        return task.strip()
     
     def add_completed_task(self, task: str) -> None:
         """
