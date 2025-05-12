@@ -94,10 +94,8 @@ class CriticAgent:
         
         # Build the prompt
         prompt = f"""
-        You are an expert evaluator in interactive fiction games like {self.game_name}.
-        Your task is to determine whether a specific objective has been successfully completed.
-        Your response will be fed to the agent that generated the actions to improve its performance in case of failure. Make sure to be helpful and constructive.
-        
+        You are an expert evaluator for text adventure games. Your task is to determine whether a specific objective 
+        has been successfully completed, based on the game's response.
 
         TASK TO EVALUATE:
         {task}
@@ -105,28 +103,60 @@ class CriticAgent:
         ACTIONS TAKEN:
         {actions_text}
 
-        CURRENT GAME STATE:
-        Observation: {observation}
-        Inventory: {inventory}
+        FINAL GAME STATE:
+        {observation}
 
-        EVALUATION GUIDELINES:
-        1. A task is successful ONLY if there is clear evidence in the observation or inventory that it has been completed.
-        2. For movement tasks (e.g., "Go north"), success is indicated by a change in location or description.
-        3. For examination tasks (e.g., "Examine mailbox"), success is indicated by a detailed description of the object.
-        4. For acquisition tasks (e.g., "Take leaflet"), success is indicated by the item appearing in inventory.
-        5. If the game responds with "I don't understand that command" or similar, the task has failed.
-        6. Be strict but fair - don't pass tasks that aren't truly done.
+        INVENTORY:
+        {inventory}
 
-        If the task has not been completed, provide SPECIFIC advice about:
-        - Which commands might work better
-        - What alternative approaches could succeed
-        - Why the current approach didn't work
+        COMPREHENSIVE SUCCESS CRITERIA:
+        1. EXAMINATION TASKS (e.g., "Examine mailbox"):
+        - Success: The game provides a detailed description of the object
+        - Failure: "You can't see any such thing", "Nothing special" with no details, or no relevant information
+        
+        2. ACQUISITION TASKS (e.g., "Take leaflet"):
+        - Success: Object appears in inventory OR game confirms "Taken."
+        - Failure: "You can't see any such thing", "You can't take that", or object not in inventory
+        
+        3. MOVEMENT TASKS (e.g., "Go north"):
+        - Success: Description changes to new location
+        - Failure: "You can't go that way", no change in environment
+        
+        4. OPENING/CLOSING TASKS (e.g., "Open mailbox"):
+        - Success: Game confirms "Opened." or describes new state
+        - Failure: "You can't open that", "That's already open", "You can't see any such thing"
+        
+        5. READING TASKS (e.g., "Read leaflet"):
+        - Success: Game provides text content
+        - Failure: "You can't read that", "There's nothing written on it"
 
-        Respond in the following format:
+        DETERMINING SUCCESS:
+        - Success REQUIRES clear, affirmative evidence in the game's response
+        - The mere absence of an error message is NOT sufficient
+        - Pay close attention to the game's specific wording
+        - For tasks with multiple parts, ALL parts must be completed
 
-        Reasoning: [Your detailed analysis of why the task is complete or incomplete]
+        ANALYSIS FRAMEWORK:
+        1. EVIDENCE ANALYSIS:
+        - What was the specific task?
+        - What commands were used?
+        - What was the game's response?
+        - Does the response directly confirm task completion?
+        
+        2. COMMAND EFFECTIVENESS:
+        - Were the commands appropriate for the task?
+        - Did the game understand the commands?
+        - Did the game's response indicate progress?
+        
+        3. ALTERNATIVE APPROACHES:
+        - If the task failed, what specific command would work better?
+        - What different objects or directions could be tried?
+        - What specific verb would be more effective?
+
+        FORMAT YOUR RESPONSE STRICTLY AS:
         Success: [true/false]
-        Critique: [If success is false, provide helpful feedback on how to improve]
+        Reasoning: [1-2 sentences explaining your evaluation]
+        Critique: [ONLY IF Success is false, provide specific, actionable feedback with 1-2 alternative commands]
         """
         
         return prompt

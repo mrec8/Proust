@@ -189,51 +189,73 @@ class CurriculumAgent:
         inventory = agent_state.get('inventory', '')
         
         # Extract progress information
-        completed_count = exploration_progress["completed_tasks_count"]
-        failed_count = exploration_progress["failed_tasks_count"]
-        success_rate = exploration_progress["success_rate"]
-        task_categories = exploration_progress["task_categories"]
+        #completed_count = exploration_progress["completed_tasks_count"]
+        #failed_count = exploration_progress["failed_tasks_count"]
+        #success_rate = exploration_progress["success_rate"]
+        #task_categories = exploration_progress["task_categories"]
         recent_completed = exploration_progress["completed_tasks"]
         recent_failed = exploration_progress["failed_tasks"]
         
         # Build the prompt
         prompt = f"""
-        You are an intelligent curriculum agent for the text adventure game '{self.game_name}'.
-        Your task is to propose the next immediate objective for an agent to complete.
+        You are an intelligent curriculum agent for the text adventure game '{self.game_name}'. 
+        Your responsibility is to analyze the current game state and previous tasks to propose 
+        a single, highly specific task that represents the optimal next step for progression.
 
         CURRENT GAME STATE:
-        Current observation: "{observation}"
-        Current inventory: "{inventory}"
-
-        EXPLORATION PROGRESS:
-        Tasks completed so far: {completed_count}
-        Tasks failed so far: {failed_count}
-        Success rate: {success_rate:.2f}
-
-        Recently completed tasks:
-        {', '.join(recent_completed) if recent_completed else 'None'}
-
-        Recently failed tasks:
-        {', '.join(recent_failed) if recent_failed else 'None'}
+        Location: {observation}
+        Inventory: {inventory}
+        
+        PREVIOUS TASKS:
+        Completed tasks: {', '.join(recent_completed) if recent_completed else 'None'}
+        Failed tasks: {', '.join(recent_failed) if recent_failed else 'None'}
 
         GAME INFORMATION:
         Special commands: {', '.join(self.special_commands)}
+        Key game objects: {', '.join(self.game_specific_config.get('key_objects', []))}
         Key locations: {', '.join(self.game_specific_config.get('key_locations', []))}
-        Key objects: {', '.join(self.game_specific_config.get('key_objects', []))}
 
-        TASK CRITERIA:
-        1. The task MUST be extremely specific and verifiable (e.g., "Open the mailbox", "Go north")
-        2. The task MUST be achievable with a few simple commands
-        3. The task MUST be simple for beginners if the success rate is low
-        4. The task MUST be a single action or a simple sequence 
-        5. The task MUST NOT repeat ANY recently failed task - DO NOT propose the same task again
-        6. The task MUST be expressed in 5-10 words maximum
-        7. The task MUST be very different from failed tasks - try a completely new direction
+        DETAILED TASK SELECTION CRITERIA:
+        1. SPECIFIC COMMANDS: Choose tasks that can be accomplished with 1-2 specific text adventure commands.
+        2. AVOID FAILED PATTERNS: DO NOT propose tasks similar to the failed tasks listed above.
+        3. PROGRESSION: Tasks should follow a logical progression from basic to complex:
+        a. First: Simple observation (look, examine objects)
+        b. Next: Object manipulation (take objects, open containers)
+        c. Later: Navigation to new areas
+        d. Advanced: Combining objects, solving puzzles
+        4. EXISTING OBJECTS: Only reference objects that appear in the current observation or inventory.
+        5. REALISTIC SCOPE: Tasks must be directly achievable from the current state.
+        6. BREVITY: Tasks must be described in 3-7 words MAXIMUM.
 
-        Your response must be ONLY the task itself (e.g., "Examine the mailbox", "Go north", "Take the leaflet").
-        DO NOT include explanations, steps, or any additional text.
+        EXAMPLES OF EXCELLENT TASKS:
+        - "Examine mailbox"
+        - "Take leaflet"
+        - "Go north"
+        - "Open door"
+        - "Read note"
+        - "Put gem in bag"
 
-        NEXT TASK:
+        EXAMPLES OF POOR TASKS (DO NOT USE THESE PATTERNS):
+        - "Explore the surrounding area" (too vague)
+        - "Find the treasure" (too broad)
+        - "Search for hidden passages" (not specific enough)
+        - "Investigate the mysterious sound" (references non-existent elements)
+        - "Go to the mountain" (not accessible from current location)
+        - "Open the rusty gate" (if no gate is mentioned in the observation)
+
+        YOUR RESPONSE MUST:
+        1. Include ONLY the task itself
+        2. Be 3-7 words maximum
+        3. Start with an action verb
+        4. Reference ONLY objects or directions available in the current state
+        5. NOT include explanations, reasoning, or additional commentary
+        6. NOT repeat recently failed tasks or patterns
+
+        IMPORTANT: Analyze the failed tasks carefully. If several similar tasks have failed (e.g., "Examine X"), 
+        DO NOT propose another variation of the same pattern. Instead, suggest a completely different approach 
+        or interaction with a different object.
+
+        YOUR RESPONSE:
         """
         
         

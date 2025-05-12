@@ -191,33 +191,65 @@ class SkillManager:
         
         # Build prompt for skill description
         prompt = f"""
-        Create a brief, clear description of this skill in a text adventure game:
+        You are a professional text adventure game analyst creating precise skill descriptions 
+        for an intelligent agent. Your task is to create an extremely concise, action-oriented 
+        description that captures exactly what this skill accomplishes.
 
-        Task: {task}
-        Commands used: {', '.join(commands)}
-        Final command: {key_command}
-        Result: {result}
+        TASK PERFORMED:
+        {task}
 
-        The description should:
-        1. Start with a verb in present tense (e.g., "Opens", "Takes", "Moves")
-        2. Clearly state what the skill ACTUALLY ACCOMPLISHES (the outcome, not the intent)
-        3. Include the specific object or location involved
-        4. Be concise (under 10 words)
-        5. Focus on what actually happened, not what was intended
-        6. Be an accurate descriptor of what the commands achieved
+        COMMANDS USED:
+        {', '.join(commands)}
 
-        Example good descriptions:
-        - "Takes leaflet from mailbox"
-        - "Opens mailbox to reveal contents"
-        - "Navigates north to forest clearing"
-        - "Reads message on small leaflet"
+        RESULT ACHIEVED:
+        {result}
 
-        Bad examples (too vague or inaccurate):
-        - "Checks for leaflet availability" (too vague)
-        - "Examines surrounding environment" (too general)
-        - "Completes task of opening mailbox" (uses meta-language)
+        SKILL DESCRIPTION SPECIFICATIONS:
+        1. FORMAT REQUIREMENTS:
+        - Must start with a present-tense action verb
+        - Must be EXACTLY 4-8 words total
+        - Must express a complete thought
+        - Must focus on the OUTCOME, not the attempt
+        
+        2. CONTENT REQUIREMENTS:
+        - Describe SPECIFICALLY what was accomplished
+        - Include the relevant object or location
+        - Avoid meta-language ("completes task", "succeeds at")
+        - Avoid vague terms ("checks", "interacts with", "tries to")
+        
+        3. CLARITY REQUIREMENTS:
+        - Must be immediately understandable without context
+        - Must distinguish this skill from similar skills
+        - Must be concrete, not abstract
+        - Must be factual, not aspirational
 
-        Description:
+        EXAMPLES OF EXCELLENT SKILL DESCRIPTIONS:
+        - "Opens mailbox revealing small leaflet" (not "Checks mailbox")
+        - "Takes leaflet from open mailbox" (not "Gets item")
+        - "Navigates north to forest clearing" (not "Explores forest")
+        - "Reads welcome message on leaflet" (not "Examines paper")
+        - "Unlocks door with brass key" (not "Uses key")
+        - "Crafts torch using rope and stick" (not "Makes light source")
+
+        EXAMPLES OF POOR SKILL DESCRIPTIONS (NEVER USE THESE PATTERNS):
+        - "Checking for leaflet availability" (too vague, not outcome-focused)
+        - "Successfully opens the container" (uses meta-language, not specific)
+        - "Trying to find the key" (describes attempt, not outcome)
+        - "Getting item from mailbox" (not specific enough)
+        - "Going to another location" (not specific enough)
+        - "Completing the first puzzle successfully" (uses meta-language)
+
+        ANALYSIS PROCESS:
+        1. Identify the EXACT outcome that was achieved
+        2. Identify the specific objects or locations involved
+        3. Select the most precise action verb
+        4. Construct a concise phrase with these elements
+        5. Verify it meets ALL requirements above
+
+        YOUR RESPONSE MUST BE EXACTLY ONE PHRASE OF 4-8 WORDS THAT MEETS ALL REQUIREMENTS ABOVE.
+        DO NOT include explanations, alternatives, or commentary.
+
+        SKILL DESCRIPTION:
         """
         
         # Generate description

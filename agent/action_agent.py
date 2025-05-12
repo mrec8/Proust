@@ -138,12 +138,7 @@ class ActionAgent:
         Returns:
             Prompt for the LLM
         """
-        # Extract relevant information
-        location = parsed_observation.get('location', '')
-        objects = parsed_observation.get('objects', [])
-        exits = parsed_observation.get('exits', [])
-        entities = parsed_observation.get('entities', [])
-        messages = parsed_observation.get('messages', [])
+        
         
         # Build relevant skills context
         skills_context = ""
@@ -153,60 +148,83 @@ class ActionAgent:
                 # Access skill attributes using dot notation, not dictionary subscription
                 skills_context += f"- {skill.description}\n"
         
-        # Extract suggestions from critique
-        critique_suggestions = ""
-        if critique and critique != "None":
-            # Format critique more prominently
-            critique_suggestions = f"""
-            CRITIC FEEDBACK (VERY IMPORTANT):
-            {critique}
-            
-            KEY PRINCIPLES FROM FEEDBACK:
-            1. Do not repeat failed approaches
-            2. Be specific in commands
-            3. Pay attention to the game's responses
-            4. Try recommended alternatives from the critique
-            """
         
+        
+        observation = agent_state.get('observation', '')
+        inventory = agent_state.get('inventory', '')
+
         # Build the prompt
         prompt = f"""
-        You are an expert agent in the text adventure game '{self.game_name}'.
-        Your task is to generate ONE SINGLE text command to achieve a specific objective.
+        You are a world-class expert at text adventure games. Your task is to generate 
+        EXACTLY ONE perfect command to accomplish a specific objective in the game '{self.game_name}'.
 
         CURRENT TASK:
         {task}
 
-        {critique_suggestions}
-
-        CURRENT STATE:
-        Location: {location}
-        Visible objects: {', '.join(objects) if objects else 'None'}
-        Available exits: {', '.join(exits) if exits else 'None visible'}
-        Present entities: {', '.join(entities) if entities else 'None'}
-        Recent messages: {', '.join(messages) if messages else 'None'}
+        GAME STATE:
+        {observation}
 
         INVENTORY:
-        {', '.join(parsed_inventory) if parsed_inventory else 'Empty'}
+        {inventory}
 
-        {skills_context}
+        CRITIC FEEDBACK (VERY IMPORTANT):
+        {critique}
+            
+        KEY PRINCIPLES FROM FEEDBACK:
+        1. Do not repeat failed approaches
+        2. Be specific in commands
+        3. Pay attention to the game's responses
+        4. Try recommended alternatives from the critique
+        
+        
+        RELEVANT SKILLS PREVIOUSLY MASTERED:
+        {skills_context if skills else "No relevant skills available."}
 
-        VALID COMMANDS FOR THIS GAME:
+        TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
+        1. TEXT ADVENTURE COMMANDS ARE SHORT: Most valid commands are 1-3 words.
+        2. VALID COMMAND PATTERNS:
+        - Single verb: "look", "inventory", "wait", "score"
+        - Verb + noun: "take leaflet", "examine house", "open mailbox"
+        - Verb + noun + preposition + noun: "put coin in slot", "attack troll with sword"
+        - Directional movement: "north", "south", "east", "west", "up", "down" (or n, s, e, w, u, d)
+        3. COMMON ABBREVIATIONS:
+        - "x" for "examine"
+        - "i" for "inventory"
+        - "l" for "look"
+        - n, s, e, w, u, d for directions
+        4. STRICT LIMITATIONS:
+        - NO complex sentences or multiple commands
+        - NO articles needed ("take leaflet" NOT "take the leaflet")
+        - NO explanations or commentary
+        - NO quotation marks
+        - NO commands not recognized by text adventures
+        
+        PROHIBITED COMMAND PATTERNS (NEVER USE THESE):
+        - "explore area" (too vague, use "look" instead)
+        - "search room" (too vague, examine specific objects instead)
+        - "check surroundings" (not a recognized command)
+        - "investigate object" (use "examine object" instead)
+        - "go to location" (use direction commands: "north", "south", etc.)
+        - "use object" (too vague, specify how: "open object", "read object")
+        - ANY command containing more than 4 words (too complex)
+
+        LEARNING FROM CRITIQUE:
+        If the critique mentions better commands to try, USE THEM EXACTLY.
+        If the critique says an object doesn't exist, DO NOT try to interact with it again.
+        If the critique suggests a different verb, USE THAT VERB.
+
+        VALID COMMANDS FOR THIS SPECIFIC GAME:
         {', '.join(self.special_commands)}
 
-        BASIC TEXT ADVENTURE COMMAND GUIDELINES:
-        1. Use simple formats: verb (e.g., "look") or verb + object (e.g., "take leaflet")
-        2. For movement, use "go north" or just "north" (or n, s, e, w, ne, nw, se, sw, up, down)
-        3. Common abbreviations: "x" for "examine", "i" for "inventory", "l" for "look"
-        4. Always be specific when interacting with objects (e.g., "examine mailbox" not "examine")
-        5. For complex actions, break them into multiple steps
+        YOUR RESPONSE MUST:
+        1. Contain EXACTLY ONE command
+        2. Follow valid text adventure syntax
+        3. Directly address the task
+        4. Be 1-4 words maximum
+        5. NOT include explanations, reasoning, or additional commentary
+        6. NOT repeat failed command patterns
 
-        AVOID THESE COMMON MISTAKES:
-        1. DO NOT use commands like "explore" or "search" - they are too vague
-        2. DO NOT include multiple actions in one command
-        3. DO NOT use quotation marks in your command
-        4. DO NOT repeat commands that have already failed
-
-        COMMAND (provide ONE simple command only):
+        YOUR COMMAND:
         """
         
         return prompt

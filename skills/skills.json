@@ -1,0 +1,17 @@
+[
+  {
+    "description": "\"Opens mailbox revealing small leaflet.\"",
+    "task": "Open mailbox",
+    "commands": [
+      "open box"
+    ],
+    "result": "\nYou open the mailbox, revealing a small leaflet.\n\n>                                                                                                                                West of HouseScore: 0Moves: 16",
+    "contexts": [
+      "Open mailbox",
+      "open box"
+    ],
+    "created_at": 1747049641.9083693,
+    "used_count": 0,
+    "success_count": 0
+  }
+]

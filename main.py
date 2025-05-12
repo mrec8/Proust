@@ -186,7 +186,7 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             next_state, reward, done, info = env.step(action)
             
             # Log the response from the environment
-            logger.info(f"Environment response: {next_state['observation']}")
+            #logger.info(f"Environment response: {next_state['observation']}")
             
             # Update tracking variables
             steps += 1
@@ -197,7 +197,7 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
                 print(f"\nResult: {agent_state['observation']}")
             
             # Check if the task has been completed
-            if steps % 3 == 0 or reward > 0:  # Check every 3 steps or if there is a reward
+            if steps % 1 == 0 or reward > 0:  # Check every 3 steps or if there is a reward
                 success, critique = critic_agent.check_task_success(
                     current_task, agent_state, task_actions
                 )
