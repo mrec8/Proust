@@ -188,18 +188,25 @@ class SkillManager:
         # Build prompt for skill description
         prompt = f"""
         Create a brief, clear description of this skill in a text adventure game:
-        
+
         Task: {task}
         Commands used: {', '.join(commands)}
         Result: {result}
-        
+
         The description should:
-        1. Start with a verb (e.g., "Find", "Open", "Navigate")
+        1. Start with a verb in present tense (e.g., "Opens", "Navigates", "Acquires")
         2. Clearly state what the skill accomplishes
-        3. Be concise (one sentence if possible)
-        4. Not include specific game names or character names
+        3. Include the specific object or location if applicable
+        4. Be concise (under 10 words)
         5. Be generic enough to apply in similar situations
-        
+        6. Focus on the outcome, not the method
+
+        Example good descriptions:
+        - "Opens mailbox to reveal contents"
+        - "Navigates north to the forest"
+        - "Acquires leaflet from mailbox"
+        - "Examines surroundings at starting location"
+
         Description:
         """
         

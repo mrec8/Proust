@@ -131,6 +131,7 @@ class ActionAgent:
             parsed_observation: Processed observation
             parsed_inventory: Processed inventory
             agent_state: Current state of the agent
+            critique: Critique of the previous action
             skills: List of relevant skills
             
         Returns:
@@ -148,8 +149,9 @@ class ActionAgent:
         if skills:
             skills_context = "RELEVANT SKILLS:\n"
             for skill in skills:
-                skills_context += f"- {skill['description']}\n"
-        
+                # Access skill attributes using dot notation, not dictionary subscription
+                skills_context += f"- {skill.description}\n"
+            
         # Build recent history
         recent_history = ""
         if self.action_history:
@@ -165,39 +167,42 @@ class ActionAgent:
         
         # Build the prompt
         prompt = f"""
-        You are an expert agent in interactive fiction games like {self.game_name}.
+        You are an expert agent in the text adventure game '{self.game_name}'.
         Your task is to generate ONE SINGLE text command to achieve a specific objective.
-        
+
         CURRENT TASK:
         {task}
-        
-        CRITIQUE OF THE PREVIOUS ACTION:
+
+        CRITIQUE OF PREVIOUS ACTION:
         {critique}
 
         CURRENT STATE:
         Location: {location}
         Visible objects: {', '.join(objects) if objects else 'None'}
-        Exits: {', '.join(exits) if exits else 'None visible'}
-        Entities: {', '.join(entities) if entities else 'None'}
-        Messages: {', '.join(messages) if messages else 'None'}
-        
+        Available exits: {', '.join(exits) if exits else 'None visible'}
+        Present entities: {', '.join(entities) if entities else 'None'}
+        Recent messages: {', '.join(messages) if messages else 'None'}
+
         INVENTORY:
         {', '.join(parsed_inventory) if parsed_inventory else 'Empty'}
-        
-        {skills_context}
-        
-        {recent_history}
-        
-        {special_commands_str}
-        
-        INSTRUCTIONS:
-        1. Generate ONE SINGLE text command to progress towards the objective.
-        2. Commands must be concise and follow the standard syntax of adventure games.
-        3. Use infinitive verbs followed by nouns (e.g., "examine key").
-        4. Do not use quotes, periods, or exclamation marks in the command.
-        5. Do not include explanations or reasoning in your response.
-        
-        COMMAND:
+
+        VALID COMMANDS FOR THIS GAME:
+        {', '.join(self.special_commands)}
+
+        BASIC TEXT ADVENTURE COMMAND GUIDELINES:
+        1. Use simple formats: verb (e.g., "look") or verb + object (e.g., "take leaflet")
+        2. For movement, use "go north" or just "north" (or n, s, e, w, ne, nw, se, sw, up, down)
+        3. Common abbreviations: "x" for "examine", "i" for "inventory", "l" for "look"
+        4. Always be specific when interacting with objects (e.g., "examine mailbox" not "examine")
+        5. For complex actions, break them into multiple steps
+
+        AVOID THESE COMMON MISTAKES:
+        1. DO NOT use commands like "explore" or "search" - they are too vague
+        2. DO NOT include multiple actions in one command
+        3. DO NOT use quotation marks in your command
+        4. DO NOT repeat commands that have already failed
+
+        COMMAND (provide ONE simple command only):
         """
         
         return prompt

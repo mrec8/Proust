@@ -31,6 +31,8 @@ class CurriculumAgent:
         self.game_name = self.config['environment']['game']
         self.game_specific_config = self.game_config.get(self.game_name, {})
         
+        self.special_commands = self.game_specific_config.get('special_commands', [])
+
         # Initialize task history
         self.completed_tasks = []
         self.failed_tasks = []
@@ -180,44 +182,40 @@ class CurriculumAgent:
         
         # Build the prompt
         prompt = f"""
-        You are an intelligent curriculum agent for a text adventure game called {self.game_name}.
-        Your task is to propose the next immediate objective for an agent exploring this narrative world.
-        
+        You are an intelligent curriculum agent for the text adventure game '{self.game_name}'.
+        Your task is to propose the next immediate objective for an agent to complete.
+
         CURRENT GAME STATE:
         Current observation: "{observation}"
         Current inventory: "{inventory}"
-        
+
         EXPLORATION PROGRESS:
         Tasks completed so far: {completed_count}
         Tasks failed so far: {failed_count}
         Success rate: {success_rate:.2f}
-        
-        Categories of completed tasks:
-        - Exploration: {task_categories["exploration"]}
-        - Inventory management: {task_categories["inventory"]}
-        - Object interaction: {task_categories["interaction"]}
-        - Puzzles: {task_categories["puzzle"]}
-        - Conversation: {task_categories["conversation"]}
-        
+
         Recently completed tasks:
         {', '.join(recent_completed) if recent_completed else 'None'}
-        
+
         Recently failed tasks:
         {', '.join(recent_failed) if recent_failed else 'None'}
-        
-        CRITERIA FOR THE NEXT TASK:
-        1. The task must be specific, concrete, and verifiable.
-        2. The task must be achievable with the agent's current state and resources.
-        3. The task must be adapted to the agent's current skill level.
-        4. The task must contribute to exploration and progress in the game.
-        5. The task must not exactly repeat something the agent just failed.
-        6. The task must maintain narrative coherence with the game world.
-        
-        INSTRUCTIONS:
-        Propose ONE specific task that the agent should attempt next.
-        The task should be brief and start with a verb (e.g., "Examine", "Take", "Open").
-        Do not include explanations, justifications, or additional instructions.
-        
+
+        GAME INFORMATION:
+        Special commands: {', '.join(self.special_commands)}
+        Key locations: {', '.join(self.game_specific_config.get('key_locations', []))}
+        Key objects: {', '.join(self.game_specific_config.get('key_objects', []))}
+
+        TASK CRITERIA:
+        1. The task MUST be extremely specific and verifiable (e.g., "Open the mailbox", "Go north")
+        2. The task MUST be achievable with a few simple commands
+        3. The task MUST be simple for beginners if the success rate is low
+        4. The task MUST be a single action or a simple sequence 
+        5. The task MUST NOT repeat a recently failed task
+        6. The task MUST be expressed in 5-10 words maximum
+
+        Your response must be ONLY the task itself (e.g., "Examine the mailbox", "Go north", "Take the leaflet").
+        DO NOT include explanations, steps, or any additional text.
+
         NEXT TASK:
         """
         

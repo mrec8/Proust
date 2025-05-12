@@ -96,30 +96,37 @@ class CriticAgent:
         prompt = f"""
         You are an expert evaluator in interactive fiction games like {self.game_name}.
         Your task is to determine whether a specific objective has been successfully completed.
-        You must be precise and fair in your evaluation.
+        Your response will be fed to the agent that generated the actions to improve its performance in case of failure. Make sure to be helpful and constructive.
         
+
         TASK TO EVALUATE:
         {task}
-        
+
         ACTIONS TAKEN:
         {actions_text}
-        
+
         CURRENT GAME STATE:
         Observation: {observation}
         Inventory: {inventory}
-        
-        INSTRUCTIONS:
-        1. Evaluate if the task has been successfully completed based on the current state.
-        2. Consider the task description, actions taken, and the current state.
-        3. Look for evidence in the observation or inventory that indicates completion.
-        4. If the task has not been completed, provide constructive critique.
-        5. Be appropriately strict - don't pass tasks that aren't truly done.
-        
+
+        EVALUATION GUIDELINES:
+        1. A task is successful ONLY if there is clear evidence in the observation or inventory that it has been completed.
+        2. For movement tasks (e.g., "Go north"), success is indicated by a change in location or description.
+        3. For examination tasks (e.g., "Examine mailbox"), success is indicated by a detailed description of the object.
+        4. For acquisition tasks (e.g., "Take leaflet"), success is indicated by the item appearing in inventory.
+        5. If the game responds with "I don't understand that command" or similar, the task has failed.
+        6. Be strict but fair - don't pass tasks that aren't truly done.
+
+        If the task has not been completed, provide SPECIFIC advice about:
+        - Which commands might work better
+        - What alternative approaches could succeed
+        - Why the current approach didn't work
+
         Respond in the following format:
-        
+
         Reasoning: [Your detailed analysis of why the task is complete or incomplete]
         Success: [true/false]
-        Critique: [If success is false, provide helpful feedback on what's missing or what to try next]
+        Critique: [If success is false, provide helpful feedback on how to improve]
         """
         
         return prompt
