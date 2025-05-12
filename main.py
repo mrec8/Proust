@@ -113,6 +113,7 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
     current_task = None
     task_actions = []
     
+
     logger.info("Starting agent loop...")
     
     try:
@@ -128,6 +129,7 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             if current_task is None:
                 # Propose the next task using the curriculum agent
                 current_task = curriculum_agent.propose_next_task(agent_state)
+                critique = "None"
                 logger.info(f"New task proposed: {current_task}")
                 
                 if interactive:
@@ -148,13 +150,16 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             
             # Retrieve relevant skills
             relevant_skills = skill_manager.retrieve_skills(current_task, agent_state)
-            if interactive and relevant_skills:
-                print("\nRelevant skills retrieved:")
+            if relevant_skills:
+                logger.info(f"Relevant skills retrieved for task '{current_task}':")
+                if interactive: print("\nRelevant skills retrieved:")
                 for i, skill in enumerate(relevant_skills):
-                    print(f"{i+1}. {skill.description}")
+                    logger.info(f"{i+1}. {skill.description}")
+                    if interactive: print(f"{i+1}. {skill.description}")
             
             # Generate action
-            action = action_agent.generate_action(current_task, agent_state, relevant_skills)
+            action = action_agent.generate_action(current_task, agent_state, critique, relevant_skills)
+            logger.info(f"Generated action: {action}")
             if interactive:
                 print(f"Generated action: {action}")
                 

@@ -47,8 +47,8 @@ class ActionAgent:
         # Action history
         self.action_history = []
     
-    def generate_action(self, task: str, agent_state: Dict[str, Any], 
-                       skills: Optional[List[Dict[str, Any]]] = None) -> str:
+    def generate_action(self, task: str, agent_state: Dict[str, Any], critique: str, 
+                       skills: Optional[List[Dict[str, Any]]] = None ) -> str:
         """
         Generates an executable command/action for the given task.
         
@@ -56,7 +56,7 @@ class ActionAgent:
             task: Current task
             agent_state: Current state of the agent
             skills: List of relevant skills from the library
-            
+            critique: Critique of the previous action regarding the task
         Returns:
             Executable command/action
         """
@@ -69,7 +69,7 @@ class ActionAgent:
         
         # Build prompt for the LLM
         prompt = self._build_action_generation_prompt(task, parsed_observation, 
-                                                     parsed_inventory, agent_state, skills)
+                                                     parsed_inventory, agent_state, critique, skills)
         
         # Generate action
         response = self.llm.generate(prompt, temperature=0.7)
@@ -121,6 +121,7 @@ class ActionAgent:
     
     def _build_action_generation_prompt(self, task: str, parsed_observation: Dict[str, Any], 
                                        parsed_inventory: List[str], agent_state: Dict[str, Any], 
+                                       critique: str,
                                        skills: Optional[List[Dict[str, Any]]] = None) -> str:
         """
         Builds the prompt to generate an action.
@@ -170,6 +171,9 @@ class ActionAgent:
         CURRENT TASK:
         {task}
         
+        CRITIQUE OF THE PREVIOUS ACTION:
+        {critique}
+
         CURRENT STATE:
         Location: {location}
         Visible objects: {', '.join(objects) if objects else 'None'}
