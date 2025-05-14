@@ -15,7 +15,7 @@ from agent.curriculum_agent import CurriculumAgent
 from agent.action_agent import ActionAgent
 from agent.critic_agent import CriticAgent
 from utils.llm_interface import LLMInterface
-from agent.skill_manager import SkillManager
+from agent.memory_manager import MemoryManager
 from utils.logging import setup_logging
 
 def parse_arguments():
@@ -80,7 +80,7 @@ def main():
         logger.info(f"Environment initialized with game: {game_name}")
         
         # Skill Manager
-        skill_manager = SkillManager(config, llm)
+        memory_manager = MemoryManager(config, llm)
         logger.info("Skill Manager initialized")
         
         # Agents
@@ -91,7 +91,7 @@ def main():
         
         # Main loop
         run_agent_loop(env, curriculum_agent, action_agent, critic_agent, 
-                      skill_manager, llm, config, args.interactive)
+                      memory_manager, llm, config, args.interactive)
         
     except Exception as e:
         logger.error(f"Error during initialization: {e}", exc_info=True)
@@ -100,7 +100,7 @@ def main():
     return 0
 
 def run_agent_loop(env, curriculum_agent, action_agent, critic_agent, 
-                  skill_manager, llm, config, interactive=False):
+                  memory_manager, llm, config, interactive=False):
     """Run the main agent loop."""
     logger = logging.getLogger(__name__)
     
@@ -127,8 +127,14 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             
             # If there is no current task or the last task was completed/failed
             if current_task is None:
-                # Propose the next task using the curriculum agent
-                current_task = curriculum_agent.propose_next_task(agent_state)
+
+                # Retrieve memories relevant for task planning
+                planning_context = f"Current location: {agent_state['observation']}\nInventory: {agent_state['inventory']}"
+                relevant_memories = memory_manager.retrieve_memories(planning_context, agent_state)
+
+
+                # Propose the next task using the curriculum agent with memories
+                current_task = curriculum_agent.propose_next_task(agent_state, relevant_memories)
                 critique = "None"
                 logger.info(f"New task proposed: {current_task}")
                 
@@ -148,20 +154,22 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             if interactive:
                 print(f"\nExecuting task: {current_task}")
             
-            # Retrieve relevant skills
-            relevant_skills = skill_manager.retrieve_skills(current_task, agent_state)
-            if relevant_skills:
-                skill_descriptions = [skill.description for skill in relevant_skills]
-                logger.info(f"Relevant skills retrieved for task '{current_task}':")
-                for i, desc in enumerate(skill_descriptions):
-                    logger.info(f"{i+1}. \"{desc}\"")
+            # Retrieve relevant memories
+            context = f"Task: {current_task}\nObservation: {agent_state['observation']}\nInventory: {agent_state['inventory']}"
+            relevant_memories = memory_manager.retrieve_memories(context, agent_state)
+            
+            if relevant_memories:
+                memory_topics = [memory.topic for memory in relevant_memories]
+                logger.info(f"Relevant memories retrieved for task '{current_task}':")
+                for i, topic in enumerate(memory_topics):
+                    logger.info(f"{i+1}. \"{topic}\"")
                 if interactive: 
-                    print("\nRelevant skills retrieved:")
-                    for i, desc in enumerate(skill_descriptions):
-                        print(f"{i+1}. \"{desc}\"")
+                    print("\nRelevant memories retrieved:")
+                    for i, topic in enumerate(memory_topics):
+                        print(f"{i+1}. \"{topic}\"")
             
             # Generate a single action
-            action = action_agent.generate_action(current_task, agent_state, critique, relevant_skills)
+            action = action_agent.generate_action(current_task, agent_state, critique, relevant_memories)
             logger.info(f"Generated action: '{action}'")
             
             if interactive:
@@ -184,6 +192,12 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             # Execute action in the environment
             task_actions.append(action)
             next_state, reward, done, info = env.step(action)
+
+            if memory_manager.should_create_memory(next_state['observation'], next_state, agent_state['observation']): 
+                memory_manager.add_memory(next_state['observation'], next_state)
+                logger.info("New memory created")
+                if interactive:
+                    print("New memory created")
             
             # Log the response from the environment
             #logger.info(f"Environment response: {next_state['observation']}")
@@ -197,42 +211,38 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
                 print(f"\nResult: {agent_state['observation']}")
             
             # Check if the task has been completed
-            if steps % 1 == 0 or reward > 0:  # Check every 3 steps or if there is a reward
-                success, critique = critic_agent.check_task_success(
-                    current_task, agent_state, task_actions
-                )
+            
+            success, critique = critic_agent.check_task_success(
+                current_task, agent_state, task_actions
+            )
+            
+            if success:
+                logger.info(f"Task successfully completed: {current_task}")
                 
-                if success:
-                    logger.info(f"Task successfully completed: {current_task}")
+                # Update curriculum agent
+                curriculum_agent.add_completed_task(current_task)
+                
+                # Reset task variables
+                current_task = None
+                task_actions = []
+                
+                if interactive:
+                    print(f"\n✅ Task successfully completed: {current_task}")
                     
-                    # Add skill to the manager
-                    skill_manager.add_skill(current_task, task_actions, 
-                                          agent_state['observation'], True)
-                    
-                    # Update curriculum agent
-                    curriculum_agent.add_completed_task(current_task)
-                    
-                    # Reset task variables
-                    current_task = None
-                    task_actions = []
-                    
-                    if interactive:
-                        print(f"\n✅ Task successfully completed: {current_task}")
-                        
-                elif len(task_actions) >= 5:  # If too many actions without success
-                    logger.info(f"Task failed: {current_task}")
-                    logger.info(f"Critique: {critique}")
-                    
-                    # Update curriculum agent
-                    curriculum_agent.add_failed_task(current_task)
-                    
-                    # Reset task variables
-                    current_task = None
-                    task_actions = []
-                    
-                    if interactive:
-                        print(f"\n❌ Task failed: {current_task}")
-                        print(f"Critique: {critique}")
+            elif len(task_actions) >= 5:  # If too many actions without success
+                logger.info(f"Task failed: {current_task}")
+                logger.info(f"Critique: {critique}")
+                
+                # Update curriculum agent
+                curriculum_agent.add_failed_task(current_task)
+                
+                # Reset task variables
+                current_task = None
+                task_actions = []
+                
+                if interactive:
+                    print(f"\n❌ Task failed: {current_task}")
+                    print(f"Critique: {critique}")
             
             # Check if the game is over
             if done:

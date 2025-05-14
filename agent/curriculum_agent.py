@@ -5,6 +5,7 @@ import logging
 from typing import Dict, List, Any, Optional
 import yaml
 
+from agent.memory_manager import Memory
 from utils.llm_interface import LLMInterface
 
 class CurriculumAgent:
@@ -48,12 +49,14 @@ class CurriculumAgent:
         
         self.logger.info(f"Curriculum agent initialized with game: {self.game_name}")
     
-    def propose_next_task(self, agent_state: Dict[str, Any]) -> str:
+    def propose_next_task(self, agent_state: Dict[str, Any], 
+                        memories: Optional[List[Memory]] = None) -> str:
         """
-        Proposes the next task based on the current state and progress.
+        Proposes the next task based on the current state, progress, and memories.
         
         Args:
             agent_state: Current state of the agent
+            memories: List of relevant memories to consider
             
         Returns:
             Description of the next task to perform
@@ -66,11 +69,9 @@ class CurriculumAgent:
         # Get relevant information to generate the next task
         exploration_progress = self._get_exploration_progress()
         
-        # Build prompt for the LLM
-        prompt = self._build_task_proposal_prompt(agent_state, exploration_progress)
+        # Build prompt for the LLM, now including memories
+        prompt = self._build_task_proposal_prompt(agent_state, exploration_progress, memories)
         
-        
-
         # Extra check to prevent repeating failed tasks
         max_attempts = 3
         attempts = 0
@@ -81,6 +82,7 @@ class CurriculumAgent:
             
             # Extract the task from the generated text
             task = self._extract_task_from_response(response)
+            
             # Check if this is a repeat of a recently failed task
             if not self._is_similar_to_failed_task(task):
                 break
@@ -173,13 +175,15 @@ class CurriculumAgent:
         }
     
     def _build_task_proposal_prompt(self, agent_state: Dict[str, Any], 
-                                   exploration_progress: Dict[str, Any]) -> str:
+                                exploration_progress: Dict[str, Any],
+                                memories: Optional[List[Memory]] = None) -> str:
         """
         Builds the prompt to generate the next task.
         
         Args:
             agent_state: Current state of the agent
             exploration_progress: Exploration progress metrics
+            memories: List of relevant memories to consider
             
         Returns:
             Prompt for the LLM
@@ -189,18 +193,23 @@ class CurriculumAgent:
         inventory = agent_state.get('inventory', '')
         
         # Extract progress information
-        #completed_count = exploration_progress["completed_tasks_count"]
-        #failed_count = exploration_progress["failed_tasks_count"]
-        #success_rate = exploration_progress["success_rate"]
-        #task_categories = exploration_progress["task_categories"]
         recent_completed = exploration_progress["completed_tasks"]
         recent_failed = exploration_progress["failed_tasks"]
+        
+        # Build memory context if available
+        memory_context = ""
+        if memories:
+            memory_context = "AGENT'S MEMORIES ABOUT THE GAME WORLD:\n"
+            for i, memory in enumerate(memories):
+                memory_context += f"{i+1}. TOPIC: {memory.topic}\n"
+                memory_context += f"   OBSERVATION: {memory.observation}\n"
+                memory_context += f"   INFERENCE: {memory.inference}\n\n"
         
         # Build the prompt
         prompt = f"""
         You are an intelligent curriculum agent for the text adventure game '{self.game_name}'. 
-        Your responsibility is to analyze the current game state and previous tasks to propose 
-        a single, highly specific task that represents the optimal next step for progression.
+        Your responsibility is to analyze the current game state, previous tasks, and the agent's memories
+        to propose a single, highly specific task that represents the optimal next step for progression.
 
         CURRENT GAME STATE:
         Location: {observation}
@@ -210,6 +219,8 @@ class CurriculumAgent:
         Completed tasks: {', '.join(recent_completed) if recent_completed else 'None'}
         Failed tasks: {', '.join(recent_failed) if recent_failed else 'None'}
 
+        {memory_context}
+
         GAME INFORMATION:
         Special commands: {', '.join(self.special_commands)}
         Key game objects: {', '.join(self.game_specific_config.get('key_objects', []))}
@@ -218,14 +229,19 @@ class CurriculumAgent:
         DETAILED TASK SELECTION CRITERIA:
         1. SPECIFIC COMMANDS: Choose tasks that can be accomplished with 1-2 specific text adventure commands.
         2. AVOID FAILED PATTERNS: DO NOT propose tasks similar to the failed tasks listed above.
-        3. PROGRESSION: Tasks should follow a logical progression from basic to complex:
+        3. LEVERAGE MEMORIES: Use the agent's memories to inform your task selection. Prioritize tasks that:
+        a. Build on discovered game mechanics
+        b. Follow up on clues found in the environment
+        c. Apply knowledge about objects or characters
+        d. Explore areas mentioned but not yet visited
+        4. PROGRESSION: Tasks should follow a logical progression from basic to complex:
         a. First: Simple observation (look, examine objects)
         b. Next: Object manipulation (take objects, open containers)
         c. Later: Navigation to new areas
         d. Advanced: Combining objects, solving puzzles
-        4. EXISTING OBJECTS: Only reference objects that appear in the current observation or inventory.
-        5. REALISTIC SCOPE: Tasks must be directly achievable from the current state.
-        6. BREVITY: Tasks must be described in 3-7 words MAXIMUM.
+        5. EXISTING OBJECTS: Only reference objects that appear in the current observation, inventory, or memories.
+        6. REALISTIC SCOPE: Tasks must be directly achievable from the current state.
+        7. BREVITY: Tasks must be described in 3-7 words MAXIMUM.
 
         EXAMPLES OF EXCELLENT TASKS:
         - "Examine mailbox"
@@ -247,7 +263,7 @@ class CurriculumAgent:
         1. Include ONLY the task itself
         2. Be 3-7 words maximum
         3. Start with an action verb
-        4. Reference ONLY objects or directions available in the current state
+        4. Reference ONLY objects or directions available in the current state or mentioned in memories
         5. NOT include explanations, reasoning, or additional commentary
         6. NOT repeat recently failed tasks or patterns
 
@@ -257,7 +273,6 @@ class CurriculumAgent:
 
         YOUR RESPONSE:
         """
-        
         
         return prompt
     

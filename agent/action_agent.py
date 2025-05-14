@@ -8,7 +8,7 @@ from typing import Dict, List, Tuple, Set, Any, Optional
 
 from utils.llm_interface import LLMInterface
 from environment.observation_parser import ObservationParser
-from agent.skill_manager import Skill
+from agent.memory_manager import Memory
 
 class ActionAgent:
     """
@@ -123,7 +123,7 @@ class ActionAgent:
     def _build_action_generation_prompt(self, task: str, parsed_observation: Dict[str, Any], 
                                         parsed_inventory: List[str], agent_state: Dict[str, Any], 
                                         critique: str,
-                                        skills: Optional[List[Skill]] = None) -> str:
+                                        memories: Optional[List[Memory]] = None) -> str:
         """
         Builds the prompt to generate an action.
         
@@ -133,22 +133,20 @@ class ActionAgent:
             parsed_inventory: Processed inventory
             agent_state: Current state of the agent
             critique: Critique of the previous action
-            skills: List of relevant skills
+            memories: List of relevant memories
             
         Returns:
             Prompt for the LLM
         """
         
-        
-        # Build relevant skills context
-        skills_context = ""
-        if skills:
-            skills_context = "RELEVANT SKILLS:\n"
-            for skill in skills:
-                # Access skill attributes using dot notation, not dictionary subscription
-                skills_context += f"- {skill.description}\n"
-        
-        
+        # Build relevant memories context
+        memories_context = ""
+        if memories:
+            memories_context = "RELEVANT MEMORIES:\n"
+            for memory in memories:
+                memories_context += f"- TOPIC: {memory.topic}\n"
+                memories_context += f"  OBSERVATION: {memory.observation}\n"
+                memories_context += f"  INFERENCE: {memory.inference}\n\n"
         
         observation = agent_state.get('observation', '')
         inventory = agent_state.get('inventory', '')
@@ -176,9 +174,8 @@ class ActionAgent:
         3. Pay attention to the game's responses
         4. Try recommended alternatives from the critique
         
-        
-        RELEVANT SKILLS PREVIOUSLY MASTERED:
-        {skills_context if skills else "No relevant skills available."}
+        RELEVANT MEMORIES FROM PAST EXPLORATION:
+        {memories_context if memories else "No relevant memories available."}
 
         TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
         1. TEXT ADVENTURE COMMANDS ARE SHORT: Most valid commands are 1-3 words.
@@ -212,6 +209,11 @@ class ActionAgent:
         If the critique mentions better commands to try, USE THEM EXACTLY.
         If the critique says an object doesn't exist, DO NOT try to interact with it again.
         If the critique suggests a different verb, USE THAT VERB.
+
+        APPLYING MEMORIES:
+        If a memory mentions a successful interaction with an object, USE THAT APPROACH.
+        If a memory contains information about a location or puzzle, USE THAT KNOWLEDGE.
+        If a memory reveals game mechanics, APPLY THAT UNDERSTANDING.
 
         VALID COMMANDS FOR THIS SPECIFIC GAME:
         {', '.join(self.special_commands)}
