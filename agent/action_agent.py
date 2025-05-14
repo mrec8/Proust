@@ -177,6 +177,11 @@ class ActionAgent:
         RELEVANT MEMORIES FROM PAST EXPLORATION:
         {memories_context if memories else "No relevant memories available."}
 
+        KEY PRINCIPLES FOR MEMORY APPLICATION:
+        1. Try to generate actions that are NOT LIKELY to have been tried before, in light of what the memories suggest.
+        2. Use memories to expand context on the observation and take more whole-oriented actions.
+        3. Use memories to avoid repeating actions that have already failed. 
+
         TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
         1. TEXT ADVENTURE COMMANDS ARE SHORT: Most valid commands are 1-3 words.
         2. VALID COMMAND PATTERNS:
