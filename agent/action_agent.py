@@ -183,7 +183,7 @@ class ActionAgent:
         3. Use memories to avoid repeating actions that have already failed. 
 
         TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
-        1. TEXT ADVENTURE COMMANDS ARE SHORT: Most valid commands are 1-3 words.
+        1. TEXT ADVENTURE COMMANDS ARE SHORT: Valid commands are either 1 word (ACTION VERB or DIRECTION) or 2 words (ACTION VERB + OBJECT or DIRECTION). NOTHING LONGER IS VALID. EVERYTHING ELSE SUCKS AND MAKES YOU A FAILURE!!!!! DON'T ASHAME YOURSELF.
         2. VALID COMMAND PATTERNS:
         - Single verb: "look", "inventory", "wait", "score"
         - Verb + noun: "take leaflet", "examine house", "open mailbox"

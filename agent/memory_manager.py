@@ -70,7 +70,7 @@ class Memory:
 class MemoryManager:
     """Manager for storing and retrieving memories about the game world."""
     
-    def __init__(self, config: Dict[str, Any], llm: LLMInterface):
+    def __init__(self, config: Dict[str, Any], llm: LLMInterface, game_name: str):
         """
         Initialize the memory manager.
         
@@ -87,6 +87,7 @@ class MemoryManager:
         
         # Directory to save/load memories
         self.save_dir = self.config.get('memory_manager', {}).get('save_dir', 'memories')
+        self.save_dir = os.path.join(self.save_dir, game_name)
         os.makedirs(self.save_dir, exist_ok=True)
         
         # Load existing memories if available
@@ -219,14 +220,14 @@ class MemoryManager:
         
         return None  # No meaningful changes
     
-    def retrieve_memories(self, current_context: str, agent_state: Dict[str, Any], limit: int = 5) -> List[Memory]:
+    def retrieve_memories(self, current_context: str, agent_state: Dict[str, Any], max_limit: int = 5) -> List[Memory]:
         """
         Retrieve relevant memories for a context.
         
         Args:
             current_context: The current context (task, observation, etc.)
             agent_state: Current state of the agent
-            limit: Maximum number of memories to return
+            max_limit: Maximum number of memories to return
             
         Returns:
             List of relevant memories
@@ -234,28 +235,43 @@ class MemoryManager:
         if not self.memories:
             return []
         
-        # Simple retrieval based on keyword matching and relevance
+        # Calculate relevance scores for all memories
         scores = []
         for memory in self.memories:
             score = self._calculate_relevance_score(memory, current_context, agent_state)
             scores.append(score)
         
-        # Get the indices of the top-scoring memories
-        if not scores:
+        # Create memory-score pairs
+        memory_scores = list(zip(self.memories, scores))
+        
+        # Sort by score (highest first)
+        memory_scores.sort(key=lambda x: x[1], reverse=True)
+        
+        # Filter memories with a relevance threshold
+        # Only include memories with meaningful relevance (score > 1.0)
+        relevant_memories = [m for m, s in memory_scores if s > 1.0]
+        
+        # If we have no relevant memories after filtering, return an empty list
+        if not relevant_memories:
+            self.logger.info("No sufficiently relevant memories found for the current context")
             return []
+            
+        # Cap at max_limit if needed
+        if len(relevant_memories) > max_limit:
+            relevant_memories = relevant_memories[:max_limit]
         
-        indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
-        top_indices = indices[:limit]
-        
-        # Return the top memories
-        top_memories = [self.memories[i] for i in top_indices]
-        
-        # Update retrieval count
-        for memory in top_memories:
+        # Update retrieval count for used memories
+        for memory in relevant_memories:
             memory.retrieve()
         
-        self.logger.info(f"Retrieved {len(top_memories)} memories for context: {current_context[:50]}...")
-        return top_memories
+        self.logger.info(f"Retrieved {len(relevant_memories)} relevant memories for context: {current_context[:50]}...")
+        
+        # Log the scores of retrieved memories
+        for i, memory in enumerate(relevant_memories):
+            score = memory_scores[i][1]
+            self.logger.debug(f"Memory: '{memory.topic}' - Relevance score: {score:.2f}")
+        
+        return relevant_memories
     
     def _generate_memory(self, observation: str, agent_state: Dict[str, Any]) -> Optional[Tuple[str, str, str]]:
         """
@@ -365,7 +381,7 @@ class MemoryManager:
         """
         score = 0.0
         
-        # Current context analysis
+        # Parse the current context
         current_task = ""
         current_observation = ""
         
@@ -374,60 +390,68 @@ class MemoryManager:
         
         if "Observation:" in current_context:
             current_observation = current_context.split("Observation:")[1].split("\n")[0].strip()
+        else:
+            current_observation = agent_state.get('observation', '')
         
-        # Task relevance (highest priority)
+        # Extract current location and inventory information
+        current_inventory = agent_state.get('inventory', '').lower()
+        
+        # Score boosts for direct topic matches with task
         if current_task:
             task_lower = current_task.lower()
             
-            # Direct topic match with task
+            # 1. Direct topic match with task (highest importance)
             if memory.topic.lower() in task_lower:
                 score += 5.0
-            
-            # Keywords in topic match task
-            topic_keywords = set(memory.topic.lower().split())
-            task_keywords = set(task_lower.split())
-            topic_task_overlap = topic_keywords.intersection(task_keywords)
-            score += len(topic_task_overlap) * 2.0
-            
-            # Inference mentions task keywords
-            inference_lower = memory.inference.lower()
-            inference_words = set(inference_lower.split())
-            inference_task_overlap = inference_words.intersection(task_keywords)
-            score += len(inference_task_overlap) * 1.0
+            elif any(word in task_lower for word in memory.topic.lower().split() if len(word) > 3):
+                score += 3.0
         
-        # Current observation relevance
+        # 2. Topic or observation keywords in current observation
         if current_observation:
             obs_lower = current_observation.lower()
             
-            # Memory topic appears in current observation
-            if memory.topic.lower() in obs_lower:
-                score += 4.0
+            # Check if any significant words from the memory topic appear in the current observation
+            topic_words = [word for word in memory.topic.lower().split() if len(word) > 3]
+            for word in topic_words:
+                if word in obs_lower:
+                    score += 2.0
+                    break
             
-            # Objects mentioned in memory appear in observation
-            memory_words = set(memory.observation.lower().split())
-            observation_words = set(obs_lower.split())
-            object_overlap = memory_words.intersection(observation_words)
-            score += min(len(object_overlap), 5) * 0.5  # Cap at 2.5
+            # Check if objects from memory observation appear in current observation
+            memory_obj_words = [word for word in memory.observation.lower().split() if len(word) > 3]
+            obj_matches = sum(1 for word in memory_obj_words if word in obs_lower)
+            score += min(obj_matches * 0.5, 2.0)  # Cap at 2.0
         
-        # Inventory relevance
-        inventory = agent_state.get('inventory', '').lower()
-        memory_observation_lower = memory.observation.lower()
-        
-        # If memory mentions objects in inventory
-        for item in inventory.split():
-            if len(item) > 3 and item in memory_observation_lower:  # Avoid short words
-                score += 2.0
+        # 3. Memory mentions objects that are in current inventory
+        inventory_words = [word for word in current_inventory.split() if len(word) > 3]
+        for word in inventory_words:
+            if word in memory.observation.lower():
+                score += 1.5
                 break
         
-        # Usage history - memories that have been useful before
+        # 4. Memory references similar actions to current task
+        task_verbs = ["take", "get", "drop", "examine", "look", "open", "close", "put", "attack"]
+        memory_verbs = []
+        for verb in task_verbs:
+            if verb in memory.topic.lower() or verb in memory.inference.lower():
+                memory_verbs.append(verb)
+        
+        task_verb_matches = sum(1 for verb in memory_verbs if verb in current_task.lower())
+        score += task_verb_matches * 1.0
+        
+        # 5. Memory has been useful before (usage history bonus)
         if memory.retrieved_count > 0:
-            usage_bonus = min(memory.retrieved_count * 0.5, 3.0)  # Cap at 3.0
+            usage_bonus = min(memory.retrieved_count * 0.3, 2.0)  # Cap at 2.0
             score += usage_bonus
         
-        # Recency - slightly favor newer memories when scores are close
+        # 6. Recency factor (less important than relevance)
         age_in_hours = (time.time() - memory.created_at) / 3600
-        recency_factor = max(0.7, 1.0 - (age_in_hours / 240))  # Decay over 10 days, but never below 0.7
+        recency_factor = max(0.8, 1.0 - (age_in_hours / 240))  # Decay over 10 days, but never below 0.8
         score *= recency_factor
+        
+        # Apply memory's own relevance score if it exists
+        if hasattr(memory, 'relevance_score') and memory.relevance_score > 0:
+            score *= (1.0 + memory.relevance_score * 0.5)
         
         return score
     
