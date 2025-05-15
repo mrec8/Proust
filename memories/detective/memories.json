@@ -7,7 +7,7 @@
       "Unexpected Severe Cold in the Environment"
     ],
     "created_at": 1747321280.9025793,
-    "retrieved_count": 0,
+    "retrieved_count": 1,
     "relevance_score": 0.0
   },
   {
@@ -18,6 +18,83 @@
       "Flashing Badge Escalates Hostile Encounters"
     ],
     "created_at": 1747321304.455785,
+    "retrieved_count": 0,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Using Badge to Bypass Law Enforcement Checkpoints",
+    "observation": "Flashing your badge to a police officer grants you immediate access past the checkpoint.",
+    "inference": "Carrying and displaying the badge is essential for bypassing law enforcement barriers and gaining cooperation from guards, indicating it should be used proactively when encountering restricted or guarded areas.",
+    "contexts": [
+      "Using Badge to Bypass Law Enforcement Checkpoints"
+    ],
+    "created_at": 1747324475.699916,
+    "retrieved_count": 0,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Exact Time of the Mayor's Murder",
+    "observation": "The Mayor was murdered at exactly 12:03 AM last night.",
+    "inference": "The precise time of death enables establishing a detailed timeline, cross-checking suspects' alibis, and linking related events or clues occurring around that time, which is critical for narrowing down suspects and advancing the investigation.",
+    "contexts": [
+      "Exact Time of the Mayor's Murder"
+    ],
+    "created_at": 1747324498.683792,
+    "retrieved_count": 3,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Mayor's Murder Time and Urgency of Investigation",
+    "observation": "The Mayor was murdered at exactly 12:03 am last night. There is urgent pressure to solve the case quickly to avoid bad publicity and prevent FBI involvement.",
+    "inference": "The precise murder time is crucial for verifying alibis and constructing timelines. The urgency indicates political sensitivity and potential consequences if the investigation stalls, suggesting prioritizing leads that can be resolved swiftly and discreetly to maintain control over the case.",
+    "contexts": [
+      "Mayor's Murder Time and Urgency of Investigation"
+    ],
+    "created_at": 1747324517.8316498,
+    "retrieved_count": 3,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Flashing Badge Escalates Hostile Encounters",
+    "observation": "Flashing your badge provokes hostile characters, increasing their aggression.",
+    "inference": "Avoid displaying your badge in threatening situations, as it can escalate violence rather than deter attackers, making stealth or alternative approaches safer.",
+    "contexts": [
+      "Flashing Badge Escalates Hostile Encounters"
+    ],
+    "created_at": 1747324559.6138155,
+    "retrieved_count": 0,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Non-Openable Objects and Alternative Interactions",
+    "observation": "\"That's not something you can open.\" indicates the object cannot be opened.",
+    "inference": "Some objects cannot be opened; players should identify alternative ways to interact with these objects, such as examining, using, or manipulating them differently, rather than attempting to open everything.",
+    "contexts": [
+      "Non-Openable Objects and Alternative Interactions"
+    ],
+    "created_at": 1747325263.170679,
+    "retrieved_count": 0,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Action Restrictions to Animate Targets",
+    "observation": "The game restricts certain actions with the message, \"You can only do that to something animate,\" indicating these commands apply exclusively to living or animate entities.",
+    "inference": "When attempting specific actions, prioritize targeting animate characters or creatures; applying these actions to inanimate objects will fail, thus saving time and guiding interaction strategies toward valid targets.",
+    "contexts": [
+      "Action Restrictions to Animate Targets"
+    ],
+    "created_at": 1747325311.9752228,
+    "retrieved_count": 0,
+    "relevance_score": 0.0
+  },
+  {
+    "topic": "Unseasonal Cold Weather and Scattered Papers as Environmental Clues",
+    "observation": "You are outside in an unusually cold environment for this time of year, with papers blowing around in the wind.",
+    "inference": "The unexpected cold suggests a possible temporal or magical anomaly affecting the area, which may impact player status or available actions (e.g., requiring warmth). The scattered papers likely serve as interactive clues or puzzle elements that can be collected or examined to progress. Prioritize investigating both the cold and the papers for gameplay advantages.",
+    "contexts": [
+      "Unseasonal Cold Weather and Scattered Papers as Environmental Clues"
+    ],
+    "created_at": 1747325331.0066679,
     "retrieved_count": 0,
     "relevance_score": 0.0
   }
