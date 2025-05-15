@@ -110,9 +110,29 @@ class CurriculumAgent:
         if self.initial_goal:
             # Decompose the initial goal into a specific task
             prompt = f"""
-            In the text adventure game '{self.game_name}', the general objective is: "{self.initial_goal}".
+            You are an AI assistant that proposes the next task for a text adventure game agent.
+
+            GAME: {self.game_name}
+
+           
+            TASK REQUIREMENTS:
+            - MUST be 3-5 words only
+            - Start with an action verb (examine, take, go, open, etc.)
+            - Only reference visible objects or known directions
+            - Must be achievable from current state
+            - Never repeat failed tasks
+
+            REASONING: Based on the information you have on the game, do reasoning about what the next task should be.
             
-            As a first specific and concrete task to start exploring this game, the agent should:
+            RESPONSE FORMAT:
+            Task: [YOUR 3-5 WORD TASK HERE]
+
+            Example good tasks:
+            Reasoning: The inventory is empty now, there's a mailbox visible, and we need to start exploring.
+            Task: Examine mailbox
+
+            Reasoning: We've examined the mailbox and saw a leaflet inside. We should take it to learn more.
+            Task: Take leaflet
             """
             response = self.llm.generate(prompt, temperature=0.5, max_tokens=50)
             initial_task = response.strip()
@@ -261,7 +281,7 @@ class CurriculumAgent:
 
         YOUR RESPONSE MUST:
         1. Include ONLY the task itself
-        2. Be 3-7 words maximum
+        2. Be 3 to 5 words MAXIMUM! ANYTHING ELSE WILL BE A HUGE FAILURE! DON'T EMBARRASS YOURSELF!
         3. Start with an action verb
         4. Reference ONLY objects or directions available in the current state or mentioned in memories
         5. NOT include explanations, reasoning, or additional commentary
@@ -271,7 +291,8 @@ class CurriculumAgent:
         DO NOT propose another variation of the same pattern. Instead, suggest a completely different approach 
         or interaction with a different object.
 
-        YOUR RESPONSE:
+        RESPONSE FORMAT:
+        Task: [YOUR 3-5 WORD TASK HERE]
         """
         
         return prompt
