@@ -141,12 +141,18 @@ class ActionAgent:
         
         # Build relevant memories context
         memories_context = ""
-        if memories:
-            memories_context = "RELEVANT MEMORIES:\n"
-            for memory in memories:
-                memories_context += f"- TOPIC: {memory.topic}\n"
-                memories_context += f"  OBSERVATION: {memory.observation}\n"
-                memories_context += f"  INFERENCE: {memory.inference}\n\n"
+        #if memories:
+        #    memories_context = "RELEVANT MEMORIES:\n"
+        #    for memory in memories:
+        #        memories_context += f"- TOPIC: {memory.topic}\n"
+        #        memories_context += f"  OBSERVATION: {memory.observation}\n"
+        #        memories_context += f"  INFERENCE: {memory.inference}\n\n"
+
+        commands_context = ""
+        if self.action_history:
+            commands_context = "PREVIOUS COMMANDS:\n"
+            for task, action in self.action_history[-5:]:
+                commands_context += f"  COMMAND: {action}\n\n"
         
         observation = agent_state.get('observation', '')
         inventory = agent_state.get('inventory', '')
@@ -182,12 +188,20 @@ class ActionAgent:
         2. Use memories to expand context on the observation and take more whole-oriented actions.
         3. Use memories to avoid repeating actions that have already failed. 
 
+        
+        LAST COMMANDS:
+        {commands_context if self.action_history else "No previous commands available."}
+        
+        KEY PRINCIPLES FOR COMMANDS:
+        1. DO NOT REPEAT COMMANDS IF THE OBSERVATION SUGGESTS THEY WERE NOT COMPREHENDED.
+        2. DO NOT REPEAT COMMANDS THAT SEEMED USELESS TO THE CRITIQUE.
+        3. IF YOU SEE REPETITION IN THE COMMANDS, CHANGE TO MOVEMENT COMMANDS OR JUST REUTRN "look".
+        
         TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
         1. TEXT ADVENTURE COMMANDS ARE SHORT: Valid commands are either 1 word (ACTION VERB or DIRECTION) or 2 words (ACTION VERB + OBJECT or DIRECTION). NOTHING LONGER IS VALID. EVERYTHING ELSE SUCKS AND MAKES YOU A FAILURE!!!!! DON'T ASHAME YOURSELF.
         2. VALID COMMAND PATTERNS:
         - Single verb: "look", "inventory", "wait", "score"
         - Verb + noun: "take leaflet", "examine house", "open mailbox"
-        - Verb + noun + preposition + noun: "put coin in slot", "attack troll with sword"
         - Directional movement: "north", "south", "east", "west", "up", "down" (or n, s, e, w, u, d)
         3. COMMON ABBREVIATIONS:
         - "x" for "examine"
@@ -227,10 +241,12 @@ class ActionAgent:
         1. Contain EXACTLY ONE command
         2. Follow valid text adventure syntax
         3. Directly address the task
-        4. Be 1-4 words maximum
+        4. Be 1-2 words maximum
         5. NOT include explanations, reasoning, or additional commentary
         6. NOT repeat failed command patterns
-
+        7. USE THE VALID COMMANDS LISTED ABOVE, DON'T MAKE UP YOUR OWN
+        8. WHEN FACING OBJECTS THAT SEEM MANIPULABLE FIRST TAKE THEM, THEN YOU CAN EXAMINE THEM OR USE THEM.
+        9. DON?T ABUSE THE "EXAMINE" COMMAND; DESPITE IT'S USEFULNESS, IT WILL GET YOU STUCK.
         YOUR COMMAND:
         """
         

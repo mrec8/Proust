@@ -45,10 +45,10 @@ class LLMInterface:
 
         # Load LLM config
         self.config = config
-        llm_config = self.config.get('llm', {})
+        llm_config = self.config.get('agents', {})
 
         # Specific configurations
-        self.model = llm_config.get('model', 'gpt-4.1-mini')
+        self.model = llm_config.get('llm_model', 'gpt-4.1-mini')
         self.default_temperature = llm_config.get('temperature', 0.7)
         self.default_max_tokens = llm_config.get('max_tokens', 1024)
         self.request_timeout = llm_config.get('request_timeout', 30)

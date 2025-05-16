@@ -106,50 +106,7 @@ class CurriculumAgent:
         Returns:
             Description of the initial task
         """
-        # If there is an initial goal in the configuration, use it
-        if self.initial_goal:
-            # Decompose the initial goal into a specific task
-            prompt = f"""
-            You are an AI assistant that proposes the next task for a text adventure game agent.
-
-            GAME: {self.game_name}
-
-           
-            TASK REQUIREMENTS:
-            - MUST be 3-5 words only
-            - Start with an action verb (examine, take, go, open, etc.)
-            - Only reference visible objects or known directions
-            - Must be achievable from current state
-            - Never repeat failed tasks
-
-            REASONING: Based on the information you have on the game, do reasoning about what the next task should be.
-            
-            RESPONSE FORMAT:
-            Task: [YOUR 3-5 WORD TASK HERE]
-
-            Example good tasks:
-            Reasoning: The inventory is empty now, there's a mailbox visible, and we need to start exploring.
-            Task: Examine mailbox
-
-            Reasoning: We've examined the mailbox and saw a leaflet inside. We should take it to learn more.
-            Task: Take leaflet
-            """
-            response = self.llm.generate(prompt, temperature=0.5, max_tokens=50)
-            initial_task = response.strip()
-            
-            # If the response is too generic, use a default task
-            if len(initial_task.split()) < 3:
-                # Game-specific defaults
-                if "zork" in self.game_name.lower():
-                    return "Look around the current location and examine visible objects"
-                else:
-                    return "Explore the initial location and examine the environment"
-            
-            self.logger.info(f"Generated initial task: {initial_task}")
-            return initial_task
-        
-        # If there is no initial goal, generate a basic initial task
-        return "Look around and examine your surroundings"
+        return "Look around"
     
     def _get_exploration_progress(self) -> Dict[str, Any]:
         """

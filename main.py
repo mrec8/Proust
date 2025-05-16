@@ -15,6 +15,7 @@ from agent.curriculum_agent import CurriculumAgent
 from agent.action_agent import ActionAgent
 from agent.critic_agent import CriticAgent
 from utils.llm_interface import LLMInterface
+from utils.metrics_tracker import MetricsTracker
 from agent.memory_manager import MemoryManager
 from utils.logging import setup_logging
 
@@ -33,6 +34,7 @@ def parse_arguments():
                         help='Run in interactive mode (allows user input)')
     parser.add_argument('--log_level', type=str, default='INFO',
                         help='Logging level')
+    parser.add_argument('--llm_model', type=str, default='gpt-4.1-nano')
     return parser.parse_args()
 
 def load_configs(args):
@@ -50,6 +52,8 @@ def load_configs(args):
         config['environment']['game'] = args.game
     if args.max_steps:
         config['environment']['max_steps'] = args.max_steps
+    if args.llm_model:
+        config['agents']['llm_model'] = args.llm_model    
     
     return config, game_config
 
@@ -69,15 +73,26 @@ def main():
     
     # Initialize components
     try:
-        # LLM Interface
-        llm = LLMInterface(config)
-        logger.info("LLM interface initialized")
         
+
         # Environment
         game_name = config['environment']['game']
         env = JerichoEnvironment(game_name)
         env.max_steps = config['environment']['max_steps']
         logger.info(f"Environment initialized with game: {game_name}")
+        
+        # LLM Interface
+        llm_name = config['agents']['llm_model']
+        llm = LLMInterface(config)
+        logger.info("LLM interface initialized")
+        
+        # Metrics Tracker
+        
+        metrics_tracker = MetricsTracker(
+            experiment_name=f"{game_name}_{llm_name}_{time.strftime('%Y%m%d_%H%M%S')}"
+        )
+        metrics_tracker.set_experiment_info(game_name, env.max_steps)
+        logger.info("Metrics tracker initialized")
         
         # Skill Manager
         memory_manager = MemoryManager(config, llm, game_name)
@@ -91,7 +106,7 @@ def main():
         
         # Main loop
         run_agent_loop(env, curriculum_agent, action_agent, critic_agent, 
-                      memory_manager, llm, config, args.interactive)
+                      memory_manager, config, metrics_tracker, args.interactive)
         
     except Exception as e:
         logger.error(f"Error during initialization: {e}", exc_info=True)
@@ -100,7 +115,7 @@ def main():
     return 0
 
 def run_agent_loop(env, curriculum_agent, action_agent, critic_agent, 
-                  memory_manager, llm, config, interactive=False):
+                  memory_manager, config, metrics_tracker, interactive=False):
     """Run the main agent loop."""
     logger = logging.getLogger(__name__)
     
@@ -135,6 +150,8 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
 
                 # Propose the next task using the curriculum agent with memories
                 current_task = curriculum_agent.propose_next_task(agent_state, relevant_memories)
+                metrics_tracker.log_task_proposed(current_task)
+
                 critique = "None"
                 logger.info(f"New task proposed: {current_task}")
                 
@@ -192,12 +209,24 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             # Execute action in the environment
             task_actions.append(action)
             next_state, reward, done, info = env.step(action)
+            metrics_tracker.log_timestep(
+                step=steps,
+                action=action,
+                observation=next_state['observation'],
+                score=next_state.get('score', 0),
+                task=current_task
+            )
 
             if memory_manager.should_create_memory(next_state['observation'], next_state, agent_state['observation']): 
-                memory_manager.add_memory(next_state['observation'], next_state)
-                logger.info("New memory created")
-                if interactive:
-                    print("New memory created")
+                memory = memory_manager.add_memory(next_state['observation'], next_state)
+                if memory is not None:
+                    logger.info("New memory created")
+                    if interactive:
+                        print("New memory created")
+                    metrics_tracker.log_memory_created(
+                        memory_name=memory.topic, 
+                        task=current_task,
+                    )
             
             # Log the response from the environment
             #logger.info(f"Environment response: {next_state['observation']}")
@@ -222,6 +251,12 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
                 # Update curriculum agent
                 curriculum_agent.add_completed_task(current_task)
                 
+                metrics_tracker.log_task_completed(
+                    task=current_task,
+                    steps_taken=len(task_actions),
+                    commands=task_actions
+                )
+
                 # Reset task variables
                 current_task = None
                 task_actions = []
@@ -235,6 +270,12 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
                 
                 # Update curriculum agent
                 curriculum_agent.add_failed_task(current_task)
+                metrics_tracker.log_task_failed(
+                    task=current_task,
+                    steps_taken=len(task_actions),
+                    commands=task_actions,
+                    reason=critique if critique else "Too many actions without success"
+                )
                 
                 # Reset task variables
                 current_task = None
@@ -255,6 +296,10 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             if interactive:
                 time.sleep(1)
         
+        metrics_tracker.end_experiment()
+        metrics_tracker.print_summary()
+
+
         # Display final summary
         logger.info(f"Session ended after {steps} steps")
         if interactive:

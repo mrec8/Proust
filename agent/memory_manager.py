@@ -37,6 +37,10 @@ class Memory:
         """Record that this memory has been retrieved."""
         self.retrieved_count += 1
     
+    def get_topic(self) -> str:
+        """Get the topic of this memory."""
+        return self.topic
+
     def update_relevance(self, score: float) -> None:
         """Update the relevance score of this memory."""
         self.relevance_score = 0.8 * self.relevance_score + 0.2 * score
