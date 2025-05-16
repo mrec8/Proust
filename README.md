@@ -56,6 +56,7 @@ Proust combines several advanced components to create an agent capable of explor
 
 The repository comes with configuration for two games:
 - `zork1`: A classic adventure game where you explore an underground world
+- `detective`: A classic detective game where a crime must be solved
 - For other games in the current repository: See the `config/games.yaml` file
 
 To add a new game:
