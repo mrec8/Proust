@@ -141,12 +141,12 @@ class ActionAgent:
         
         # Build relevant memories context
         memories_context = ""
-        #if memories:
-        #    memories_context = "RELEVANT MEMORIES:\n"
-        #    for memory in memories:
-        #        memories_context += f"- TOPIC: {memory.topic}\n"
-        #        memories_context += f"  OBSERVATION: {memory.observation}\n"
-        #        memories_context += f"  INFERENCE: {memory.inference}\n\n"
+        if memories:
+            memories_context = "RELEVANT MEMORIES:\n"
+            for memory in memories:
+                memories_context += f"- TOPIC: {memory.topic}\n"
+                memories_context += f"  OBSERVATION: {memory.observation}\n"
+                memories_context += f"  INFERENCE: {memory.inference}\n\n"
 
         commands_context = ""
         if self.action_history:
