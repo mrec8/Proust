@@ -77,7 +77,7 @@ class Skill:
 class SkillManager:
     """Manager for storing and retrieving skills."""
     
-    def __init__(self, config: Dict[str, Any], llm: LLMInterface):
+    def __init__(self, config: Dict[str, Any], game_name:str, llm: LLMInterface):
         """
         Initialize the skill manager.
         
@@ -94,6 +94,7 @@ class SkillManager:
         
         # Directory to save/load skills
         self.save_dir = self.config.get('skill_manager', {}).get('save_dir', 'skills')
+        self.save_dir = os.path.join(self.save_dir, game_name)
         os.makedirs(self.save_dir, exist_ok=True)
         
         # Load existing skills if available

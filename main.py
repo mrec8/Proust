@@ -80,7 +80,7 @@ def main():
         logger.info(f"Environment initialized with game: {game_name}")
         
         # Skill Manager
-        skill_manager = SkillManager(config, llm)
+        skill_manager = SkillManager(config, game_name, llm)
         logger.info("Skill Manager initialized")
         
         # Agents

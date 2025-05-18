@@ -226,5 +226,28 @@
     "created_at": 1747580913.5166094,
     "used_count": 0,
     "success_count": 0
+  },
+  {
+    "description": "Opens mailbox revealing small leaflet",
+    "task": "As a first specific and concrete task to start exploring Zork I, the agent should:\n\nExamine the starting location and inventory to understand the immediate environment and available items.\n\nFor example, the agent could:\n\n- Read the room description carefully for exits and",
+    "commands": [
+      "look",
+      "inventory",
+      "look",
+      "examine mailbox",
+      "open mailbox"
+    ],
+    "result": "\nYou open the mailbox, revealing a small leaflet.\n\n>                                                                                                                                West of HouseScore: 0Moves: 6",
+    "contexts": [
+      "As a first specific and concrete task to start exploring Zork I, the agent should:\n\nExamine the starting location and inventory to understand the immediate environment and available items.\n\nFor example, the agent could:\n\n- Read the room description carefully for exits and",
+      "look",
+      "inventory",
+      "look",
+      "examine mailbox",
+      "open mailbox"
+    ],
+    "created_at": 1747581360.1609445,
+    "used_count": 0,
+    "success_count": 0
   }
 ]
