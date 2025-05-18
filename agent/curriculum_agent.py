@@ -104,29 +104,7 @@ class CurriculumAgent:
         Returns:
             Description of the initial task
         """
-        # If there is an initial goal in the configuration, use it
-        if self.initial_goal:
-            # Decompose the initial goal into a specific task
-            prompt = f"""
-            In the text adventure game '{self.game_name}', the general objective is: "{self.initial_goal}".
-            
-            As a first specific and concrete task to start exploring this game, the agent should:
-            """
-            response = self.llm.generate(prompt, temperature=0.5, max_tokens=50)
-            initial_task = response.strip()
-            
-            # If the response is too generic, use a default task
-            if len(initial_task.split()) < 3:
-                # Game-specific defaults
-                if "zork" in self.game_name.lower():
-                    return "Look around the current location and examine visible objects"
-                else:
-                    return "Explore the initial location and examine the environment"
-            
-            self.logger.info(f"Generated initial task: {initial_task}")
-            return initial_task
-        
-        # If there is no initial goal, generate a basic initial task
+       
         return "Look around and examine your surroundings"
     
     def _get_exploration_progress(self) -> Dict[str, Any]:

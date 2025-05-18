@@ -1,0 +1,53 @@
+[
+  {
+    "description": "Takes white paper from tabletop surface",
+    "task": "Take white paper",
+    "commands": [
+      "take paper"
+    ],
+    "result": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
+    "contexts": [
+      "Take white paper",
+      "take paper"
+    ],
+    "created_at": 1747582941.643377,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads author\u2019s note on white paper",
+    "task": "Read white paper",
+    "commands": [
+      "read paper"
+    ],
+    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+    "contexts": [
+      "Read white paper",
+      "read paper"
+    ],
+    "created_at": 1747582946.354321,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals Chief's office and murder briefing",
+    "task": "Look",
+    "commands": [
+      "examine room",
+      "look around",
+      "look room",
+      "look"
+    ],
+    "result": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
+    "contexts": [
+      "Look",
+      "examine room",
+      "look around",
+      "look room",
+      "look"
+    ],
+    "created_at": 1747582986.2413776,
+    "used_count": 0,
+    "success_count": 0
+  }
+]
