@@ -48,7 +48,6 @@ class MetricsTracker:
                 "commands_executed": 0,
                 "successful_commands": 0,
                 "total_score": 0,
-                "unique_locations_visited": set(),
                 "unique_objects_interacted": set()
             },
             "timestep_metrics": [],
@@ -86,10 +85,6 @@ class MetricsTracker:
         self.metrics["cumulative_metrics"]["commands_executed"] += 1
         self.metrics["cumulative_metrics"]["total_score"] = score
         
-        # Extract location if possible (simplified)
-        location = self._extract_location(observation)
-        if location and location not in self.metrics["cumulative_metrics"]["unique_locations_visited"]:
-            self.metrics["cumulative_metrics"]["unique_locations_visited"].add(location)
         
         # Extract objects if possible (simplified)
         objects = self._extract_objects(observation)
@@ -103,7 +98,6 @@ class MetricsTracker:
             "action": action,
             "task": task,
             "score": score,
-            "location": location,
             "objects_in_scope": objects,
             "timestamp": time.time()
         })
@@ -181,9 +175,7 @@ class MetricsTracker:
         """
         # Convert set to list for JSON serialization
         metrics_copy = self.metrics.copy()
-        metrics_copy["cumulative_metrics"]["unique_locations_visited"] = list(
-            self.metrics["cumulative_metrics"]["unique_locations_visited"]
-        )
+        
         metrics_copy["cumulative_metrics"]["unique_objects_interacted"] = list(
             self.metrics["cumulative_metrics"]["unique_objects_interacted"]
         )
@@ -218,7 +210,6 @@ class MetricsTracker:
             "tasks_completed": self.metrics["cumulative_metrics"]["tasks_completed"],
             "tasks_failed": self.metrics["cumulative_metrics"]["tasks_failed"],
             "memories_acquired": self.metrics["cumulative_metrics"]["memories_acquired"],
-            "unique_locations": len(self.metrics["cumulative_metrics"]["unique_locations_visited"]),
             "unique_objects": len(self.metrics["cumulative_metrics"]["unique_objects_interacted"]),
             "task_success_rate": self.metrics["cumulative_metrics"]["tasks_completed"] / 
                               max(1, (self.metrics["cumulative_metrics"]["tasks_completed"] + 
@@ -243,7 +234,6 @@ class MetricsTracker:
         print(f"  Tasks Failed: {summary['tasks_failed']}")
         print(f"  Success Rate: {summary['task_success_rate']*100:.1f}%")
         print("\nExploration:")
-        print(f"  Unique Locations: {summary['unique_locations']}")
         print(f"  Unique Objects: {summary['unique_objects']}")
         print(f"  memories Acquired: {summary['memories_acquired']}")
         print("="*50)
@@ -286,9 +276,8 @@ class MetricsTracker:
             axs[1, 0].set_xlabel('Time (s)')
             axs[1, 0].set_ylabel('Cumulative memories')
             
-        # Plot 4: Exploration (locations and objects)
+        # Plot 4: Object exploration
         exploration = {
-            'Locations': len(self.metrics["cumulative_metrics"]["unique_locations_visited"]),
             'Objects': len(self.metrics["cumulative_metrics"]["unique_objects_interacted"])
         }
         axs[1, 1].bar(exploration.keys(), exploration.values())

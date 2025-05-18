@@ -50,7 +50,8 @@ class CurriculumAgent:
         self.logger.info(f"Curriculum agent initialized with game: {self.game_name}")
     
     def propose_next_task(self, agent_state: Dict[str, Any], 
-                        memories: Optional[List[Memory]] = None) -> str:
+                          observation_history: List[str],
+                          memories: Optional[List[Memory]] = None) -> str:
         """
         Proposes the next task based on the current state, progress, and memories.
         
@@ -70,7 +71,7 @@ class CurriculumAgent:
         exploration_progress = self._get_exploration_progress()
         
         # Build prompt for the LLM, now including memories
-        prompt = self._build_task_proposal_prompt(agent_state, exploration_progress, memories)
+        prompt = self._build_task_proposal_prompt(agent_state, exploration_progress, observation_history, memories)
         
         # Extra check to prevent repeating failed tasks
         max_attempts = 3
@@ -152,6 +153,7 @@ class CurriculumAgent:
         }
     
     def _build_task_proposal_prompt(self, agent_state: Dict[str, Any], 
+                                    observation_history: List[str],
                                     exploration_progress: Dict[str, Any],
                                     memories: Optional[List[Memory]] = None) -> str:
         observation = agent_state.get('observation', '')
@@ -171,7 +173,7 @@ class CurriculumAgent:
                 if obj.lower() in task.lower():
                     interacted_objects.add(obj.lower())
 
-        interacted_context = "INTERACTED OBJECTS (DO NOT REPEAT UNLESS NEW INFO):\n" + ", ".join(interacted_objects)
+      
 
                 
         # Memory context
@@ -185,131 +187,58 @@ class CurriculumAgent:
                     f"   Inference: {m.inference}\n"
                 )
 
-        special_commands = ', '.join(self.special_commands)
-        key_objects = ', '.join(self.game_specific_config.get('key_objects', []))
-        key_locations = ', '.join(self.game_specific_config.get('key_locations', []))
-
         # -----------------------------
         # Final prompt to return
         # -----------------------------
-        return f"""You are a curriculum planner agent helping an autonomous explorer play a text-based adventure game called "{self.game_name}". 
-        Your role is to propose the next best task for the agent to perform. The agent will **strictly follow** your suggestion to progress through the game.
+        return f"""You are a curriculum task planner embedded inside an autonomous interactive fiction agent playing the classic game Zork. Your role is to carefully propose the next most promising high-level task for the agent to pursue, taking into account its current sensory input, recent actions, inventory, and task history.
 
-        You must analyze the current state, past attempts, and the agent’s memories to decide a specific, achievable, and useful next step. 
+        ## CONTEXT AVAILABLE TO YOU:
 
-        # GAME STATE
-        - Observation: {observation}
-        - Inventory: {inventory}
-        - Exploration progress: {exploration_progress}
+        You will be provided with:
+        - `observation`: A textual description of the current game location, including visible objects and exits.
+        - `inventory`: The current items the agent is carrying.
+        - `previous_tasks`: A chronological list of proposed tasks, each annotated with success (True/False).
+        - `observation_history`: The most recent environment observations made by the agent.
+        - `steps_without_change`: How many consecutive steps have occurred without a meaningful change in location, objects, or environment description.
 
-        You must analyze the following observation and identify objects, locations, or elements that are currently visible:
+        ## YOUR OBJECTIVES:
 
-        OBSERVATION:
-        {observation}
+        1. Propose **a single, clear, high-level task** that is:
+        - Achievable based on the current `observation`.
+        - Different from tasks that have recently failed.
+        - Not redundant with previous successes or overly similar phrasing.
+        - Focused on **progression**, such as acquiring new objects, interacting meaningfully with the environment, or uncovering new descriptions.
 
+        2. **Avoid suggesting movement/navigation** (e.g., "go north") if:
+        - That direction was already tried recently and led to a loop or no location change.
+        - The `steps_without_change` counter is high, suggesting exploration is stuck.
+        - No visible exit or landmark suggests value in that direction.
 
-        # TASK HISTORY
-        {task_context}
+        3. **Avoid loops and non-progressive commands**:
+        - Repetitive commands like “look” or “wait” should only be proposed if clearly justified by the current state (e.g., a new object just appeared).
+        - Do not suggest examining or opening items that have already been interacted with unless a new reason is present.
 
-        # OBJECT HISTORY
-        {interacted_context}
+        4. Prefer tasks that:
+        - Directly interact with objects mentioned in the `observation`.
+        - Continue the logical chain of interaction (e.g., after opening a box, "take what’s inside", then "read it").
+        - Help the agent uncover more of the game world or story.
 
-        # MEMORY LOG
-        {memory_context}
+        ## FORMAT:
+        Output **only** the next best high-level task as a natural language imperative (e.g., `"Open the mailbox"`, `"Read the leaflet"`). Do not add explanations, summaries, or code.
 
-        # GAME KNOWLEDGE
-        - Special commands: {special_commands}
-        - Key objects: {key_objects}
-        - Key locations: {key_locations}
+        ---
 
-        # TASK GENERATION RULES
-        1. Propose a task that can be completed using 1–2 standard text adventure commands.
-        2. Avoid suggesting anything similar to failed tasks.
-        3. Use the memories to propose informed actions (follow clues, use known objects, visit unvisited places).
-        4. Only mention objects or locations visible in the current observation, inventory, or memories.
-        5. Do NOT be vague, repetitive, or speculative.
-        6. Suggest tasks that are practical and realistic from the current state.
-        7. Keep the task under 3–7 words.
+        # DATA FOR YOU TO USE:
 
-        # AVOID REPETITION & REDUNDANT PATTERNS
-
-        You MUST NOT generate a task involving:
-        - Objects that have already been interacted with (examined, opened, taken, read, etc.), unless a new change in the environment justifies it.
-        - Repeating the same command structure for the same object (e.g., "examine mailbox" → "open mailbox" → "examine mailbox again").
-        - Switching verbs on the same object in close succession. For example:
-            ✘ "read note" followed by "examine note"
-            ✘ "open mailbox" followed by "look at mailbox"
-
-        Repeated interaction with the same object is considered a sign of poor progression planning.
-
-        Focus on actions that involve **new objects**, **new directions**, or **new combinations**. Prefer novel paths of interaction, even if subtle.
-
-        If you believe the best next task involves a previously used object, you must be absolutely sure it is **still relevant** due to new context from the latest observation.
-
-        🚫 NEVER suggest tasks on the same object twice in a row — this is considered a major planning failure.
-
-
-       # HARD CONSTRAINT: CONTEXTUAL ALIGNMENT
-
-        You must ONLY reference objects, characters, or locations that are **explicitly present** in the current game observation, inventory, or listed in the agent's recent memory **IF they are confirmed to be currently relevant**.
-
-        NEVER propose tasks involving:
-        - Locations or objects not visible in the current observation.
-        - Actions that assume previous positions or states (e.g., mailbox if it's not in the scene).
-        - Recalling past locations unless the current observation clearly mentions them.
-
-        The current observation is the ultimate source of truth. If something is not visible or mentioned **now**, you must ignore it — even if it was recently seen or stored in memory.
-
-        ✅ VALID TARGET: “Take key” — if the key is in the current observation.  
-        ❌ INVALID TARGET: “Open mailbox” — if the mailbox is not visible in the current scene.
-
-
-        # RECOGNIZING INTERACTABLE ELEMENTS
-
-        Extract all objects and elements mentioned in the CURRENT OBSERVATION as potential targets for interaction. These are the only valid entities for your next task.
-
-        Use simple keyword matching: if the word appears in the observation, it's usable. If not, ignore it — even if it was previously seen.
-
-        Do NOT assume prior context. Only act on what's explicitly described in the current scene.
-
+        observation: {observation}  
+        inventory: {inventory}  
+        previous_tasks: {task_context}  
+        observation_history: {observation_history}  
         
-        # ABSOLUTE CONSTRAINTS ON TASK SELECTION
 
-        1. Do NOT suggest a task that involves any object or location NOT mentioned in the current observation.
-        2. Do NOT repeat any task that has failed more than once (even with small changes).
-        3. Do NOT propose multiple variations of the same command verb for the same object (e.g., "examine mailbox", "look at mailbox", "open mailbox").
-        4. Do NOT reference previous locations unless the agent has explicitly moved back there.
+        Now propose the most meaningful next task for the agent."""
 
-        You must generate a task that:
-        - Can be executed immediately, in the current visible context.
-        - Has never failed before in a similar form.
-        - Helps advance the game by interacting with new elements, moving in new directions, or trying novel actions.
 
-        If there are no obvious new objects, suggest moving in a new direction:
-        - "Go north"
-        - "Go south"
-        - "Enter clearing"
-
-        
-        # GOOD EXAMPLES
-        - "Take leaflet"
-        - "Go north"
-        - "Open mailbox"
-        - "Read the note"
-
-        # BAD EXAMPLES
-        - "Explore the area" (too vague)
-        - "Find treasure" (too broad)
-        - "Open rusty gate" (not in view)
-        - "Investigate sound" (imaginary element)
-
-        # FORMAT (MANDATORY)
-        Respond with only:
-        Task: [your 3–7 word task]
-
-        Example:
-        Task: Examine the mailbox
-        """
 
     
     def _extract_task_from_response(self, response: str) -> str:

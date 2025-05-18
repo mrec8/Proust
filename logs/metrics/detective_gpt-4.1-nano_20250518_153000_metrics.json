@@ -1,0 +1,393 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1-nano_20250518_153000",
+    "start_time": 1747575000.020744,
+    "end_time": 1747575057.3720844,
+    "game": "detective",
+    "max_steps": 30,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 11,
+    "tasks_completed": 10,
+    "tasks_failed": 1,
+    "memories_acquired": 0,
+    "commands_executed": 30,
+    "successful_commands": 0,
+    "total_score": 30,
+    "unique_objects_interacted": [
+      "paper"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575000.8465054
+    },
+    {
+      "step": 1,
+      "action": "examine paper",
+      "task": "Examine white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575003.0155888
+    },
+    {
+      "step": 2,
+      "action": "x",
+      "task": "Search white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575005.0537858
+    },
+    {
+      "step": 3,
+      "action": "search paper",
+      "task": "Search white paper edges",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575007.2888415
+    },
+    {
+      "step": 4,
+      "action": "look edges",
+      "task": "Search white paper edges",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575008.974066
+    },
+    {
+      "step": 5,
+      "action": "examine edges",
+      "task": "Search white paper edges",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575010.373588
+    },
+    {
+      "step": 6,
+      "action": "look",
+      "task": "Search white paper edges",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575012.210699
+    },
+    {
+      "step": 7,
+      "action": "search edges",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575014.2605474
+    },
+    {
+      "step": 8,
+      "action": "search table",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575016.2206242
+    },
+    {
+      "step": 9,
+      "action": "search table",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575017.7158318
+    },
+    {
+      "step": 10,
+      "action": "look",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575019.4062061
+    },
+    {
+      "step": 11,
+      "action": "take white paper",
+      "task": "Examine the white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575021.781306
+    },
+    {
+      "step": 12,
+      "action": "examine white paper",
+      "task": "Search white paper edges",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575023.9453256
+    },
+    {
+      "step": 13,
+      "action": "examine edges of white paper",
+      "task": "Search white paper edges",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575025.7430763
+    },
+    {
+      "step": 14,
+      "action": "examine edges",
+      "task": "Search white paper edges",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575027.5943825
+    },
+    {
+      "step": 15,
+      "action": "examine edges of white paper",
+      "task": "Search white paper edges",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575029.4266775
+    },
+    {
+      "step": 16,
+      "action": "examine edges of white paper",
+      "task": "Search white paper edges",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575031.266348
+    },
+    {
+      "step": 17,
+      "action": "search edges",
+      "task": "Search surroundings",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575033.7223892
+    },
+    {
+      "step": 18,
+      "action": "look",
+      "task": "Search surroundings",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575035.364941
+    },
+    {
+      "step": 19,
+      "action": "search surroundings",
+      "task": "Search surroundings",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575037.41559
+    },
+    {
+      "step": 20,
+      "action": "look",
+      "task": "Search surroundings",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575038.945164
+    },
+    {
+      "step": 21,
+      "action": "w",
+      "task": "Read the police report",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575041.3335633
+    },
+    {
+      "step": 22,
+      "action": "examine police report",
+      "task": "Read the police report",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575042.9394841
+    },
+    {
+      "step": 23,
+      "action": "look",
+      "task": "Read the police report",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575044.7809105
+    },
+    {
+      "step": 24,
+      "action": "examine police report",
+      "task": "Read the police report",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575046.4294457
+    },
+    {
+      "step": 25,
+      "action": "look",
+      "task": "Read the police report",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575048.1604493
+    },
+    {
+      "step": 26,
+      "action": "take gun",
+      "task": "Take black pistol",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747575050.1796124
+    },
+    {
+      "step": 27,
+      "action": "take pistol",
+      "task": "Open the evidence box",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747575052.4751115
+    },
+    {
+      "step": 28,
+      "action": "open evidence box",
+      "task": "Open the evidence box",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747575054.3003013
+    },
+    {
+      "step": 29,
+      "action": "search",
+      "task": "Open the evidence box",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747575056.4020054
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747575001.7722907
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine paper"
+      ],
+      "timestamp": 1747575003.75664
+    },
+    {
+      "task": "Search white paper",
+      "steps_taken": 1,
+      "commands": [
+        "x"
+      ],
+      "timestamp": 1747575006.080403
+    },
+    {
+      "task": "Search white paper edges",
+      "steps_taken": 4,
+      "commands": [
+        "search paper",
+        "look edges",
+        "examine edges",
+        "look"
+      ],
+      "timestamp": 1747575013.1473496
+    },
+    {
+      "task": "Take white paper",
+      "steps_taken": 4,
+      "commands": [
+        "search edges",
+        "search table",
+        "search table",
+        "look"
+      ],
+      "timestamp": 1747575020.5082579
+    },
+    {
+      "task": "Examine the white paper",
+      "steps_taken": 1,
+      "commands": [
+        "take white paper"
+      ],
+      "timestamp": 1747575022.5567038
+    },
+    {
+      "task": "Search surroundings",
+      "steps_taken": 4,
+      "commands": [
+        "search edges",
+        "look",
+        "search surroundings",
+        "look"
+      ],
+      "timestamp": 1747575039.85819
+    },
+    {
+      "task": "Read the police report",
+      "steps_taken": 5,
+      "commands": [
+        "w",
+        "examine police report",
+        "look",
+        "examine police report",
+        "look"
+      ],
+      "timestamp": 1747575048.9819562
+    },
+    {
+      "task": "Take black pistol",
+      "steps_taken": 1,
+      "commands": [
+        "take gun"
+      ],
+      "timestamp": 1747575051.0905297
+    },
+    {
+      "task": "Open the evidence box",
+      "steps_taken": 3,
+      "commands": [
+        "take pistol",
+        "open evidence box",
+        "search"
+      ],
+      "timestamp": 1747575057.3720262
+    }
+  ],
+  "failed_tasks": [
+    {
+      "task": "Search white paper edges",
+      "steps_taken": 5,
+      "commands": [
+        "examine white paper",
+        "examine edges of white paper",
+        "examine edges",
+        "examine edges of white paper",
+        "examine edges of white paper"
+      ],
+      "reason": "Critique: To better investigate the edges, try examining the entire white paper again with a more specific command like \"examine edges of white paper\" or \"look at the edges of the white paper\" to ensure the game recognizes the focus on the edges.",
+      "timestamp": 1747575032.4932857
+    }
+  ],
+  "acquired_memories": []
+}

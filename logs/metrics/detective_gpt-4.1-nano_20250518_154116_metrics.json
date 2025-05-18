@@ -1,0 +1,581 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1-nano_20250518_154116",
+    "start_time": 1747575676.267106,
+    "end_time": 1747575758.9505754,
+    "game": "detective",
+    "max_steps": 40,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 21,
+    "tasks_completed": 18,
+    "tasks_failed": 2,
+    "memories_acquired": 0,
+    "commands_executed": 40,
+    "successful_commands": 0,
+    "total_score": 20,
+    "unique_objects_interacted": [
+      "paper",
+      "ring",
+      "pen"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "examine paper",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575677.1861236
+    },
+    {
+      "step": 1,
+      "action": "look closely",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575678.814262
+    },
+    {
+      "step": 2,
+      "action": "look around",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575680.7036934
+    },
+    {
+      "step": 3,
+      "action": "look around",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575682.220251
+    },
+    {
+      "step": 4,
+      "action": "look around",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575683.792611
+    },
+    {
+      "step": 5,
+      "action": "look",
+      "task": "Examine the paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575685.8844883
+    },
+    {
+      "step": 6,
+      "action": "read",
+      "task": "Read the paper again",
+      "score": 10,
+      "objects_in_scope": [
+        "paper",
+        "ring"
+      ],
+      "timestamp": 1747575688.0615814
+    },
+    {
+      "step": 7,
+      "action": "read paper",
+      "task": "Search the paper again",
+      "score": 10,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747575690.2207408
+    },
+    {
+      "step": 8,
+      "action": "search paper",
+      "task": "Search the paper again",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747575691.9736476
+    },
+    {
+      "step": 9,
+      "action": "search paper thoroughly",
+      "task": "Search the paper again",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575693.4554713
+    },
+    {
+      "step": 10,
+      "action": "examine paper carefully",
+      "task": "Search the paper again",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575695.427503
+    },
+    {
+      "step": 11,
+      "action": "search paper again",
+      "task": "Search the paper again",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575697.3534245
+    },
+    {
+      "step": 12,
+      "action": "examine paper",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575699.6578963
+    },
+    {
+      "step": 13,
+      "action": "take paper",
+      "task": "Take white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575701.5278597
+    },
+    {
+      "step": 14,
+      "action": "take paper",
+      "task": "Examine the white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575703.6456738
+    },
+    {
+      "step": 15,
+      "action": "x",
+      "task": "Search the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575706.81349
+    },
+    {
+      "step": 16,
+      "action": "take paper",
+      "task": "Examine the white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575708.8845
+    },
+    {
+      "step": 17,
+      "action": "examine paper",
+      "task": "Open the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575710.0323322
+    },
+    {
+      "step": 18,
+      "action": "open",
+      "task": "Search the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper",
+        "pen"
+      ],
+      "timestamp": 1747575712.3509467
+    },
+    {
+      "step": 19,
+      "action": "search paper",
+      "task": "Search the white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575714.14637
+    },
+    {
+      "step": 20,
+      "action": "read paper",
+      "task": "Search the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747575715.6660223
+    },
+    {
+      "step": 21,
+      "action": "take paper",
+      "task": "Search white paper thoroughly",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575717.8115256
+    },
+    {
+      "step": 22,
+      "action": "search paper",
+      "task": "Search white paper thoroughly",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575720.015777
+    },
+    {
+      "step": 23,
+      "action": "examine white paper",
+      "task": "Search white paper thoroughly",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575721.8560152
+    },
+    {
+      "step": 24,
+      "action": "search paper",
+      "task": "Open the white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575724.6179733
+    },
+    {
+      "step": 25,
+      "action": "look",
+      "task": "Open the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575726.47976
+    },
+    {
+      "step": 26,
+      "action": "open paper",
+      "task": "Go west",
+      "score": 20,
+      "objects_in_scope": [
+        "pen"
+      ],
+      "timestamp": 1747575728.6211848
+    },
+    {
+      "step": 27,
+      "action": "w",
+      "task": "Go west",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575730.257519
+    },
+    {
+      "step": 28,
+      "action": "east",
+      "task": "Go west",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575733.2455227
+    },
+    {
+      "step": 29,
+      "action": "w",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575735.9994957
+    },
+    {
+      "step": 30,
+      "action": "north",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575737.6384895
+    },
+    {
+      "step": 31,
+      "action": "east",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575740.9050932
+    },
+    {
+      "step": 32,
+      "action": "north",
+      "task": "Read the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575743.6060507
+    },
+    {
+      "step": 33,
+      "action": "read white paper",
+      "task": "Read the white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747575745.226131
+    },
+    {
+      "step": 34,
+      "action": "read white paper",
+      "task": "Examine white paper again",
+      "score": 20,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747575747.3134274
+    },
+    {
+      "step": 35,
+      "action": "x white paper",
+      "task": "Search white paper again",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575749.828512
+    },
+    {
+      "step": 36,
+      "action": "x white paper",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575751.9373984
+    },
+    {
+      "step": 37,
+      "action": "x white paper",
+      "task": "Search white paper again",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575754.6377506
+    },
+    {
+      "step": 38,
+      "action": "x white paper",
+      "task": "Search the paper edges",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747575755.953001
+    },
+    {
+      "step": 39,
+      "action": "examine edges of paper",
+      "task": "Search the paper edges",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747575757.7251244
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Examine the paper",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747575686.8326347
+    },
+    {
+      "task": "Read the paper again",
+      "steps_taken": 1,
+      "commands": [
+        "read"
+      ],
+      "timestamp": 1747575689.009802
+    },
+    {
+      "task": "Take white paper",
+      "steps_taken": 2,
+      "commands": [
+        "examine paper",
+        "take paper"
+      ],
+      "timestamp": 1747575702.5269773
+    },
+    {
+      "task": "Examine the white paper",
+      "steps_taken": 1,
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747575705.1670806
+    },
+    {
+      "task": "Search the white paper",
+      "steps_taken": 1,
+      "commands": [
+        "x"
+      ],
+      "timestamp": 1747575707.624301
+    },
+    {
+      "task": "Examine the white paper",
+      "steps_taken": 1,
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747575708.8849373
+    },
+    {
+      "task": "Open the white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine paper"
+      ],
+      "timestamp": 1747575711.04645
+    },
+    {
+      "task": "Search the white paper",
+      "steps_taken": 3,
+      "commands": [
+        "open",
+        "search paper",
+        "read paper"
+      ],
+      "timestamp": 1747575716.6329303
+    },
+    {
+      "task": "Search white paper thoroughly",
+      "steps_taken": 1,
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747575718.5486057
+    },
+    {
+      "task": "Search white paper thoroughly",
+      "steps_taken": 2,
+      "commands": [
+        "search paper",
+        "examine white paper"
+      ],
+      "timestamp": 1747575722.675037
+    },
+    {
+      "task": "Open the white paper",
+      "steps_taken": 2,
+      "commands": [
+        "search paper",
+        "look"
+      ],
+      "timestamp": 1747575727.3928037
+    },
+    {
+      "task": "Go west",
+      "steps_taken": 3,
+      "commands": [
+        "open paper",
+        "w",
+        "east"
+      ],
+      "timestamp": 1747575734.015535
+    },
+    {
+      "task": "Go north",
+      "steps_taken": 3,
+      "commands": [
+        "w",
+        "north",
+        "east"
+      ],
+      "timestamp": 1747575742.132164
+    },
+    {
+      "task": "Read the white paper",
+      "steps_taken": 2,
+      "commands": [
+        "north",
+        "read white paper"
+      ],
+      "timestamp": 1747575746.1225805
+    },
+    {
+      "task": "Examine white paper again",
+      "steps_taken": 1,
+      "commands": [
+        "read white paper"
+      ],
+      "timestamp": 1747575748.2822735
+    },
+    {
+      "task": "Search white paper again",
+      "steps_taken": 1,
+      "commands": [
+        "x white paper"
+      ],
+      "timestamp": 1747575750.6032538
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "x white paper"
+      ],
+      "timestamp": 1747575752.9131105
+    },
+    {
+      "task": "Search white paper again",
+      "steps_taken": 1,
+      "commands": [
+        "x white paper"
+      ],
+      "timestamp": 1747575754.638545
+    }
+  ],
+  "failed_tasks": [
+    {
+      "task": "Look around",
+      "steps_taken": 5,
+      "commands": [
+        "examine paper",
+        "look closely",
+        "look around",
+        "look around",
+        "look around"
+      ],
+      "reason": "Critique: Try using a more explicit command like \"look around the area\" or \"examine surroundings\" to prompt a detailed description.",
+      "timestamp": 1747575684.683071
+    },
+    {
+      "task": "Search the paper again",
+      "steps_taken": 5,
+      "commands": [
+        "read paper",
+        "search paper",
+        "search paper thoroughly",
+        "examine paper carefully",
+        "search paper again"
+      ],
+      "reason": "Critique: Try using a more specific command such as \"Examine the paper carefully\" or \"Look at the paper closely\" to prompt a detailed description.",
+      "timestamp": 1747575698.5261347
+    }
+  ],
+  "acquired_memories": []
+}

@@ -168,6 +168,8 @@ class ActionAgent:
         GAME STATE:
         {observation}
 
+        IT IS CRUCIAL THAT YOU NEVER GENERATE COMMANDS REGARDING OBJECTS OR PLACES THAT ARE NOT PRESENT IN THE GAME STATE DESCRIPTION. IF YOU DO SO CANCER WILL NEVER BE CURED!!!!
+
         INVENTORY:
         {inventory}
 
@@ -196,6 +198,7 @@ class ActionAgent:
         1. DO NOT REPEAT COMMANDS IF THE OBSERVATION SUGGESTS THEY WERE NOT COMPREHENDED.
         2. DO NOT REPEAT COMMANDS THAT SEEMED USELESS TO THE CRITIQUE.
         3. IF YOU SEE REPETITION IN THE COMMANDS, CHANGE TO MOVEMENT COMMANDS OR JUST REUTRN "look".
+        4. IF THE PREVIOUS COMMAND FOCCUSES ON A SPECIFIC OBJECT, MAKE SURE THE NEW ONE DOES NOT UNLESS THE ACTION SUBSTANTIALLY CANGES. IF YOU REPEAT THE MODEL WILL ABORT EXECUTION!!!!!!
         
         TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
         1. TEXT ADVENTURE COMMANDS ARE SHORT: Valid commands are either 1 word (ACTION VERB or DIRECTION) or 2 words (ACTION VERB + OBJECT or DIRECTION). NOTHING LONGER IS VALID. EVERYTHING ELSE SUCKS AND MAKES YOU A FAILURE!!!!! DON'T ASHAME YOURSELF.
@@ -204,7 +207,7 @@ class ActionAgent:
         - Verb + noun: "take leaflet", "examine house", "open mailbox"
         - Directional movement: "north", "south", "east", "west", "up", "down" (or n, s, e, w, u, d)
         3. COMMON ABBREVIATIONS:
-        - "x" for "examine"
+        
         - "i" for "inventory"
         - "l" for "look"
         - n, s, e, w, u, d for directions
@@ -222,7 +225,9 @@ class ActionAgent:
         - "investigate object" (use "examine object" instead)
         - "go to location" (use direction commands: "north", "south", etc.)
         - "use object" (too vague, specify how: "open object", "read object")
-        - ANY command containing more than 4 words (too complex)
+        - "look around" (use "look" instead)
+        - "examine" despite being supported it almost never works, so avoid it.
+        - ANY command containing more than 2 words (too complex)
 
         LEARNING FROM CRITIQUE:
         If the critique mentions better commands to try, USE THEM EXACTLY.
@@ -246,10 +251,10 @@ class ActionAgent:
         6. NOT repeat failed command patterns
         7. USE THE VALID COMMANDS LISTED ABOVE, DON'T MAKE UP YOUR OWN
         8. WHEN FACING OBJECTS THAT SEEM MANIPULABLE FIRST TAKE THEM, THEN YOU CAN EXAMINE THEM OR USE THEM.
-        9. DON?T ABUSE THE "EXAMINE" COMMAND; DESPITE IT'S USEFULNESS, IT WILL GET YOU STUCK.
+        9. DON'T ABUSE THE "EXAMINE" COMMAND; DESPITE IT'S USEFULNESS, IT WILL GET YOU STUCK.
+        10. IF YOU SEE A REPEATED COMMAND, CHANGE TO MOVEMENT COMMANDS OR JUST RETURN "look".
         YOUR COMMAND:
         """
-        
         return prompt
     
     def _build_action_refinement_prompt(self, previous_action: str, task: str, 

@@ -1,0 +1,532 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1-nano_20250518_152614",
+    "start_time": 1747574774.9182634,
+    "end_time": 1747574800.1240525,
+    "game": "detective",
+    "max_steps": 30,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 26,
+    "tasks_completed": 26,
+    "tasks_failed": 0,
+    "memories_acquired": 0,
+    "commands_executed": 30,
+    "successful_commands": 0,
+    "total_score": 20,
+    "unique_objects_interacted": [
+      "paper"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574775.6770191
+    },
+    {
+      "step": 1,
+      "action": "examine paper",
+      "task": "Take the white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574777.8192062
+    },
+    {
+      "step": 2,
+      "action": "take paper",
+      "task": "Take the white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747574779.397843
+    },
+    {
+      "step": 3,
+      "action": "drop paper",
+      "task": "Search evidence in room",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747574781.5252693
+    },
+    {
+      "step": 4,
+      "action": "search room",
+      "task": "Search evidence in room",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747574783.6632528
+    },
+    {
+      "step": 5,
+      "action": "examine",
+      "task": "Search evidence in room",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574785.193944
+    },
+    {
+      "step": 6,
+      "action": "search paper",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747574787.3657415
+    },
+    {
+      "step": 7,
+      "action": "examine paper",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574789.142683
+    },
+    {
+      "step": 8,
+      "action": "x",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574791.0323827
+    },
+    {
+      "step": 9,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574792.5465212
+    },
+    {
+      "step": 10,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574794.098353
+    },
+    {
+      "step": 11,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574794.7134
+    },
+    {
+      "step": 12,
+      "action": "x",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574796.2614162
+    },
+    {
+      "step": 13,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574796.932044
+    },
+    {
+      "step": 14,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574797.7804494
+    },
+    {
+      "step": 15,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574798.3014193
+    },
+    {
+      "step": 16,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574798.7951088
+    },
+    {
+      "step": 17,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574799.345866
+    },
+    {
+      "step": 18,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.0885255
+    },
+    {
+      "step": 19,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.0930102
+    },
+    {
+      "step": 20,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.0973673
+    },
+    {
+      "step": 21,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.1020331
+    },
+    {
+      "step": 22,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.106698
+    },
+    {
+      "step": 23,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.1104252
+    },
+    {
+      "step": 24,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.1134105
+    },
+    {
+      "step": 25,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.1159785
+    },
+    {
+      "step": 26,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.11822
+    },
+    {
+      "step": 27,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.120364
+    },
+    {
+      "step": 28,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.1220741
+    },
+    {
+      "step": 29,
+      "action": "examine",
+      "task": "Examine white paper",
+      "score": 20,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574800.1238415
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747574776.5920775
+    },
+    {
+      "task": "Take the white paper",
+      "steps_taken": 2,
+      "commands": [
+        "examine paper",
+        "take paper"
+      ],
+      "timestamp": 1747574780.0810425
+    },
+    {
+      "task": "Search evidence in room",
+      "steps_taken": 3,
+      "commands": [
+        "drop paper",
+        "search room",
+        "examine"
+      ],
+      "timestamp": 1747574785.8778598
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 2,
+      "commands": [
+        "search paper",
+        "examine paper"
+      ],
+      "timestamp": 1747574789.896466
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "x"
+      ],
+      "timestamp": 1747574791.7793286
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574793.508063
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574794.098556
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574794.713526
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "x"
+      ],
+      "timestamp": 1747574796.2620609
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574796.9327278
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574797.7808576
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574798.3022287
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574798.7958202
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574799.3465004
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.0891793
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.0936108
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.0979059
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1027877
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.107287
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1107764
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1137657
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1162755
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1185343
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1205866
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1222978
+    },
+    {
+      "task": "Examine white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine"
+      ],
+      "timestamp": 1747574800.1240025
+    }
+  ],
+  "failed_tasks": [],
+  "acquired_memories": []
+}

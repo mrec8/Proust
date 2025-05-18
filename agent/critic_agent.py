@@ -94,69 +94,56 @@ class CriticAgent:
         
         # Build the prompt
         prompt = f"""
-        You are an expert evaluator for text adventure games. Your task is to determine whether a specific objective 
-        has been successfully completed, based on the game's response.
+        You are an expert interactive fiction game critic. Your role is to **evaluate whether a high-level task has been successfully completed**, based on the player's actions, final game state, and inventory.
 
-        TASK TO EVALUATE:
-        {task}
+        ## TASK TO EVALUATE:
+        "{task}"
 
-        ACTIONS TAKEN:
+        ## ACTIONS TAKEN:
         {actions_text}
 
-        FINAL GAME STATE:
+        ## FINAL GAME STATE:
         {observation}
 
-        INVENTORY:
+        ## INVENTORY:
         {inventory}
 
-        COMPREHENSIVE SUCCESS CRITERIA:
-        1. EXAMINATION TASKS (e.g., "Examine mailbox"):
-        - Success: The game provides a detailed description of the object
-        - Failure: "You can't see any such thing", "Nothing special" with no details, or no relevant information
-        
-        2. ACQUISITION TASKS (e.g., "Take leaflet"):
-        - Success: Object appears in inventory OR game confirms "Taken."
-        - Failure: "You can't see any such thing", "You can't take that", or object not in inventory
-        
-        3. MOVEMENT TASKS (e.g., "Go north"):
-        - Success: Description changes to new location
-        - Failure: "You can't go that way", no change in environment
-        
-        4. OPENING/CLOSING TASKS (e.g., "Open mailbox"):
-        - Success: Game confirms "Opened." or describes new state
-        - Failure: "You can't open that", "That's already open", "You can't see any such thing"
-        
-        5. READING TASKS (e.g., "Read leaflet"):
-        - Success: Game provides text content
-        - Failure: "You can't read that", "There's nothing written on it"
+        ---
 
-        DETERMINING SUCCESS:
-        - Success REQUIRES clear, affirmative evidence in the game's response
-        - The mere absence of an error message is NOT sufficient
-        - Pay close attention to the game's specific wording
-        - For tasks with multiple parts, ALL parts must be completed
+        ### CRITERIA FOR SUCCESS:
 
-        ANALYSIS FRAMEWORK:
-        1. EVIDENCE ANALYSIS:
-        - What was the specific task?
-        - What commands were used?
-        - What was the game's response?
-        - Does the response directly confirm task completion?
-        
-        2. COMMAND EFFECTIVENESS:
-        - Were the commands appropriate for the task?
-        - Did the game understand the commands?
-        - Did the game's response indicate progress?
-        
-        3. ALTERNATIVE APPROACHES:
-        - If the task failed, what specific command would work better?
-        - What different objects or directions could be tried?
-        - What specific verb would be more effective?
+        A task is considered successful if there is clear evidence that its intended outcome has been fulfilled. Do not base your judgment only on the last action—use the full context. Use the following guidance per task type:
 
-        FORMAT YOUR RESPONSE STRICTLY AS:
-        Success: [true/false]
-        Reasoning: [1-2 sentences explaining your evaluation]
-        Critique: [ONLY IF Success is false, provide specific, actionable feedback with 1-2 alternative commands]
+        1. **Examine / Look at [object]**
+        - ✅ Success: The object yields a meaningful description.
+        - ❌ Failure: No description, or message like "nothing special" or "you can't see that".
+
+        2. **Take / Pick up [object]**
+        - ✅ Success: The object is confirmed with "Taken." or appears in the inventory.
+        - ❌ Failure: Object not taken or error like "you can't take that".
+
+        3. **Read [object]**
+        - ✅ Success: Textual content is shown.
+        - ❌ Failure: Error messages or empty description.
+
+        4. **Open / Close [object]**
+        - ✅ Success: The game confirms the change in state, e.g., "You open the mailbox".
+        - ❌ Failure: Object can't be opened or is already in that state.
+
+        5. **Navigation / Movement**
+        - ✅ Success: The location changes or description changes significantly.
+        - ❌ Failure: "You can't go that way", or the same description repeats.
+
+        6. **Compound Tasks (e.g., "Take the leaflet and read it")**
+        - ✅ Success: All subgoals are fulfilled (e.g., object taken and text shown).
+
+        ### EVALUATION FORMAT:
+
+        - **Success**: [true | false]
+        - **Reasoning**: Briefly explain why the task succeeded or failed based on evidence.
+        - **Critique**: (Only if failed) Suggest 1–2 better commands or strategies.
+
+        Respond strictly in this format and do not include commentary or introductions.
         """
         
         return prompt

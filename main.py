@@ -127,7 +127,8 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
     max_steps = config['environment']['max_steps']
     current_task = None
     task_actions = []
-    
+    observation_history = []
+    max_observations = 5
 
     logger.info("Starting agent loop...")
     
@@ -144,12 +145,12 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             if current_task is None:
 
                 # Retrieve memories relevant for task planning
-                planning_context = f"Current location: {agent_state['observation']}\nInventory: {agent_state['inventory']}"
+                planning_context = f"Current observation: {agent_state['observation']}\nInventory: {agent_state['inventory']}"
                 relevant_memories = memory_manager.retrieve_memories(planning_context, agent_state)
 
 
                 # Propose the next task using the curriculum agent with memories
-                current_task = curriculum_agent.propose_next_task(agent_state, relevant_memories)
+                current_task = curriculum_agent.propose_next_task(agent_state, observation_history, relevant_memories)
                 metrics_tracker.log_task_proposed(current_task)
 
                 critique = "None"
@@ -217,23 +218,27 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
                 task=current_task
             )
 
-            if memory_manager.should_create_memory(next_state['observation'], next_state, agent_state['observation']): 
-                memory = memory_manager.add_memory(next_state['observation'], next_state)
-                if memory is not None:
-                    logger.info("New memory created")
-                    if interactive:
-                        print("New memory created")
-                    metrics_tracker.log_memory_created(
-                        memory_name=memory.topic, 
-                        task=current_task,
-                    )
+            #if memory_manager.should_create_memory(next_state['observation'], next_state, agent_state['observation']): 
+            #    memory = memory_manager.add_memory(next_state['observation'], next_state)
+            #    if memory is not None:
+            #        logger.info("New memory created")
+            #        if interactive:
+            #            print("New memory created")
+            #        metrics_tracker.log_memory_created(
+            #            memory_name=memory.topic, 
+            #            task=current_task,
+            #        )
             
             # Log the response from the environment
             #logger.info(f"Environment response: {next_state['observation']}")
             
             # Update tracking variables
+            observation_history.insert(0, agent_state['observation'])
+            if len(observation_history) > max_observations:
+                observation_history.pop()
             steps += 1
             agent_state = next_state
+            
             
             # Display result if interactive
             if interactive:

@@ -1,0 +1,180 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1-nano_20250518_151147",
+    "start_time": 1747573907.3938813,
+    "end_time": 1747573929.8976724,
+    "game": "detective",
+    "max_steps": 10,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 5,
+    "tasks_completed": 4,
+    "tasks_failed": 0,
+    "memories_acquired": 0,
+    "commands_executed": 10,
+    "successful_commands": 0,
+    "total_score": 10,
+    "unique_locations_visited": [
+      "It is a piece of white paper.",
+      "(the piece of white paper)",
+      "I only understood you as far as wanting to look at the piece of white paper.",
+      "CONFIDENTIAL:",
+      "<< Chief's office >>"
+    ],
+    "unique_objects_interacted": [
+      "paper",
+      "ring"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around",
+      "score": 10,
+      "location": "<< Chief's office >>",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573908.7527611
+    },
+    {
+      "step": 1,
+      "action": "examine paper",
+      "task": "Read the white paper",
+      "score": 10,
+      "location": "It is a piece of white paper.",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573911.4604611
+    },
+    {
+      "step": 2,
+      "action": "read paper",
+      "task": "Read the white paper",
+      "score": 10,
+      "location": "CONFIDENTIAL:",
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747573913.2943094
+    },
+    {
+      "step": 3,
+      "action": "read paper",
+      "task": "Read white paper",
+      "score": 10,
+      "location": "CONFIDENTIAL:",
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747573916.0460172
+    },
+    {
+      "step": 4,
+      "action": "read paper",
+      "task": "Examine evidence",
+      "score": 10,
+      "location": "CONFIDENTIAL:",
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747573918.2706356
+    },
+    {
+      "step": 5,
+      "action": "examine paper",
+      "task": "Examine evidence",
+      "score": 10,
+      "location": "It is a piece of white paper.",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573920.4204683
+    },
+    {
+      "step": 6,
+      "action": "examine",
+      "task": "Search the white paper",
+      "score": 10,
+      "location": "(the piece of white paper)",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573923.159068
+    },
+    {
+      "step": 7,
+      "action": "examine white paper",
+      "task": "Search the white paper",
+      "score": 10,
+      "location": "It is a piece of white paper.",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573924.875658
+    },
+    {
+      "step": 8,
+      "action": "look at white paper in detail",
+      "task": "Search the white paper",
+      "score": 10,
+      "location": "I only understood you as far as wanting to look at the piece of white paper.",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573926.765296
+    },
+    {
+      "step": 9,
+      "action": "examine white paper",
+      "task": "Search the white paper",
+      "score": 10,
+      "location": "It is a piece of white paper.",
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747573928.6112435
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747573909.9665713
+    },
+    {
+      "task": "Read the white paper",
+      "steps_taken": 2,
+      "commands": [
+        "examine paper",
+        "read paper"
+      ],
+      "timestamp": 1747573914.6387682
+    },
+    {
+      "task": "Read white paper",
+      "steps_taken": 1,
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747573917.0286999
+    },
+    {
+      "task": "Examine evidence",
+      "steps_taken": 2,
+      "commands": [
+        "read paper",
+        "examine paper"
+      ],
+      "timestamp": 1747573921.6508842
+    }
+  ],
+  "failed_tasks": [],
+  "acquired_memories": []
+}

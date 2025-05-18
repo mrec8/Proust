@@ -1,0 +1,397 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1-nano_20250518_152431",
+    "start_time": 1747574671.310804,
+    "end_time": 1747574728.3729823,
+    "game": "detective",
+    "max_steps": 30,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 10,
+    "tasks_completed": 6,
+    "tasks_failed": 3,
+    "memories_acquired": 0,
+    "commands_executed": 30,
+    "successful_commands": 0,
+    "total_score": 10,
+    "unique_objects_interacted": [
+      "paper",
+      "ring"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574672.0020733
+    },
+    {
+      "step": 1,
+      "action": "examine paper",
+      "task": "Read the sheet of paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574674.001558
+    },
+    {
+      "step": 2,
+      "action": "read paper",
+      "task": "Read the sheet of paper",
+      "score": 10,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747574675.5821123
+    },
+    {
+      "step": 3,
+      "action": "read paper",
+      "task": "Examine sheet of paper",
+      "score": 10,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747574677.674732
+    },
+    {
+      "step": 4,
+      "action": "examine paper",
+      "task": "Examine sheet of paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574679.8218021
+    },
+    {
+      "step": 5,
+      "action": "examine paper carefully",
+      "task": "Examine sheet of paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574681.9701264
+    },
+    {
+      "step": 6,
+      "action": "examine white paper",
+      "task": "Examine sheet of paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574683.527193
+    },
+    {
+      "step": 7,
+      "action": "examine",
+      "task": "Search the paper for clues",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574685.961243
+    },
+    {
+      "step": 8,
+      "action": "search paper",
+      "task": "Search the paper for clues",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574687.5204756
+    },
+    {
+      "step": 9,
+      "action": "examine paper",
+      "task": "Search the paper for clues",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574690.0568013
+    },
+    {
+      "step": 10,
+      "action": "read paper",
+      "task": "Search the paper for clues",
+      "score": 10,
+      "objects_in_scope": [
+        "ring"
+      ],
+      "timestamp": 1747574691.53996
+    },
+    {
+      "step": 11,
+      "action": "search paper",
+      "task": "Search the paper for clues",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574693.0433047
+    },
+    {
+      "step": 12,
+      "action": "examine",
+      "task": "Search the room carefully",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574695.442643
+    },
+    {
+      "step": 13,
+      "action": "look",
+      "task": "Search the room carefully",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574697.0214663
+    },
+    {
+      "step": 14,
+      "action": "examine paper",
+      "task": "Search the room carefully",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574698.7901273
+    },
+    {
+      "step": 15,
+      "action": "look",
+      "task": "Write on the paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574700.712595
+    },
+    {
+      "step": 16,
+      "action": "write on paper",
+      "task": "Write on the paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574702.351482
+    },
+    {
+      "step": 17,
+      "action": "write",
+      "task": "Write on the paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574703.9824684
+    },
+    {
+      "step": 18,
+      "action": "write on paper",
+      "task": "Write on the paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574705.9375558
+    },
+    {
+      "step": 19,
+      "action": "inscribe",
+      "task": "Write on the paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574707.7742174
+    },
+    {
+      "step": 20,
+      "action": "write",
+      "task": "Look at surroundings",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574710.5433857
+    },
+    {
+      "step": 21,
+      "action": "look",
+      "task": "Look at surroundings",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574712.4969351
+    },
+    {
+      "step": 22,
+      "action": "north",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574714.5483382
+    },
+    {
+      "step": 23,
+      "action": "take paper",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574716.390123
+    },
+    {
+      "step": 24,
+      "action": "look",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747574717.9085054
+    },
+    {
+      "step": 25,
+      "action": "examine paper",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574719.7563972
+    },
+    {
+      "step": 26,
+      "action": "search",
+      "task": "Take white paper",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574721.6264453
+    },
+    {
+      "step": 27,
+      "action": "take paper",
+      "task": "Search the room again",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574724.0530314
+    },
+    {
+      "step": 28,
+      "action": "look around",
+      "task": "Search the room again",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574725.5561914
+    },
+    {
+      "step": 29,
+      "action": "look again",
+      "task": "Search the room again",
+      "score": 10,
+      "objects_in_scope": [],
+      "timestamp": 1747574727.4360886
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747574672.7396517
+    },
+    {
+      "task": "Read the sheet of paper",
+      "steps_taken": 2,
+      "commands": [
+        "examine paper",
+        "read paper"
+      ],
+      "timestamp": 1747574676.467827
+    },
+    {
+      "task": "Examine sheet of paper",
+      "steps_taken": 1,
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747574678.4562566
+    },
+    {
+      "task": "Examine sheet of paper",
+      "steps_taken": 3,
+      "commands": [
+        "examine paper",
+        "examine paper carefully",
+        "examine white paper"
+      ],
+      "timestamp": 1747574684.4289634
+    },
+    {
+      "task": "Search the room carefully",
+      "steps_taken": 3,
+      "commands": [
+        "examine",
+        "look",
+        "examine paper"
+      ],
+      "timestamp": 1747574699.4835157
+    },
+    {
+      "task": "Look at surroundings",
+      "steps_taken": 2,
+      "commands": [
+        "write",
+        "look"
+      ],
+      "timestamp": 1747574713.3130112
+    }
+  ],
+  "failed_tasks": [
+    {
+      "task": "Search the paper for clues",
+      "steps_taken": 5,
+      "commands": [
+        "examine",
+        "search paper",
+        "examine paper",
+        "read paper",
+        "search paper"
+      ],
+      "reason": "Critique: To improve the chances of success, try examining the paper first to get a detailed description, then search it to look for clues. For example, use \"examine paper\" followed by \"search paper\" to ensure the game recognizes the object and provides relevant details.",
+      "timestamp": 1747574694.066787
+    },
+    {
+      "task": "Write on the paper",
+      "steps_taken": 5,
+      "commands": [
+        "look",
+        "write on paper",
+        "write",
+        "write on paper",
+        "inscribe"
+      ],
+      "reason": "Critique: Try using a different verb that the game recognizes, such as \"write\" or \"scribble,\" combined with the object if possible, e.g., \"write on paper\" or \"scribble on paper.\"",
+      "timestamp": 1747574709.0113873
+    },
+    {
+      "task": "Take white paper",
+      "steps_taken": 5,
+      "commands": [
+        "north",
+        "take paper",
+        "look",
+        "examine paper",
+        "search"
+      ],
+      "reason": "Critique: To successfully search the paper, try the command \"search paper\" or \"search the paper\" to specify the object and prompt the game to perform the search.",
+      "timestamp": 1747574722.8365247
+    }
+  ],
+  "acquired_memories": []
+}
