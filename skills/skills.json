@@ -13,5 +13,218 @@
     "created_at": 1747049641.9083693,
     "used_count": 0,
     "success_count": 0
+  },
+  {
+    "description": "\"Reveals leaflet by opening mailbox.\"",
+    "task": "Open mailbox",
+    "commands": [
+      "open mailbox"
+    ],
+    "result": "\nYou open the mailbox, revealing a small leaflet.\n\n>                                                                                                                                West of HouseScore: 0Moves: 10",
+    "contexts": [
+      "Open mailbox",
+      "open mailbox"
+    ],
+    "created_at": 1747580443.0573702,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "\"Extracts leaflet from opened mailbox\"",
+    "task": "Begin by examining their surroundings. This can be done by typing commands such as \"look\" or \"examine\" followed by the specific object or area they wish to investigate. They should also try to pick up any items they find, as these could",
+    "commands": [
+      "open mailbox",
+      "take leaflet"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                West of HouseScore: 0Moves: 3",
+    "contexts": [
+      "Begin by examining their surroundings. This can be done by typing commands such as \"look\" or \"examine\" followed by the specific object or area they wish to investigate. They should also try to pick up any items they find, as these could",
+      "open mailbox",
+      "take leaflet"
+    ],
+    "created_at": 1747580527.953803,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "\"Reads leaflet revealing ZORK game details\"",
+    "task": "\"Read the leaflet\"",
+    "commands": [
+      "read leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                West of HouseScore: 0Moves: 4",
+    "contexts": [
+      "\"Read the leaflet\"",
+      "read leaflet"
+    ],
+    "created_at": 1747580534.130699,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "\"Moves east into dimly lit forest\"",
+    "task": "\"Go east\"",
+    "commands": [
+      "east",
+      "go west",
+      "east"
+    ],
+    "result": "\nForest\nThis is a dimly lit forest, with large trees all around.  One particularly large tree with some low branches stands here.\n\n>                                                                                                                                ForestScore: 0Moves: 7",
+    "contexts": [
+      "\"Go east\"",
+      "east",
+      "go west",
+      "east"
+    ],
+    "created_at": 1747580549.469828,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals field west of white house",
+    "task": "...examine your surroundings in the starting location to gather information about where you are and what objects or exits are available. For example, you might type look or examine room to get a description of your immediate environment. This will help you plan your next",
+    "commands": [
+      "look"
+    ],
+    "result": "\nWest of House\nThis is an open field west of a white house, with a boarded front door.\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 0Moves: 2",
+    "contexts": [
+      "...examine your surroundings in the starting location to gather information about where you are and what objects or exits are available. For example, you might type look or examine room to get a description of your immediate environment. This will help you plan your next",
+      "look"
+    ],
+    "created_at": 1747580786.3127005,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes leaflet from mailbox at house",
+    "task": "Take leaflet",
+    "commands": [
+      "take leaflet"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                West of HouseScore: 0Moves: 4",
+    "contexts": [
+      "Take leaflet",
+      "take leaflet"
+    ],
+    "created_at": 1747580797.4659195,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys open field west of house",
+    "task": "Look around West of House",
+    "commands": [
+      "look"
+    ],
+    "result": "\nWest of House\nThis is an open field west of a white house, with a boarded front door.\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 0Moves: 9",
+    "contexts": [
+      "Look around West of House",
+      "look"
+    ],
+    "created_at": 1747580823.2234526,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves south to area south of house",
+    "task": "Go south",
+    "commands": [
+      "south",
+      "east",
+      "s"
+    ],
+    "result": "\nSouth of House\n\n>                                                                                                                                South of HouseScore: 0Moves: 16",
+    "contexts": [
+      "Go south",
+      "south",
+      "east",
+      "s"
+    ],
+    "created_at": 1747580855.7657561,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Arrives at north side of house",
+    "task": "Go north",
+    "commands": [
+      "north",
+      "west",
+      "north"
+    ],
+    "result": "\nNorth of House\nYou are facing the north side of a white house.  There is no door here, and all the windows are barred.\n\n>                                                                                                                                North of HouseScore: 0Moves: 19",
+    "contexts": [
+      "Go north",
+      "north",
+      "west",
+      "north"
+    ],
+    "created_at": 1747580867.1384475,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves north to area north of house",
+    "task": "Go north",
+    "commands": [
+      "east",
+      "north"
+    ],
+    "result": "\nNorth of House\n\n>                                                                                                                                North of HouseScore: 0Moves: 26",
+    "contexts": [
+      "Go north",
+      "east",
+      "north"
+    ],
+    "created_at": 1747580893.100567,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys north side of house exterior",
+    "task": "Look around North of House",
+    "commands": [
+      "look"
+    ],
+    "result": "\nNorth of House\nYou are facing the north side of a white house.  There is no door here, and all the windows are barred.\n\n>                                                                                                                                North of HouseScore: 0Moves: 27",
+    "contexts": [
+      "Look around North of House",
+      "look"
+    ],
+    "created_at": 1747580897.535724,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves west to area beside house",
+    "task": "Go west",
+    "commands": [
+      "west"
+    ],
+    "result": "\nWest of House\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 0Moves: 28",
+    "contexts": [
+      "Go west",
+      "west"
+    ],
+    "created_at": 1747580905.1965163,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens mailbox revealing it is empty",
+    "task": "Open mailbox",
+    "commands": [
+      "open mailbox",
+      "look in mailbox"
+    ],
+    "result": "\nThe mailbox is empty.\n\n>                                                                                                                                West of HouseScore: 0Moves: 30",
+    "contexts": [
+      "Open mailbox",
+      "open mailbox",
+      "look in mailbox"
+    ],
+    "created_at": 1747580913.5166094,
+    "used_count": 0,
+    "success_count": 0
   }
 ]
