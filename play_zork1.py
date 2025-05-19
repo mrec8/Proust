@@ -1,7 +1,7 @@
 import jericho
 
 # Load the Zork1 game
-env = jericho.FrotzEnv('games/roms/detective.z5')
+env = jericho.FrotzEnv('games/roms/zork1.z5')
 obs, info = env.reset()
 print(obs)
 
