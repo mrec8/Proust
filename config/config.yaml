@@ -5,9 +5,9 @@ environment:
   # Jericho game to use
   game: "zork1"
   # Maximum turns per episode
-  max_steps: 100
+  max_steps: 400
   # Score threshold to consider success
-  score_threshold: 10
+  score_threshold: 40
 
 # Agent configuration
 agents:

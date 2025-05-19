@@ -1,0 +1,253 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1_20250519_111116",
+    "start_time": 1747645876.2106247,
+    "end_time": 1747645937.2497962,
+    "game": "detective",
+    "max_steps": 400,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 8,
+    "tasks_completed": 7,
+    "tasks_failed": 1,
+    "skills_acquired": 7,
+    "commands_executed": 12,
+    "successful_commands": 0,
+    "total_score": 30,
+    "unique_objects_interacted": [
+      "paper"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around and examine your surroundings",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747645877.3096836
+    },
+    {
+      "step": 1,
+      "action": "take paper",
+      "task": "Take piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645882.890325
+    },
+    {
+      "step": 2,
+      "action": "examine paper",
+      "task": "Examine piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645887.7552164
+    },
+    {
+      "step": 3,
+      "action": "fold paper",
+      "task": "Fold the piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645892.45004
+    },
+    {
+      "step": 4,
+      "action": "bend paper",
+      "task": "Fold the piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645895.777292
+    },
+    {
+      "step": 5,
+      "action": "crease paper",
+      "task": "Fold the piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645899.3195605
+    },
+    {
+      "step": 6,
+      "action": "fold paper",
+      "task": "Fold the piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645902.8140333
+    },
+    {
+      "step": 7,
+      "action": "fold paper",
+      "task": "Fold the piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645910.5111852
+    },
+    {
+      "step": 8,
+      "action": "look",
+      "task": "Look around",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645916.698533
+    },
+    {
+      "step": 9,
+      "action": "north",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747645922.857218
+    },
+    {
+      "step": 10,
+      "action": "west",
+      "task": "Go west",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747645928.365654
+    },
+    {
+      "step": 11,
+      "action": "north",
+      "task": "Go north to the restaurant",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747645934.4458122
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around and examine your surroundings",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747645880.99284
+    },
+    {
+      "task": "Take piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747645885.6163127
+    },
+    {
+      "task": "Examine piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine paper"
+      ],
+      "timestamp": 1747645890.2708383
+    },
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747645920.6614795
+    },
+    {
+      "task": "Go north",
+      "steps_taken": 1,
+      "commands": [
+        "north"
+      ],
+      "timestamp": 1747645926.4430494
+    },
+    {
+      "task": "Go west",
+      "steps_taken": 1,
+      "commands": [
+        "west"
+      ],
+      "timestamp": 1747645931.7134278
+    },
+    {
+      "task": "Go north to the restaurant",
+      "steps_taken": 1,
+      "commands": [
+        "north"
+      ],
+      "timestamp": 1747645937.2497551
+    }
+  ],
+  "failed_tasks": [
+    {
+      "task": "Fold the piece of white paper",
+      "steps_taken": 5,
+      "commands": [
+        "fold paper",
+        "bend paper",
+        "crease paper",
+        "fold paper",
+        "fold paper"
+      ],
+      "reason": "Critique: Try examining the paper first to see if the game suggests a specific action or alternate verb. You might also try \"use paper,\" \"manipulate paper,\" or consult the game's help for accepted verbs.",
+      "timestamp": 1747645914.6316173
+    }
+  ],
+  "acquired_skills": [
+    {
+      "skill_description": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n\nYou can see a piece of white paper here.\n",
+      "task": "Look around and examine your surroundings",
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747645880.992801
+    },
+    {
+      "skill_description": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Take piece of white paper",
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747645885.616276
+    },
+    {
+      "skill_description": "\nIt is a piece of white paper.\n",
+      "task": "Examine piece of white paper",
+      "commands": [
+        "examine paper"
+      ],
+      "timestamp": 1747645890.2705457
+    },
+    {
+      "skill_description": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
+      "task": "Look around",
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747645920.6614177
+    },
+    {
+      "skill_description": "\n\n<< Outside >>\nYou are outside in the cold. To the east is a dead end. To the west is the rest of the street. Papers are blowing around. It's amazingly cold for this time of year.\n",
+      "task": "Go north",
+      "commands": [
+        "north"
+      ],
+      "timestamp": 1747645926.4430122
+    },
+    {
+      "skill_description": "\n\n<< Outside >>\nYou are still on the streets. To the north is a restraunt where the mayor ate often. To the east is the Mayor's home.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Go west",
+      "commands": [
+        "west"
+      ],
+      "timestamp": 1747645931.7133915
+    },
+    {
+      "skill_description": "\n\n<< Restraunt >>\nYou are about to enter the restraunt when two guys jump you. They take your wallet and beat you a bit. Then you flash your badge and that riles them. Your body was discovered in a river 10 miles away.\n\n\n    *** You have died ***\n\n\nIn that game you scored 30 out of a possible 360, in 7 turns.\n\nWould you like to RESTART, RESTORE a saved game, give the FULL score for that game or QUIT?",
+      "task": "Go north to the restaurant",
+      "commands": [
+        "north"
+      ],
+      "timestamp": 1747645937.2497172
+    }
+  ]
+}

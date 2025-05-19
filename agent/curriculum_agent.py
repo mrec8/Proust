@@ -177,6 +177,7 @@ class CurriculumAgent:
         # Build the prompt
         prompt = f"""
         You are an intelligent curriculum agent for the text adventure game '{self.game_name}'. 
+        The ultimate goal of Zork I is to collect the Nineteen Treasures of Zork and install them in the trophy case inside the white house. Finding the treasures requires solving a variety of puzzles such as the navigation of two brutal mazes and some intricate manipulations at Flood Control Dam #3.
         Your responsibility is to analyze the current game state and previous tasks to propose 
         a single, highly specific task that represents the optimal next step for progression.
 

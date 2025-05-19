@@ -1,0 +1,209 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1_20250519_121756",
+    "start_time": 1747649876.9668963,
+    "end_time": 1747649914.8930905,
+    "game": "detective",
+    "max_steps": 400,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 7,
+    "tasks_completed": 7,
+    "tasks_failed": 0,
+    "skills_acquired": 7,
+    "commands_executed": 8,
+    "successful_commands": 0,
+    "total_score": 30,
+    "unique_objects_interacted": [
+      "paper"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around and examine your surroundings",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747649878.3811712
+    },
+    {
+      "step": 1,
+      "action": "take paper",
+      "task": "Take white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747649883.136364
+    },
+    {
+      "step": 2,
+      "action": "read paper",
+      "task": "Examine piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747649887.6709511
+    },
+    {
+      "step": 3,
+      "action": "look",
+      "task": "Look for exits",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747649892.8093162
+    },
+    {
+      "step": 4,
+      "action": "north",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747649897.405367
+    },
+    {
+      "step": 5,
+      "action": "north",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747649900.496584
+    },
+    {
+      "step": 6,
+      "action": "west",
+      "task": "Go west to rest of street",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747649905.3735683
+    },
+    {
+      "step": 7,
+      "action": "north",
+      "task": "Go north to the restaurant",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747649910.7004685
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around and examine your surroundings",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747649881.4140847
+    },
+    {
+      "task": "Take white paper",
+      "steps_taken": 1,
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747649885.7884767
+    },
+    {
+      "task": "Examine piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747649890.9299157
+    },
+    {
+      "task": "Look for exits",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747649895.5390298
+    },
+    {
+      "task": "Go north",
+      "steps_taken": 2,
+      "commands": [
+        "north",
+        "north"
+      ],
+      "timestamp": 1747649903.6297417
+    },
+    {
+      "task": "Go west to rest of street",
+      "steps_taken": 1,
+      "commands": [
+        "west"
+      ],
+      "timestamp": 1747649908.7772481
+    },
+    {
+      "task": "Go north to the restaurant",
+      "steps_taken": 1,
+      "commands": [
+        "north"
+      ],
+      "timestamp": 1747649914.8928788
+    }
+  ],
+  "failed_tasks": [],
+  "acquired_skills": [
+    {
+      "skill_description": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n\nYou can see a piece of white paper here.\n",
+      "task": "Look around and examine your surroundings",
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747649881.414042
+    },
+    {
+      "skill_description": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Take white paper",
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747649885.7882676
+    },
+    {
+      "skill_description": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+      "task": "Examine piece of white paper",
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747649890.9297755
+    },
+    {
+      "skill_description": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
+      "task": "Look for exits",
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747649895.5389931
+    },
+    {
+      "skill_description": "\nYou can't go north from here!\n\n<< Outside >>\nYou are outside in the cold. To the east is a dead end. To the west is the rest of the street. Papers are blowing around. It's amazingly cold for this time of year.\n",
+      "task": "Go north",
+      "commands": [
+        "north",
+        "north"
+      ],
+      "timestamp": 1747649903.629353
+    },
+    {
+      "skill_description": "\n\n<< Outside >>\nYou are still on the streets. To the north is a restraunt where the mayor ate often. To the east is the Mayor's home.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Go west to rest of street",
+      "commands": [
+        "west"
+      ],
+      "timestamp": 1747649908.7771864
+    },
+    {
+      "skill_description": "\n\n<< Restraunt >>\nYou are about to enter the restraunt when two guys jump you. They take your wallet and beat you a bit. Then you flash your badge and that riles them. Your body was discovered in a river 10 miles away.\n\n\n    *** You have died ***\n\n\nIn that game you scored 30 out of a possible 360, in 8 turns.\n\nWould you like to RESTART, RESTORE a saved game, give the FULL score for that game or QUIT?",
+      "task": "Go north to the restaurant",
+      "commands": [
+        "north"
+      ],
+      "timestamp": 1747649914.8926673
+    }
+  ]
+}

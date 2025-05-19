@@ -3,7 +3,7 @@
 zork1:
   description: "A classic adventure game where you explore an underground world."
   starting_goal: "Explore the world, collect treasures, and survive."
-  initial_inventory: ["sword", "lantern"]
+  initial_inventory: []
   key_locations: ["West of House", "Clearing", "Forest"]
   key_objects: ["leaflet", "mailbox", "sword", "lantern"]
   key_characters: ["troll", "thief"]
@@ -27,6 +27,30 @@ zork1:
     - name: "Defeat the troll"
       score: 40
 
-# Configurations for other Jericho games can be added here
-# adventure:
-#   description: ...
+detective:
+  description: "A mystery adventure where you play as a detective solving a case."
+  starting_goal: "Investigate the crime scene, gather clues, and solve the mystery."
+  initial_inventory: []  # Detective starts with an empty inventory
+  key_locations: ["Detective's Office", "Crime Scene", "Suspect's House", "Police Station"]
+  key_objects: ["notebook", "evidence", "clues", "suspects", "weapon"]
+  key_characters: ["police chief", "witness", "suspect", "victim"]
+  special_commands:
+    - "look"
+    - "inventory"
+    - "examine"
+    - "take"
+    - "drop"
+    - "open"
+    - "close"
+    - "talk"
+    - "ask"
+    - "accuse"
+    - "search"
+    - "investigate"
+  progression_milestones:
+    - name: "Find initial clues"
+      score: 10
+    - name: "Identify the suspects"
+      score: 25
+    - name: "Solve the case"
+      score: 50

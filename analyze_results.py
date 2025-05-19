@@ -68,7 +68,6 @@ def extract_summaries(experiments: List[Dict[str, Any]]) -> pd.DataFrame:
             "tasks_completed": exp["cumulative_metrics"]["tasks_completed"],
             "tasks_failed": exp["cumulative_metrics"]["tasks_failed"],
             "skills_acquired": exp["cumulative_metrics"]["skills_acquired"],
-            #"unique_locations": locations_count,
             "unique_objects": objects_count,
             "task_success_rate": task_success_rate
         }

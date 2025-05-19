@@ -1,57 +1,6 @@
 [
   {
-    "description": "Takes white paper from tabletop surface",
-    "task": "Take white paper",
-    "commands": [
-      "take paper"
-    ],
-    "result": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
-    "contexts": [
-      "Take white paper",
-      "take paper"
-    ],
-    "created_at": 1747582941.643377,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Reads author\u2019s note on white paper",
-    "task": "Read white paper",
-    "commands": [
-      "read paper"
-    ],
-    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
-    "contexts": [
-      "Read white paper",
-      "read paper"
-    ],
-    "created_at": 1747582946.354321,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Reveals Chief's office and murder briefing",
-    "task": "Look",
-    "commands": [
-      "examine room",
-      "look around",
-      "look room",
-      "look"
-    ],
-    "result": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
-    "contexts": [
-      "Look",
-      "examine room",
-      "look around",
-      "look room",
-      "look"
-    ],
-    "created_at": 1747582986.2413776,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Reveals Chief's office and white paper",
+    "description": "Reveals Chief's office and visible paper",
     "task": "Look around and examine your surroundings",
     "commands": [
       "look"
@@ -61,12 +10,27 @@
       "Look around and examine your surroundings",
       "look"
     ],
-    "created_at": 1747595938.310741,
+    "created_at": 1747645880.9924774,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Identifies object as piece of white paper",
+    "description": "Takes white paper from tabletop surface",
+    "task": "Take piece of white paper",
+    "commands": [
+      "take paper"
+    ],
+    "result": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
+    "contexts": [
+      "Take piece of white paper",
+      "take paper"
+    ],
+    "created_at": 1747645885.6159692,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Inspects paper revealing it is white",
     "task": "Examine piece of white paper",
     "commands": [
       "examine paper"
@@ -76,7 +40,67 @@
       "Examine piece of white paper",
       "examine paper"
     ],
-    "created_at": 1747595946.803443,
+    "created_at": 1747645890.2689888,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals Chief's office and murder briefing",
+    "task": "Look around",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
+    "contexts": [
+      "Look around",
+      "look"
+    ],
+    "created_at": 1747645920.6609313,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves north to cold street outside",
+    "task": "Go north",
+    "commands": [
+      "north"
+    ],
+    "result": "\n\n<< Outside >>\nYou are outside in the cold. To the east is a dead end. To the west is the rest of the street. Papers are blowing around. It's amazingly cold for this time of year.\n",
+    "contexts": [
+      "Go north",
+      "north"
+    ],
+    "created_at": 1747645926.4426384,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves west onto the city streets",
+    "task": "Go west",
+    "commands": [
+      "west"
+    ],
+    "result": "\n\n<< Outside >>\nYou are still on the streets. To the north is a restraunt where the mayor ate often. To the east is the Mayor's home.\n\n[Your score has just gone up by ten points.]\n",
+    "contexts": [
+      "Go west",
+      "west"
+    ],
+    "created_at": 1747645931.7130506,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Is killed entering restaurant from the north",
+    "task": "Go north to the restaurant",
+    "commands": [
+      "north"
+    ],
+    "result": "\n\n<< Restraunt >>\nYou are about to enter the restraunt when two guys jump you. They take your wallet and beat you a bit. Then you flash your badge and that riles them. Your body was discovered in a river 10 miles away.\n\n\n    *** You have died ***\n\n\nIn that game you scored 30 out of a possible 360, in 7 turns.\n\nWould you like to RESTART, RESTORE a saved game, give the FULL score for that game or QUIT?",
+    "contexts": [
+      "Go north to the restaurant",
+      "north"
+    ],
+    "created_at": 1747645937.249303,
     "used_count": 0,
     "success_count": 0
   },
@@ -91,12 +115,12 @@
       "Read piece of white paper",
       "read paper"
     ],
-    "created_at": 1747595951.12182,
+    "created_at": 1747646165.7681465,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Reveals exits north and west in office",
+    "description": "Reveals exits north and west from office",
     "task": "Look for exits or directions",
     "commands": [
       "look"
@@ -106,44 +130,12 @@
       "Look for exits or directions",
       "look"
     ],
-    "created_at": 1747595955.4039035,
+    "created_at": 1747646171.0158563,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Receives message blocking northward movement outside",
-    "task": "Go north",
-    "commands": [
-      "north",
-      "north"
-    ],
-    "result": "\nYou can't go north from here!\n\n<< Outside >>\nYou are outside in the cold. To the east is a dead end. To the west is the rest of the street. Papers are blowing around. It's amazingly cold for this time of year.\n",
-    "contexts": [
-      "Go north",
-      "north",
-      "north"
-    ],
-    "created_at": 1747595965.8679173,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Moves west onto city street outside",
-    "task": "Go west",
-    "commands": [
-      "west"
-    ],
-    "result": "\n\n<< Outside >>\nYou are still on the streets. To the north is a restraunt where the mayor ate often. To the east is the Mayor's home.\n\n[Your score has just gone up by ten points.]\n",
-    "contexts": [
-      "Go west",
-      "west"
-    ],
-    "created_at": 1747595970.7639651,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Enters Mayor's house and flashes badge",
+    "description": "Enters Mayor's house and gains admission",
     "task": "Go east to Mayor's home",
     "commands": [
       "east"
@@ -153,133 +145,54 @@
       "Go east to Mayor's home",
       "east"
     ],
-    "created_at": 1747595975.1553524,
+    "created_at": 1747646242.261648,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Surveys mayor's house, noting exits and cop",
-    "task": "Look around mayor's house",
-    "commands": [
-      "look"
-    ],
-    "result": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n",
-    "contexts": [
-      "Look around mayor's house",
-      "look"
-    ],
-    "created_at": 1747595979.9928484,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Surveys Mayor's house, noting exits and occupants",
-    "task": "Look around",
-    "commands": [
-      "look"
-    ],
-    "result": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n",
-    "contexts": [
-      "Look around",
-      "look"
-    ],
-    "created_at": 1747595986.757392,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Discovers no exit south from hallway",
-    "task": "Go south",
-    "commands": [
-      "south",
-      "south"
-    ],
-    "result": "\nYou can't go south from here!\n\n<< Hallway >>\nYou are at the end of the hallway. To the north is a room, while to the west is the rest of the hallway.\n",
-    "contexts": [
-      "Go south",
-      "south",
-      "south"
-    ],
-    "created_at": 1747596004.8749657,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Enters Brickbuster Video from the west",
-    "task": "Go east to video store",
-    "commands": [
-      "east"
-    ],
-    "result": "\n\n<< Video Store >>\nYou are in a video store called Brickbuster Video. There are about 3,000 videos here. You can go north, or east.\n",
-    "contexts": [
-      "Go east to video store",
-      "east"
-    ],
-    "created_at": 1747596059.8536432,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Enters house and is fatally shot",
-    "task": "Go east",
+    "description": "Enters living room from eastern doorway",
+    "task": "Go east to living room",
     "commands": [
       "east",
-      "east",
-      "go east"
-    ],
-    "result": "\n\n<< House >>\nYou enter the house. A man charges down the stairs. Before you even have time to say anything, he shoots you. You lose!\n\n\n    *** You have died ***\n\n\nIn that game you scored 70 out of a possible 360, in 31 turns.\n\nWould you like to RESTART, RESTORE a saved game, give the FULL score for that game or QUIT?",
-    "contexts": [
-      "Go east",
-      "east",
-      "east",
-      "go east"
-    ],
-    "created_at": 1747596072.14188,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Identifies paper as a piece of white",
-    "task": "Examine white paper",
-    "commands": [
-      "examine paper"
-    ],
-    "result": "\nIt is a piece of white paper.\n",
-    "contexts": [
-      "Examine white paper",
-      "examine paper"
-    ],
-    "created_at": 1747596212.8098137,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Reads author\u2019s message on white paper",
-    "task": "Read the white paper",
-    "commands": [
-      "read paper"
-    ],
-    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
-    "contexts": [
-      "Read the white paper",
-      "read paper"
-    ],
-    "created_at": 1747596218.100507,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Surveys living room revealing battered wood",
-    "task": "Examine living room",
-    "commands": [
-      "east"
+      "look"
     ],
     "result": "\n\n<< Living room >>\nYou are standing in the living room. You see a battered piece of wood. You wonder \"Should I pick this thing up?\". Well, whether you do or don't the only way out of the room is back west.\n\nYou can see a wooden wood here.\n",
     "contexts": [
-      "Examine living room",
-      "east"
+      "Go east to living room",
+      "east",
+      "look"
     ],
-    "created_at": 1747596244.1645706,
+    "created_at": 1747646249.9713113,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Inspects wood, deems analysis inconclusive",
+    "task": "Examine battered piece of wood",
+    "commands": [
+      "examine wood"
+    ],
+    "result": "\nYou look at it closely and figure that the guys in the forensic's lab would be better at this than you.\n",
+    "contexts": [
+      "Examine battered piece of wood",
+      "examine wood"
+    ],
+    "created_at": 1747646254.8603363,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals battered wood in living room",
+    "task": "Look around the current location",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Living room >>\nYou are standing in the living room. You see a battered piece of wood. You wonder \"Should I pick this thing up?\". Well, whether you do or don't the only way out of the room is back west.\n\nYou can see a wooden wood here.\n",
+    "contexts": [
+      "Look around the current location",
+      "look"
+    ],
+    "created_at": 1747646264.0882978,
     "used_count": 0,
     "success_count": 0
   },
@@ -294,37 +207,22 @@
       "Take battered piece of wood",
       "take wood"
     ],
-    "created_at": 1747596248.1745713,
+    "created_at": 1747646268.4362547,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Inspects wooden wood, finds no useful clues",
-    "task": "Examine wooden wood",
-    "commands": [
-      "examine wooden wood"
-    ],
-    "result": "\nYou look at it closely and figure that the guys in the forensic's lab would be better at this than you.\n",
-    "contexts": [
-      "Examine wooden wood",
-      "examine wooden wood"
-    ],
-    "created_at": 1747596257.7209709,
-    "used_count": 0,
-    "success_count": 0
-  },
-  {
-    "description": "Takes paper note from table",
-    "task": "Take paper note from table",
+    "description": "Takes handwritten note from wooden desk",
+    "task": "Take paper note",
     "commands": [
       "take note"
     ],
     "result": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
     "contexts": [
-      "Take paper note from table",
+      "Take paper note",
       "take note"
     ],
-    "created_at": 1747596273.57913,
+    "created_at": 1747646335.0396595,
     "used_count": 0,
     "success_count": 0
   },
@@ -339,12 +237,196 @@
       "Read paper note",
       "read note"
     ],
-    "created_at": 1747596277.9798636,
+    "created_at": 1747646340.263007,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Inspects wood, finds nothing personally informative",
+    "description": "Enters living room from eastern passage",
+    "task": "Go east to living room",
+    "commands": [
+      "east",
+      "east"
+    ],
+    "result": "\n\n<< Living room >>\nYou are standing in the living room. You see a battered piece of wood. You wonder \"Should I pick this thing up?\". Well, whether you do or don't the only way out of the room is back west.\n",
+    "contexts": [
+      "Go east to living room",
+      "east",
+      "east"
+    ],
+    "created_at": 1747646388.499185,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads incriminating note on table",
+    "task": "Read note on the table",
+    "commands": [
+      "read note"
+    ],
+    "result": "\nThe note was written on a computer obviously this murder was planned and it says:\nWe have acclaimed Justice! The Justice of the future! Our next hit is the governer! You CAN'T STOP US! The note sounds like the killers are a group and that they are vigilantes (look it up). You are now getting a bit worried.\n",
+    "contexts": [
+      "Read note on the table",
+      "read note"
+    ],
+    "created_at": 1747646405.4253292,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters living room from the west",
+    "task": "Go east",
+    "commands": [
+      "east",
+      "east"
+    ],
+    "result": "\n\n<< Living room >>\nYou are standing in the living room. You see a battered piece of wood. You wonder \"Should I pick this thing up?\". Well, whether you do or don't the only way out of the room is back west.\n",
+    "contexts": [
+      "Go east",
+      "east",
+      "east"
+    ],
+    "created_at": 1747646417.0647566,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Already possesses note from the table",
+    "task": "Take note from the table",
+    "commands": [
+      "take note"
+    ],
+    "result": "\nYou already have that.\n",
+    "contexts": [
+      "Take note from the table",
+      "take note"
+    ],
+    "created_at": 1747646427.206867,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains in dining room after blocked exit",
+    "task": "Go south",
+    "commands": [
+      "south"
+    ],
+    "result": "\nYou can't go south from here!\n\n<< Dining room >>\nYou are in the dining room. You look around and see a note on the table. You can go back east.\n",
+    "contexts": [
+      "Go south",
+      "south"
+    ],
+    "created_at": 1747646433.810333,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads creator\u2019s message on white paper",
+    "task": "Examine piece of white paper",
+    "commands": [
+      "read paper"
+    ],
+    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+    "contexts": [
+      "Examine piece of white paper",
+      "read paper"
+    ],
+    "created_at": 1747649890.9282541,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals north and west exits in office",
+    "task": "Look for exits",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
+    "contexts": [
+      "Look for exits",
+      "look"
+    ],
+    "created_at": 1747649895.5382166,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves west onto street outside restaurant",
+    "task": "Go west to rest of street",
+    "commands": [
+      "west"
+    ],
+    "result": "\n\n<< Outside >>\nYou are still on the streets. To the north is a restraunt where the mayor ate often. To the east is the Mayor's home.\n\n[Your score has just gone up by ten points.]\n",
+    "contexts": [
+      "Go west to rest of street",
+      "west"
+    ],
+    "created_at": 1747649908.7755678,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Identifies paper as a plain white sheet",
+    "task": "Examine white paper",
+    "commands": [
+      "examine paper"
+    ],
+    "result": "\nIt is a piece of white paper.\n",
+    "contexts": [
+      "Examine white paper",
+      "examine paper"
+    ],
+    "created_at": 1747649960.355503,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads author\u2019s note on white paper",
+    "task": "Read white paper",
+    "commands": [
+      "read paper"
+    ],
+    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+    "contexts": [
+      "Read white paper",
+      "read paper"
+    ],
+    "created_at": 1747649964.7422352,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters living room and observes battered wood",
+    "task": "Examine living room",
+    "commands": [
+      "east"
+    ],
+    "result": "\n\n<< Living room >>\nYou are standing in the living room. You see a battered piece of wood. You wonder \"Should I pick this thing up?\". Well, whether you do or don't the only way out of the room is back west.\n\nYou can see a wooden wood here.\n",
+    "contexts": [
+      "Examine living room",
+      "east"
+    ],
+    "created_at": 1747649991.4448218,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes wooden wood from ground",
+    "task": "Take wooden wood",
+    "commands": [
+      "take wood"
+    ],
+    "result": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
+    "contexts": [
+      "Take wooden wood",
+      "take wood"
+    ],
+    "created_at": 1747649995.635953,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Inspects wood, recognizes need for forensics",
     "task": "Examine wooden wood",
     "commands": [
       "examine wood"
@@ -354,22 +436,220 @@
       "Examine wooden wood",
       "examine wood"
     ],
-    "created_at": 1747596352.1161888,
+    "created_at": 1747650009.5237386,
     "used_count": 0,
     "success_count": 0
   },
   {
-    "description": "Enters living room east of crime scene",
-    "task": "Go east",
+    "description": "Exits building to street past guard",
+    "task": "Go north",
+    "commands": [
+      "north",
+      "north",
+      "talk officer",
+      "north"
+    ],
+    "result": "\n\n<< Outside >>\nYou pass the guard. He nods at you. You are now outside standing on the street. You can go north and east, your choice. To the north is more of the street, and to the east is a video store.\n\n[Your score has just gone up by ten points.]\n",
+    "contexts": [
+      "Go north",
+      "north",
+      "north",
+      "talk officer",
+      "north"
+    ],
+    "created_at": 1747650096.892419,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters Brickbuster Video from the west",
+    "task": "Go east to video store",
     "commands": [
       "east"
     ],
-    "result": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n",
+    "result": "\n\n<< Video Store >>\nYou are in a video store called Brickbuster Video. There are about 3,000 videos here. You can go north, or east.\n",
     "contexts": [
-      "Go east",
+      "Go east to video store",
       "east"
     ],
-    "created_at": 1747596356.6494427,
+    "created_at": 1747650101.4941595,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys Mayor's house, noting room exits",
+    "task": "Look around the Mayor's house",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n",
+    "contexts": [
+      "Look around the Mayor's house",
+      "look"
+    ],
+    "created_at": 1747650215.9594584,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters dining room from western doorway",
+    "task": "Go west to previous room",
+    "commands": [
+      "west",
+      "west"
+    ],
+    "result": "\n\n<< Dining room >>\nYou are in the dining room. You look around and see a note on the table. You can go back east.\n\nYou can see a paper note here.\n",
+    "contexts": [
+      "Go west to previous room",
+      "west",
+      "west"
+    ],
+    "created_at": 1747650238.8030193,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes handwriting on paper note",
+    "task": "Examine paper note",
+    "commands": [
+      "examine note"
+    ],
+    "result": "\nIt is a note. With writing on it.\n",
+    "contexts": [
+      "Examine paper note",
+      "examine note"
+    ],
+    "created_at": 1747650252.3347263,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys dining room revealing note on table",
+    "task": "Look",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Dining room >>\nYou are in the dining room. You look around and see a note on the table. You can go back east.\n",
+    "contexts": [
+      "Look",
+      "look"
+    ],
+    "created_at": 1747650274.4788835,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Identifies object as piece of white paper",
+    "task": "Examine piece of white paper",
+    "commands": [
+      "examine paper",
+      "examine piece of white paper",
+      "look at piece of white paper",
+      "examine white paper"
+    ],
+    "result": "\nIt is a piece of white paper.\n",
+    "contexts": [
+      "Examine piece of white paper",
+      "examine paper",
+      "examine piece of white paper",
+      "look at piece of white paper",
+      "examine white paper"
+    ],
+    "created_at": 1747650311.3861248,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads confidential message on white paper",
+    "task": "Read piece of white paper",
+    "commands": [
+      "read paper",
+      "read piece of white paper",
+      "read white paper"
+    ],
+    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+    "contexts": [
+      "Read piece of white paper",
+      "read paper",
+      "read piece of white paper",
+      "read white paper"
+    ],
+    "created_at": 1747650322.2379968,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys dining room, spots note on table",
+    "task": "Examine confidential location surroundings",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Dining room >>\nYou are in the dining room. You look around and see a note on the table. You can go back east.\n",
+    "contexts": [
+      "Examine confidential location surroundings",
+      "look"
+    ],
+    "created_at": 1747650332.0957634,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Lists paper note and white paper carried",
+    "task": "Examine inventory",
+    "commands": [
+      "inventory"
+    ],
+    "result": "\nYou are carrying:\n  a paper note\n  a piece of white paper\n",
+    "contexts": [
+      "Examine inventory",
+      "inventory"
+    ],
+    "created_at": 1747650371.0952036,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Describes exits and features of hallway",
+    "task": "Examine location closely",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Hallway >>\nYou are in the hallway. To the north is more hallway, and to the east is a door marked \"Guests\".\n",
+    "contexts": [
+      "Examine location closely",
+      "look"
+    ],
+    "created_at": 1747650658.4275117,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys interior of Brickbuster Video store",
+    "task": "Look around video store",
+    "commands": [
+      "look"
+    ],
+    "result": "\n\n<< Video Store >>\nYou are in a video store called Brickbuster Video. There are about 3,000 videos here. You can go north, or east.\n",
+    "contexts": [
+      "Look around video store",
+      "look"
+    ],
+    "created_at": 1747650682.9012525,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads creator\u2019s note on confidential paper",
+    "task": "Examine confidential information",
+    "commands": [
+      "read paper"
+    ],
+    "result": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+    "contexts": [
+      "Examine confidential information",
+      "read paper"
+    ],
+    "created_at": 1747650739.1248848,
     "used_count": 0,
     "success_count": 0
   }

@@ -121,6 +121,7 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
     
     # Tracking variables
     steps = 0
+    current_score = 0
     max_steps = config['environment']['max_steps']
     current_task = None
     task_actions = []
@@ -199,11 +200,12 @@ def run_agent_loop(env, curriculum_agent, action_agent, critic_agent,
             # Execute action in the environment
             task_actions.append(action)
             next_state, reward, done, info = env.step(action)
+            current_score += reward
             metrics_tracker.log_timestep(
                 step=steps,
                 action=action,
                 observation=next_state['observation'],
-                score=next_state.get('score', 0),
+                score=next_state.get('score', info.get('score', 0)),
                 task=current_task
             )
 

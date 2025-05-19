@@ -1,0 +1,2625 @@
+[
+  {
+    "description": "Reveals field west of white house",
+    "task": "Look around and examine your surroundings",
+    "commands": [
+      "look"
+    ],
+    "result": "\nWest of House\nThis is an open field west of a white house, with a boarded front door.\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 0Moves: 2",
+    "contexts": [
+      "Look around and examine your surroundings",
+      "look"
+    ],
+    "created_at": 1747655225.9733257,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens mailbox revealing small leaflet inside",
+    "task": "Open mailbox",
+    "commands": [
+      "open mailbox"
+    ],
+    "result": "\nYou open the mailbox, revealing a small leaflet.\n\n>                                                                                                                                West of HouseScore: 0Moves: 3",
+    "contexts": [
+      "Open mailbox",
+      "open mailbox"
+    ],
+    "created_at": 1747655231.0228534,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Removes leaflet from open mailbox outside house",
+    "task": "Take leaflet",
+    "commands": [
+      "take leaflet"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                West of HouseScore: 0Moves: 4",
+    "contexts": [
+      "Take leaflet",
+      "take leaflet"
+    ],
+    "created_at": 1747655237.0497923,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes wealth and style of house",
+    "task": "Examine house",
+    "commands": [
+      "examine house"
+    ],
+    "result": "\nThe house is a beautiful colonial house which is painted white.  It is clear that the owners must have been extremely wealthy.\n\n>                                                                                                                                West of HouseScore: 0Moves: 5",
+    "contexts": [
+      "Examine house",
+      "examine house"
+    ],
+    "created_at": 1747655242.84919,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers east door is locked shut",
+    "task": "Go east",
+    "commands": [
+      "east"
+    ],
+    "result": "\nThe door is locked, and there is evidently no key.\n\n>                                                                                                                                West of HouseScore: 0Moves: 6",
+    "contexts": [
+      "Go east",
+      "east"
+    ],
+    "created_at": 1747655247.1319811,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves north to house\u2019s barred windows",
+    "task": "Go north",
+    "commands": [
+      "north"
+    ],
+    "result": "\nNorth of House\nYou are facing the north side of a white house.  There is no door here, and all the windows are barred.\n\n>                                                                                                                                North of HouseScore: 0Moves: 7",
+    "contexts": [
+      "Go north",
+      "north"
+    ],
+    "created_at": 1747655251.9629488,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves west to front of house",
+    "task": "Go west",
+    "commands": [
+      "west"
+    ],
+    "result": "\nWest of House\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 0Moves: 8",
+    "contexts": [
+      "Go west",
+      "west"
+    ],
+    "created_at": 1747655257.2803116,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens mailbox and finds it empty",
+    "task": "Examine mailbox",
+    "commands": [
+      "examine mailbox",
+      "open mailbox",
+      "look at mailbox",
+      "look inside mailbox"
+    ],
+    "result": "\nThe mailbox is empty.\n\n>                                                                                                                                West of HouseScore: 0Moves: 12",
+    "contexts": [
+      "Examine mailbox",
+      "examine mailbox",
+      "open mailbox",
+      "look at mailbox",
+      "look inside mailbox"
+    ],
+    "created_at": 1747655271.6146557,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys open field west of house",
+    "task": "Look around west of house",
+    "commands": [
+      "look"
+    ],
+    "result": "\nWest of House\nThis is an open field west of a white house, with a boarded front door.\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 0Moves: 17",
+    "contexts": [
+      "Look around west of house",
+      "look"
+    ],
+    "created_at": 1747655292.7249658,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves south to house\u2019s barred windows",
+    "task": "Go south",
+    "commands": [
+      "south"
+    ],
+    "result": "\nSouth of House\nYou are facing the south side of a white house.  There is no door here, and all the windows are barred.\n\n>                                                                                                                                South of HouseScore: 0Moves: 23",
+    "contexts": [
+      "Go south",
+      "south"
+    ],
+    "created_at": 1747655318.831789,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals ground grating beneath leaf pile",
+    "task": "Examine pile of leaves",
+    "commands": [
+      "examine leaves",
+      "move leaves"
+    ],
+    "result": "\nDone.\nA grating appears on the ground.\n\n>                                                                                                                                ClearingScore: 0Moves: 27",
+    "contexts": [
+      "Examine pile of leaves",
+      "examine leaves",
+      "move leaves"
+    ],
+    "created_at": 1747655336.4314113,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes securely fastened grating in clearing",
+    "task": "Examine grating",
+    "commands": [
+      "examine grating",
+      "look through grating",
+      "examine grating",
+      "inspect grating",
+      "look"
+    ],
+    "result": "\nClearing\nYou are in a clearing, with a forest surrounding you on the west and south.\nThere is a grating securely fastened into the ground.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                ClearingScore: 0Moves: 31",
+    "contexts": [
+      "Examine grating",
+      "examine grating",
+      "look through grating",
+      "examine grating",
+      "inspect grating",
+      "look"
+    ],
+    "created_at": 1747655361.5224223,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes pile of leaves from ground",
+    "task": "Take pile of leaves",
+    "commands": [
+      "take leaves"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                ClearingScore: 0Moves: 32",
+    "contexts": [
+      "Take pile of leaves",
+      "take leaves"
+    ],
+    "created_at": 1747655366.230218,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters clearing by moving southward",
+    "task": "Go south",
+    "commands": [
+      "south",
+      "go south"
+    ],
+    "result": "\nClearing\n\n>                                                                                                                                ClearingScore: 0Moves: 36",
+    "contexts": [
+      "Go south",
+      "south",
+      "go south"
+    ],
+    "created_at": 1747655400.261068,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads introductory text on small leaflet",
+    "task": "Read small leaflet",
+    "commands": [
+      "read leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                ClearingScore: 0Moves: 40",
+    "contexts": [
+      "Read small leaflet",
+      "read leaflet"
+    ],
+    "created_at": 1747655416.31717,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends canyon wall to canyon bottom",
+    "task": "Climb down into the canyon",
+    "commands": [
+      "down",
+      "down"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 67",
+    "contexts": [
+      "Climb down into the canyon",
+      "down",
+      "down"
+    ],
+    "created_at": 1747655557.0100174,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Receives message blocking northward movement",
+    "task": "Go west",
+    "commands": [
+      "north"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 70",
+    "contexts": [
+      "Go west",
+      "north"
+    ],
+    "created_at": 1747655572.6829338,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers impassable barrier west of rainbow",
+    "task": "Go west",
+    "commands": [
+      "look",
+      "west"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 72",
+    "contexts": [
+      "Go west",
+      "look",
+      "west"
+    ],
+    "created_at": 1747655580.9748209,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Receives message blocking southward movement",
+    "task": "Go south",
+    "commands": [
+      "north",
+      "look",
+      "south"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 75",
+    "contexts": [
+      "Go south",
+      "north",
+      "look",
+      "south"
+    ],
+    "created_at": 1747655591.7228913,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters impassable barrier east of rainbow",
+    "task": "Go east",
+    "commands": [
+      "move west",
+      "east"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 77",
+    "contexts": [
+      "Go east",
+      "move west",
+      "east"
+    ],
+    "created_at": 1747655598.7841477,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys End of Rainbow revealing beach details",
+    "task": "Look around End of Rainbow",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 78",
+    "contexts": [
+      "Look around End of Rainbow",
+      "look"
+    ],
+    "created_at": 1747655604.0028377,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves southeast to canyon bottom location",
+    "task": "Go southeast",
+    "commands": [
+      "southeast"
+    ],
+    "result": "\nCanyon Bottom\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 79",
+    "contexts": [
+      "Go southeast",
+      "southeast"
+    ],
+    "created_at": 1747655608.567625,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Ascends to the rocky ledge above",
+    "task": "Go up",
+    "commands": [
+      "up"
+    ],
+    "result": "\nRocky Ledge\n\n>                                                                                                                                Rocky LedgeScore: 0Moves: 80",
+    "contexts": [
+      "Go up",
+      "up"
+    ],
+    "created_at": 1747655612.9174795,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends to the bottom of canyon",
+    "task": "Go down",
+    "commands": [
+      "down"
+    ],
+    "result": "\nCanyon Bottom\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 81",
+    "contexts": [
+      "Go down",
+      "down"
+    ],
+    "created_at": 1747655617.319083,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains at canyon bottom facing northwest barrier",
+    "task": "Go northwest",
+    "commands": [
+      "northwest"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 89",
+    "contexts": [
+      "Go northwest",
+      "northwest"
+    ],
+    "created_at": 1747655649.1684754,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys canyon bottom revealing stream and path",
+    "task": "Look around canyon bottom",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 90",
+    "contexts": [
+      "Look around canyon bottom",
+      "look"
+    ],
+    "created_at": 1747655653.7751884,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains at canyon bottom facing southwest barrier",
+    "task": "Go southwest",
+    "commands": [
+      "southwest"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 97",
+    "contexts": [
+      "Go southwest",
+      "southwest"
+    ],
+    "created_at": 1747655685.1123796,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops pile of leaves at canyon bottom",
+    "task": "Drop pile of leaves",
+    "commands": [
+      "drop leaves"
+    ],
+    "result": "\nDropped.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 101",
+    "contexts": [
+      "Drop pile of leaves",
+      "drop leaves"
+    ],
+    "created_at": 1747655715.4531925,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys canyon bottom revealing stream and leaves",
+    "task": "Look around Canyon Bottom",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 102",
+    "contexts": [
+      "Look around Canyon Bottom",
+      "look"
+    ],
+    "created_at": 1747655720.2157483,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers no exit southwest from rainbow",
+    "task": "Go southwest",
+    "commands": [
+      "look",
+      "sw"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 125",
+    "contexts": [
+      "Go southwest",
+      "look",
+      "sw"
+    ],
+    "created_at": 1747655835.0262003,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals nothing beneath pile of leaves",
+    "task": "Look under pile of leaves",
+    "commands": [
+      "drop leaves",
+      "move leaves",
+      "look under leaves"
+    ],
+    "result": "\nThere is nothing interesting there.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 139",
+    "contexts": [
+      "Look under pile of leaves",
+      "drop leaves",
+      "move leaves",
+      "look under leaves"
+    ],
+    "created_at": 1747655902.6637785,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Receives message blocking southwest movement",
+    "task": "Go southwest",
+    "commands": [
+      "north"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 140",
+    "contexts": [
+      "Go southwest",
+      "north"
+    ],
+    "created_at": 1747655907.2221453,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys End of Rainbow revealing leaves",
+    "task": "Look around carefully",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 141",
+    "contexts": [
+      "Look around carefully",
+      "look"
+    ],
+    "created_at": 1747655912.4383724,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys End of Rainbow beach surroundings",
+    "task": "Look around",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 153",
+    "contexts": [
+      "Look around",
+      "look"
+    ],
+    "created_at": 1747655969.6097505,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Identifies narrow path exit at canyon bottom",
+    "task": "Look around for exits",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 158",
+    "contexts": [
+      "Look around for exits",
+      "look"
+    ],
+    "created_at": 1747655996.3931198,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Arrives at canyon bottom near stream",
+    "task": "Go southeast",
+    "commands": [
+      "southeast",
+      "southeast",
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 171",
+    "contexts": [
+      "Go southeast",
+      "southeast",
+      "southeast",
+      "look"
+    ],
+    "created_at": 1747656056.829982,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals beach, cliffs, river, rainbow, and path",
+    "task": "Look around for visible objects",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 174",
+    "contexts": [
+      "Look around for visible objects",
+      "look"
+    ],
+    "created_at": 1747656073.1081207,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals exits west and southeast at beach",
+    "task": "Look around for visible exits",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 181",
+    "contexts": [
+      "Look around for visible exits",
+      "look"
+    ],
+    "created_at": 1747656110.2043653,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads introductory message on Zork leaflet",
+    "task": "Read leaflet",
+    "commands": [
+      "read leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 206",
+    "contexts": [
+      "Read leaflet",
+      "read leaflet"
+    ],
+    "created_at": 1747656234.3931534,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads Zork introduction on small leaflet",
+    "task": "Examine small leaflet",
+    "commands": [
+      "examine leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 221",
+    "contexts": [
+      "Examine small leaflet",
+      "examine leaflet"
+    ],
+    "created_at": 1747656313.9538314,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters impassable path southwest of rocky ledge",
+    "task": "Go southwest",
+    "commands": [
+      "up",
+      "sw"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Rocky LedgeScore: 0Moves: 263",
+    "contexts": [
+      "Go southwest",
+      "up",
+      "sw"
+    ],
+    "created_at": 1747656548.6861064,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys Rocky Ledge revealing canyon and cliffs",
+    "task": "Look around Rocky Ledge",
+    "commands": [
+      "look"
+    ],
+    "result": "\nRocky Ledge\nYou are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible to enter.  Below you is the canyon bottom.  Above you is more cliff, which still appears climbable.\n\n>                                                                                                                                Rocky LedgeScore: 0Moves: 264",
+    "contexts": [
+      "Look around Rocky Ledge",
+      "look"
+    ],
+    "created_at": 1747656553.2678387,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Fails to ascend from Canyon View location",
+    "task": "Go up",
+    "commands": [
+      "up",
+      "climb ledge"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon ViewScore: 0Moves: 266",
+    "contexts": [
+      "Go up",
+      "up",
+      "climb ledge"
+    ],
+    "created_at": 1747656562.0939593,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys panoramic landscape from Canyon View",
+    "task": "Look around Canyon View",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon View\nYou are at the top of the Great Canyon on its south wall.  From here there is a marvelous view of the Canyon and parts of the Frigid River upstream.  Across the canyon, the walls of the White Cliffs still appear to loom far above.  Following the Canyon upstream (north and northwest), Aragain Falls may be seen, complete with rainbow. Fortunately, my vision is better than average and I can discern the top of the Flood Control Dam #3 far to the distant north.  To the west and south can be seen an immense forest, stretching for miles around.  It is possible to climb down into the canyon from here.\n\n>                                                                                                                                Canyon ViewScore: 0Moves: 267",
+    "contexts": [
+      "Look around Canyon View",
+      "look"
+    ],
+    "created_at": 1747656566.5749056,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends ledge to reach canyon bottom",
+    "task": "Climb down into the canyon",
+    "commands": [
+      "climb down",
+      "climb canyon",
+      "down",
+      "climb down",
+      "climb down ledge"
+    ],
+    "result": "\nCanyon Bottom\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                Canyon BottomScore: 0Moves: 269",
+    "contexts": [
+      "Climb down into the canyon",
+      "climb down",
+      "climb canyon",
+      "down",
+      "climb down",
+      "climb down ledge"
+    ],
+    "created_at": 1747656586.8596234,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals details of End of Rainbow location",
+    "task": "Look around the current location",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 327",
+    "contexts": [
+      "Look around the current location",
+      "look"
+    ],
+    "created_at": 1747656876.7458866,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys End of Rainbow beach and surroundings",
+    "task": "Look around the End of Rainbow",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 0Moves: 331",
+    "contexts": [
+      "Look around the End of Rainbow",
+      "look"
+    ],
+    "created_at": 1747656899.7188845,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes white colonial house's opulent appearance",
+    "task": "Look at the house",
+    "commands": [
+      "examine house"
+    ],
+    "result": "\nThe house is a beautiful colonial house which is painted white.  It is clear that the owners must have been extremely wealthy.\n\n>                                                                                                                                West of HouseScore: 0Moves: 5",
+    "contexts": [
+      "Look at the house",
+      "examine house"
+    ],
+    "created_at": 1747660028.1620052,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters forest by traveling northward",
+    "task": "Go north",
+    "commands": [
+      "west",
+      "north"
+    ],
+    "result": "\nForest\n\n>                                                                                                                                ForestScore: 0Moves: 8",
+    "contexts": [
+      "Go north",
+      "west",
+      "north"
+    ],
+    "created_at": 1747660041.2811897,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Describes surrounding trees in the forest",
+    "task": "Look around the forest",
+    "commands": [
+      "look"
+    ],
+    "result": "\nForest\nThis is a forest, with trees in all directions around you.\n\n>                                                                                                                                ForestScore: 0Moves: 9",
+    "contexts": [
+      "Look around the forest",
+      "look"
+    ],
+    "created_at": 1747660045.880214,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys rocky ledge revealing canyon features",
+    "task": "Look around the rocky ledge",
+    "commands": [
+      "look"
+    ],
+    "result": "\nRocky Ledge\nYou are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible to enter.  Below you is the canyon bottom.  Above you is more cliff, which still appears climbable.\n\n>                                                                                                                                Rocky LedgeScore: 0Moves: 19",
+    "contexts": [
+      "Look around the rocky ledge",
+      "look"
+    ],
+    "created_at": 1747660099.3312964,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes large trees surrounding dim forest",
+    "task": "Look at the trees",
+    "commands": [
+      "examine trees",
+      "look"
+    ],
+    "result": "\nForest\nThis is a dimly lit forest, with large trees all around.  To the east, there appears to be sunlight.\n\n>                                                                                                                                ForestScore: 0Moves: 29",
+    "contexts": [
+      "Look at the trees",
+      "examine trees",
+      "look"
+    ],
+    "created_at": 1747660146.7476249,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys clearing revealing forest and leaf pile",
+    "task": "Look around the clearing",
+    "commands": [
+      "look"
+    ],
+    "result": "\nClearing\nYou are in a clearing, with a forest surrounding you on the west and south.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                ClearingScore: 0Moves: 32",
+    "contexts": [
+      "Look around the clearing",
+      "look"
+    ],
+    "created_at": 1747660173.368766,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes south side's elegant white exterior",
+    "task": "Examine south side of house",
+    "commands": [
+      "examine house"
+    ],
+    "result": "\nThe house is a beautiful colonial house which is painted white.  It is clear that the owners must have been extremely wealthy.\n\n>                                                                                                                                South of HouseScore: 0Moves: 45",
+    "contexts": [
+      "Examine south side of house",
+      "examine house"
+    ],
+    "created_at": 1747660239.3493156,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads introductory text on Zork leaflet",
+    "task": "Examine leaflet",
+    "commands": [
+      "examine leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                West of HouseScore: 0Moves: 51",
+    "contexts": [
+      "Examine leaflet",
+      "examine leaflet"
+    ],
+    "created_at": 1747660273.2169497,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens mailbox and confirms it is empty",
+    "task": "Examine mailbox",
+    "commands": [
+      "examine mailbox",
+      "open mailbox",
+      "look inside mailbox"
+    ],
+    "result": "\nThe mailbox is empty.\n\n>                                                                                                                                West of HouseScore: 0Moves: 54",
+    "contexts": [
+      "Examine mailbox",
+      "examine mailbox",
+      "open mailbox",
+      "look inside mailbox"
+    ],
+    "created_at": 1747660285.5242786,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals nothing beneath welcome mat",
+    "task": "Lift rubber mat",
+    "commands": [
+      "lift mat",
+      "move mat"
+    ],
+    "result": "\nMoving the welcome mat reveals nothing.\n\n>                                                                                                                                West of HouseScore: 0Moves: 57",
+    "contexts": [
+      "Lift rubber mat",
+      "lift mat",
+      "move mat"
+    ],
+    "created_at": 1747660300.5431547,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Ascends large tree to reach upper branches",
+    "task": "Climb the large tree",
+    "commands": [
+      "climb tree",
+      "climb large tree"
+    ],
+    "result": "\nUp a Tree\nYou are about 10 feet above the ground nestled among some large branches.  The nearest branch above you is above your reach.\nOn the branch is a small birds nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged somewhere by a childless songbird.  The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl.  Unlike most eggs, this one is hinged and has a delicate looking clasp holding it closed.  The egg appears extremely fragile.\n\n>                                                                                                                                Up a TreeScore: 0Moves: 79",
+    "contexts": [
+      "Climb the large tree",
+      "climb tree",
+      "climb large tree"
+    ],
+    "created_at": 1747660419.4415789,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Removes jeweled egg from nest",
+    "task": "Take jeweled egg from nest",
+    "commands": [
+      "take egg"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                Up a TreeScore: 5Moves: 80",
+    "contexts": [
+      "Take jeweled egg from nest",
+      "take egg"
+    ],
+    "created_at": 1747660424.4411979,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Climbs down tree into forest clearing",
+    "task": "Climb down from the tree",
+    "commands": [
+      "down"
+    ],
+    "result": "\nForest\n\n>                                                                                                                                ForestScore: 5Moves: 81",
+    "contexts": [
+      "Climb down from the tree",
+      "down"
+    ],
+    "created_at": 1747660430.9697118,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves pile of leaves from ground",
+    "task": "Move the pile of leaves",
+    "commands": [
+      "move leaves"
+    ],
+    "result": "\nDone.\n\n>                                                                                                                                ClearingScore: 5Moves: 95",
+    "contexts": [
+      "Move the pile of leaves",
+      "move leaves"
+    ],
+    "created_at": 1747660509.7528837,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters forest with view of eastern clearing",
+    "task": "Go south",
+    "commands": [
+      "south",
+      "south",
+      "south",
+      "look"
+    ],
+    "result": "\nForest\nThis is a large forest, with trees obstructing all views except to the east, where a small clearing may be seen through the trees.\n\n>                                                                                                                                ForestScore: 5Moves: 114",
+    "contexts": [
+      "Go south",
+      "south",
+      "south",
+      "south",
+      "look"
+    ],
+    "created_at": 1747660605.3953805,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters clearing with pile of leaves",
+    "task": "Go east toward the sunlight",
+    "commands": [
+      "east",
+      "east"
+    ],
+    "result": "\nClearing\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                ClearingScore: 5Moves: 123",
+    "contexts": [
+      "Go east toward the sunlight",
+      "east",
+      "east"
+    ],
+    "created_at": 1747660652.1283453,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Clears leaves from ground, revealing surface",
+    "task": "Move leaves on the ground",
+    "commands": [
+      "move leaves"
+    ],
+    "result": "\nDone.\n\n>                                                                                                                                ClearingScore: 5Moves: 124",
+    "contexts": [
+      "Move leaves on the ground",
+      "move leaves"
+    ],
+    "created_at": 1747660657.418175,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Ascends large tree to reach bird\u2019s nest",
+    "task": "Climb large tree",
+    "commands": [
+      "climb tree",
+      "climb large tree"
+    ],
+    "result": "\nUp a Tree\nOn the branch is a small birds nest.\n\n>                                                                                                                                Up a TreeScore: 5Moves: 127",
+    "contexts": [
+      "Climb large tree",
+      "climb tree",
+      "climb large tree"
+    ],
+    "created_at": 1747660676.8716795,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes birds nest from tree branch",
+    "task": "Take birds nest",
+    "commands": [
+      "take nest"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                Up a TreeScore: 5Moves: 128",
+    "contexts": [
+      "Take birds nest",
+      "take nest"
+    ],
+    "created_at": 1747660681.7891223,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Examines exterior of birds nest only",
+    "task": "Examine birds nest",
+    "commands": [
+      "examine nest",
+      "look at birds nest",
+      "look inside nest"
+    ],
+    "result": "\nI don't know how to look inside a birds nest.\n\n>                                                                                                                                ForestScore: 5Moves: 137",
+    "contexts": [
+      "Examine birds nest",
+      "examine nest",
+      "look at birds nest",
+      "look inside nest"
+    ],
+    "created_at": 1747660730.0538213,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops birds nest onto forest floor",
+    "task": "Drop birds nest",
+    "commands": [
+      "drop birds nest"
+    ],
+    "result": "\nDropped.\nYou hear in the distance the chirping of a song bird.\n\n>                                                                                                                                ForestScore: 5Moves: 154",
+    "contexts": [
+      "Drop birds nest",
+      "drop birds nest"
+    ],
+    "created_at": 1747660822.1390147,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends into canyon reaching canyon bottom",
+    "task": "Climb down into the canyon",
+    "commands": [
+      "climb down",
+      "climb down canyon",
+      "down",
+      "descend canyon",
+      "down"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 180",
+    "contexts": [
+      "Climb down into the canyon",
+      "climb down",
+      "climb down canyon",
+      "down",
+      "descend canyon",
+      "down"
+    ],
+    "created_at": 1747660967.643607,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters impassable barrier north of narrow path",
+    "task": "Go north along the narrow path",
+    "commands": [
+      "north",
+      "north"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 185",
+    "contexts": [
+      "Go north along the narrow path",
+      "north",
+      "north"
+    ],
+    "created_at": 1747661008.6689637,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Inspects egg, finds no opening mechanism",
+    "task": "Examine jewel-encrusted egg",
+    "commands": [
+      "examine egg",
+      "look at egg",
+      "examine jewel-encrusted egg",
+      "examine egg",
+      "open egg"
+    ],
+    "result": "\nThere is no obvious way to open the egg.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 190",
+    "contexts": [
+      "Examine jewel-encrusted egg",
+      "examine egg",
+      "look at egg",
+      "examine jewel-encrusted egg",
+      "examine egg",
+      "open egg"
+    ],
+    "created_at": 1747661038.4552796,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers egg has no visible opening mechanism",
+    "task": "Examine jewel-encrusted egg",
+    "commands": [
+      "examine egg",
+      "look at egg",
+      "open egg"
+    ],
+    "result": "\nThere is no obvious way to open the egg.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 202",
+    "contexts": [
+      "Examine jewel-encrusted egg",
+      "examine egg",
+      "look at egg",
+      "open egg"
+    ],
+    "created_at": 1747661102.6547,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys rocky beach at end of rainbow",
+    "task": "Look around the end of rainbow",
+    "commands": [
+      "look"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\nThere is a small birds nest here.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 214",
+    "contexts": [
+      "Look around the end of rainbow",
+      "look"
+    ],
+    "created_at": 1747661183.7669861,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains at canyon bottom facing east barrier",
+    "task": "Go east",
+    "commands": [
+      "west",
+      "look",
+      "southeast",
+      "east"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 220",
+    "contexts": [
+      "Go east",
+      "west",
+      "look",
+      "southeast",
+      "east"
+    ],
+    "created_at": 1747661210.079779,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains on rocky ledge facing east barrier",
+    "task": "Go east",
+    "commands": [
+      "up",
+      "east"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Rocky LedgeScore: 5Moves: 222",
+    "contexts": [
+      "Go east",
+      "up",
+      "east"
+    ],
+    "created_at": 1747661218.6577928,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves west onto rocky canyon ledge",
+    "task": "Go west",
+    "commands": [
+      "look"
+    ],
+    "result": "\nRocky Ledge\nYou are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible to enter.  Below you is the canyon bottom.  Above you is more cliff, which still appears climbable.\n\n>                                                                                                                                Rocky LedgeScore: 5Moves: 223",
+    "contexts": [
+      "Go west",
+      "look"
+    ],
+    "created_at": 1747661224.6502085,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends to canyon bottom from above",
+    "task": "Go down to canyon bottom",
+    "commands": [
+      "down"
+    ],
+    "result": "\nCanyon Bottom\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 224",
+    "contexts": [
+      "Go down to canyon bottom",
+      "down"
+    ],
+    "created_at": 1747661231.0670924,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters canyon bottom from eastern approach",
+    "task": "Go east",
+    "commands": [
+      "look",
+      "southeast"
+    ],
+    "result": "\nCanyon Bottom\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 231",
+    "contexts": [
+      "Go east",
+      "look",
+      "southeast"
+    ],
+    "created_at": 1747661265.3889344,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops birds nest at canyon bottom",
+    "task": "Drop birds nest",
+    "commands": [
+      "drop nest"
+    ],
+    "result": "\nDropped.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 233",
+    "contexts": [
+      "Drop birds nest",
+      "drop nest"
+    ],
+    "created_at": 1747661289.741106,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals canyon bottom with stream and nest",
+    "task": "Look",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\nThere is a small birds nest here.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 244",
+    "contexts": [
+      "Look",
+      "look"
+    ],
+    "created_at": 1747661349.0549436,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters impassable barrier northeast of rainbow",
+    "task": "Go northeast",
+    "commands": [
+      "northeast"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 246",
+    "contexts": [
+      "Go northeast",
+      "northeast"
+    ],
+    "created_at": 1747661360.9633567,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers east exit blocked at canyon bottom",
+    "task": "Go east",
+    "commands": [
+      "look",
+      "southeast",
+      "east"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 253",
+    "contexts": [
+      "Go east",
+      "look",
+      "southeast",
+      "east"
+    ],
+    "created_at": 1747661389.8882527,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys canyon bottom revealing bird\u2019s nest",
+    "task": "Look around the canyon bottom",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\nThere is a small birds nest here.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 254",
+    "contexts": [
+      "Look around the canyon bottom",
+      "look"
+    ],
+    "created_at": 1747661395.7253046,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Receives message blocking eastward movement",
+    "task": "Go east",
+    "commands": [
+      "west",
+      "west"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 265",
+    "contexts": [
+      "Go east",
+      "west",
+      "west"
+    ],
+    "created_at": 1747661460.2469425,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters impassable barrier north of rainbow",
+    "task": "Go north",
+    "commands": [
+      "south",
+      "look",
+      "north"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 274",
+    "contexts": [
+      "Go north",
+      "south",
+      "look",
+      "north"
+    ],
+    "created_at": 1747661503.0356429,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Fails to ascend ledge at Canyon View",
+    "task": "Go up",
+    "commands": [
+      "climb ledge",
+      "up",
+      "climb up",
+      "climb ledge"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon ViewScore: 5Moves: 281",
+    "contexts": [
+      "Go up",
+      "climb ledge",
+      "up",
+      "climb up",
+      "climb ledge"
+    ],
+    "created_at": 1747661548.1231928,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens window wide enough for entry",
+    "task": "Open window",
+    "commands": [
+      "open window"
+    ],
+    "result": "\nWith great effort, you open the window far enough to allow entry.\n\n>                                                                                                                                Behind HouseScore: 5Moves: 304",
+    "contexts": [
+      "Open window",
+      "open window"
+    ],
+    "created_at": 1747661667.517013,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Removes lantern from trophy case",
+    "task": "Take lantern from trophy case",
+    "commands": [
+      "take lantern"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                Living RoomScore: 15Moves: 319",
+    "contexts": [
+      "Take lantern from trophy case",
+      "take lantern"
+    ],
+    "created_at": 1747661747.182347,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys living room revealing doors and items",
+    "task": "Look around the living room",
+    "commands": [
+      "look"
+    ],
+    "result": "\nLiving Room\nYou are in the living room.  There is a door to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, and a large oriental rug in the center of the room.\nThere is a trophy case here.\nThere is an issue of US NEWS & DUNGEON REPORT dated 08/26/04 here.\nOn hooks above the mantelpiece hangs an elvish sword of great antiquity.\n\n>                                                                                                                                Living RoomScore: 15Moves: 326",
+    "contexts": [
+      "Look around the living room",
+      "look"
+    ],
+    "created_at": 1747661779.7470617,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes elvish sword from mantelpiece",
+    "task": "Take elvish sword from mantelpiece",
+    "commands": [
+      "take sword"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                Living RoomScore: 15Moves: 327",
+    "contexts": [
+      "Take elvish sword from mantelpiece",
+      "take sword"
+    ],
+    "created_at": 1747661786.1863654,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals closed trap door under rug",
+    "task": "Look under the living room rug",
+    "commands": [
+      "look under rug"
+    ],
+    "result": "\nUnderneath the rug is a closed trap door.\n\n>                                                                                                                                Living RoomScore: 15Moves: 328",
+    "contexts": [
+      "Look under the living room rug",
+      "look under rug"
+    ],
+    "created_at": 1747661792.0332973,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens trap door revealing descending staircase",
+    "task": "Open trap door",
+    "commands": [
+      "open trap door",
+      "west",
+      "look",
+      "move rug",
+      "open trap door"
+    ],
+    "result": "\nThe door reluctantly opens to reveal a rickety staircase descending into darkness.\n\n>                                                                                                                                Living RoomScore: 15Moves: 332",
+    "contexts": [
+      "Open trap door",
+      "open trap door",
+      "west",
+      "look",
+      "move rug",
+      "open trap door"
+    ],
+    "created_at": 1747661811.7897666,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends staircase into pitch-black basement",
+    "task": "Descend the staircase into darkness",
+    "commands": [
+      "down"
+    ],
+    "result": "\nIt is pitch black.  You are likely to be eaten by a grue.\nYour sword is glowing with a faint blue glow.\n\n>                                                                                                                                DarknessScore: 40Moves: 333",
+    "contexts": [
+      "Descend the staircase into darkness",
+      "down"
+    ],
+    "created_at": 1747661816.6489065,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Illuminates cellar by turning on lamp",
+    "task": "Turn on lamp",
+    "commands": [
+      "turn on lamp"
+    ],
+    "result": "\nThe lamp is now on.\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading east, and a crawlway to the south.  On the west is the bottom of a steep metal ramp which is unclimbable.\nThe trap door crashes shut, and you hear someone barring it.\n\n>                                                                                                                                CellarScore: 40Moves: 334",
+    "contexts": [
+      "Turn on lamp",
+      "turn on lamp"
+    ],
+    "created_at": 1747661821.2777014,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Defeats troll and enters north-south crawlway",
+    "task": "Go east through narrow passageway",
+    "commands": [
+      "east",
+      "attack troll",
+      "east"
+    ],
+    "result": "\nNorth-South Crawlway\nThis is a north-south crawlway; a passage goes to the east also. There is a hole above, but it provides no opportunities for climbing.\nSomeone carrying a large bag is casually leaning against one of the walls here.  He does not speak, but it is clear from his aspect that the bag will be taken only over his dead body.\nYour sword has begun to glow very brightly.\n\n>                                                                                                                                North-South CrawlwayScore: 40Moves: 337",
+    "contexts": [
+      "Go east through narrow passageway",
+      "east",
+      "attack troll",
+      "east"
+    ],
+    "created_at": 1747661836.5676625,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys Troll Room revealing bloodstains and scratches",
+    "task": "Look around the Troll Room",
+    "commands": [
+      "look"
+    ],
+    "result": "\nThe Troll Room\nThis is a small room with passages off in all directions. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\n>                                                                                                                                The Troll RoomScore: 40Moves: 345",
+    "contexts": [
+      "Look around the Troll Room",
+      "look"
+    ],
+    "created_at": 1747661895.2466948,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals description of twisty maze passages",
+    "task": "Look around the Maze",
+    "commands": [
+      "look"
+    ],
+    "result": "\nMaze\nThis is part of a maze of twisty little passages, all alike.\n\n>                                                                                                                                MazeScore: 40Moves: 351",
+    "contexts": [
+      "Look around the Maze",
+      "look"
+    ],
+    "created_at": 1747661952.70185,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters wall north of Deep Ravine",
+    "task": "Go north",
+    "commands": [
+      "north",
+      "down",
+      "north"
+    ],
+    "result": "\nThere is a wall there.\n\n>                                                                                                                                Deep RavineScore: 45Moves: 358",
+    "contexts": [
+      "Go north",
+      "north",
+      "down",
+      "north"
+    ],
+    "created_at": 1747661992.4202602,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes nothing special about jewel-encrusted egg",
+    "task": "Examine jewel-encrusted egg",
+    "commands": [
+      "examine egg",
+      "look at jewel-encrusted egg",
+      "examine egg"
+    ],
+    "result": "\nI see nothing special about the jewel-encrusted egg.\n\n>                                                                                                                                Deep RavineScore: 45Moves: 360",
+    "contexts": [
+      "Examine jewel-encrusted egg",
+      "examine egg",
+      "look at jewel-encrusted egg",
+      "examine egg"
+    ],
+    "created_at": 1747662004.6005452,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reads introduction text on small leaflet",
+    "task": "Read the small leaflet",
+    "commands": [
+      "read leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                ForestScore: 0Moves: 11",
+    "contexts": [
+      "Read the small leaflet",
+      "read leaflet"
+    ],
+    "created_at": 1747664171.29391,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Inspects jeweled egg revealing hinged clasp",
+    "task": "Examine jeweled egg",
+    "commands": [
+      "examine egg",
+      "examine jewel-encrusted egg",
+      "look"
+    ],
+    "result": "\nUp a Tree\nYou are about 10 feet above the ground nestled among some large branches.  The nearest branch above you is above your reach.\nOn the branch is a small birds nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged somewhere by a childless songbird.  The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl.  Unlike most eggs, this one is hinged and has a delicate looking clasp holding it closed.  The egg appears extremely fragile.\n\n>                                                                                                                                Up a TreeScore: 0Moves: 16",
+    "contexts": [
+      "Examine jeweled egg",
+      "examine egg",
+      "examine jewel-encrusted egg",
+      "look"
+    ],
+    "created_at": 1747664203.463988,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens small window wide for entry",
+    "task": "Open the small window",
+    "commands": [
+      "open window"
+    ],
+    "result": "\nWith great effort, you open the window far enough to allow entry.\n\n>                                                                                                                                Behind HouseScore: 5Moves: 22",
+    "contexts": [
+      "Open the small window",
+      "open window"
+    ],
+    "created_at": 1747664231.8536267,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys entrance to Hades and surroundings",
+    "task": "Look around entrance to Hades",
+    "commands": [
+      "look"
+    ],
+    "result": "\nThe room looks strange and unearthly and objects appear indistinct.\nEntrance to Hades\nYou are outside a large gateway, on which is inscribed \n        \"Abandon every hope, all ye who enter here.\"\nThe gate is open; through it you can see a desolation, with a pile of mangled corpses in one corner.  Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through the gate is barred by evil spirits, who jeer at your attempts to pass.\n\n>                                                                                                                                Entrance to HadesScore: 5Moves: 33",
+    "contexts": [
+      "Look around entrance to Hades",
+      "look"
+    ],
+    "created_at": 1747664300.3537638,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters Entrance to Hades, observes barred gateway",
+    "task": "Go north",
+    "commands": [
+      "look"
+    ],
+    "result": "\nThe room looks strange and unearthly and objects appear indistinct.\nEntrance to Hades\nYou are outside a large gateway, on which is inscribed \n        \"Abandon every hope, all ye who enter here.\"\nThe gate is open; through it you can see a desolation, with a pile of mangled corpses in one corner.  Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through the gate is barred by evil spirits, who jeer at your attempts to pass.\n\n>                                                                                                                                Entrance to HadesScore: 5Moves: 41",
+    "contexts": [
+      "Go north",
+      "look"
+    ],
+    "created_at": 1747664333.8579233,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers wall blocking passage northward",
+    "task": "Go north",
+    "commands": [
+      "look",
+      "north"
+    ],
+    "result": "\nThere is a wall there.\n\n>                                                                                                                                Entrance to HadesScore: 5Moves: 44",
+    "contexts": [
+      "Go north",
+      "look",
+      "north"
+    ],
+    "created_at": 1747664347.34863,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters Entrance to Hades outside gateway",
+    "task": "Go south",
+    "commands": [
+      "look"
+    ],
+    "result": "\nThe room looks strange and unearthly and objects appear indistinct.\nEntrance to Hades\nYou are outside a large gateway, on which is inscribed \n        \"Abandon every hope, all ye who enter here.\"\nThe gate is open; through it you can see a desolation, with a pile of mangled corpses in one corner.  Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through the gate is barred by evil spirits, who jeer at your attempts to pass.\n\n>                                                                                                                                Entrance to HadesScore: 5Moves: 68",
+    "contexts": [
+      "Go south",
+      "look"
+    ],
+    "created_at": 1747664452.7223647,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals inscription and horrors at gateway",
+    "task": "Examine gateway",
+    "commands": [
+      "examine gateway",
+      "examine entrance",
+      "look"
+    ],
+    "result": "\nThe room looks strange and unearthly and objects appear indistinct.\nEntrance to Hades\nYou are outside a large gateway, on which is inscribed \n        \"Abandon every hope, all ye who enter here.\"\nThe gate is open; through it you can see a desolation, with a pile of mangled corpses in one corner.  Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through the gate is barred by evil spirits, who jeer at your attempts to pass.\n\n>                                                                                                                                Entrance to HadesScore: 5Moves: 69",
+    "contexts": [
+      "Examine gateway",
+      "examine gateway",
+      "examine entrance",
+      "look"
+    ],
+    "created_at": 1747664463.0639873,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes mangled corpses in Hades entrance",
+    "task": "Examine pile of mangled corpses",
+    "commands": [
+      "examine corpses",
+      "look at pile",
+      "examine corpses",
+      "look"
+    ],
+    "result": "\nThe room looks strange and unearthly and objects appear indistinct.\nEntrance to Hades\nYou are outside a large gateway, on which is inscribed \n        \"Abandon every hope, all ye who enter here.\"\nThe gate is open; through it you can see a desolation, with a pile of mangled corpses in one corner.  Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through the gate is barred by evil spirits, who jeer at your attempts to pass.\n\n>                                                                                                                                Entrance to HadesScore: 5Moves: 73",
+    "contexts": [
+      "Examine pile of mangled corpses",
+      "examine corpses",
+      "look at pile",
+      "examine corpses",
+      "look"
+    ],
+    "created_at": 1747664477.2633188,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Clears leaves from ground surface",
+    "task": "Move leaves",
+    "commands": [
+      "move leaves"
+    ],
+    "result": "\nDone.\n\n>                                                                                                                                ClearingScore: 5Moves: 32",
+    "contexts": [
+      "Move leaves",
+      "move leaves"
+    ],
+    "created_at": 1747664659.0399656,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Descends from tree to forest floor",
+    "task": "Climb down from tree",
+    "commands": [
+      "down"
+    ],
+    "result": "\nForest\n\n>                                                                                                                                ForestScore: 5Moves: 44",
+    "contexts": [
+      "Climb down from tree",
+      "down"
+    ],
+    "created_at": 1747664724.70454,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves east to area behind house",
+    "task": "Go east",
+    "commands": [
+      "west",
+      "east"
+    ],
+    "result": "\nBehind House\n\n>                                                                                                                                Behind HouseScore: 5Moves: 69",
+    "contexts": [
+      "Go east",
+      "west",
+      "east"
+    ],
+    "created_at": 1747664849.9306388,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes small birds nest from tree",
+    "task": "Take small birds nest",
+    "commands": [
+      "take nest"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                Up a TreeScore: 5Moves: 73",
+    "contexts": [
+      "Take small birds nest",
+      "take nest"
+    ],
+    "created_at": 1747664872.0840564,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals ground beneath pile of leaves",
+    "task": "Look under the pile of leaves",
+    "commands": [
+      "move leaves"
+    ],
+    "result": "\nDone.\n\n>                                                                                                                                ForestScore: 5Moves: 75",
+    "contexts": [
+      "Look under the pile of leaves",
+      "move leaves"
+    ],
+    "created_at": 1747664881.8867517,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters clearing by moving eastward",
+    "task": "Go east",
+    "commands": [
+      "east",
+      "look",
+      "east"
+    ],
+    "result": "\nClearing\n\n>                                                                                                                                ClearingScore: 5Moves: 81",
+    "contexts": [
+      "Go east",
+      "east",
+      "look",
+      "east"
+    ],
+    "created_at": 1747664940.5445468,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters forest from southern approach",
+    "task": "Go south",
+    "commands": [
+      "east",
+      "south",
+      "south",
+      "south"
+    ],
+    "result": "\nForest\nThis is a large forest, with trees obstructing all views except to the east, where a small clearing may be seen through the trees.\n\n>                                                                                                                                ForestScore: 5Moves: 103",
+    "contexts": [
+      "Go south",
+      "east",
+      "south",
+      "south",
+      "south"
+    ],
+    "created_at": 1747665049.507288,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains at Canyon View facing impassable north",
+    "task": "Go north",
+    "commands": [
+      "east",
+      "north"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon ViewScore: 5Moves: 112",
+    "contexts": [
+      "Go north",
+      "east",
+      "north"
+    ],
+    "created_at": 1747665091.3963416,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops jewel-encrusted egg onto ground",
+    "task": "Drop jewel-encrusted egg",
+    "commands": [
+      "drop egg"
+    ],
+    "result": "\nDropped.\n\n>                                                                                                                                ClearingScore: 5Moves: 125",
+    "contexts": [
+      "Drop jewel-encrusted egg",
+      "drop egg"
+    ],
+    "created_at": 1747665149.1580336,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes jewel-encrusted egg from display",
+    "task": "Take jewel-encrusted egg",
+    "commands": [
+      "take egg"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                ClearingScore: 5Moves: 128",
+    "contexts": [
+      "Take jewel-encrusted egg",
+      "take egg"
+    ],
+    "created_at": 1747665163.5895522,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters western forest with leaf pile",
+    "task": "Go west into the forest",
+    "commands": [
+      "west"
+    ],
+    "result": "\nForest\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                ForestScore: 5Moves: 152",
+    "contexts": [
+      "Go west into the forest",
+      "west"
+    ],
+    "created_at": 1747665279.8494515,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves south to the forest clearing",
+    "task": "Go south to the clearing",
+    "commands": [
+      "south"
+    ],
+    "result": "\nClearing\n\n>                                                                                                                                ClearingScore: 5Moves: 154",
+    "contexts": [
+      "Go south to the clearing",
+      "south"
+    ],
+    "created_at": 1747665288.9337938,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens leaflet revealing Zork introduction text",
+    "task": "Open small leaflet",
+    "commands": [
+      "open leaflet",
+      "read leaflet"
+    ],
+    "result": "\n                          WELCOME TO ZORK\n\n    ZORK is a game of adventure, danger, and low cunning.  In it you will explore some of the most amazing territory ever seen by mortal man.  Hardened adventurers have run screaming from the terrors contained within!\n\n    In ZORK the intrepid explorer delves into the forgotten secrets of a lost labyrinth deep in the bowels of the earth, searching for vast treasures long hidden from prying eyes, treasures guarded by fearsome monsters and diabolical traps!\n\n    No PDP-10 should be without one!\n\n    ZORK was created at the MIT Laboratory for Computer Science, by Tim Anderson, Marc Blank, Bruce Daniels, and Dave Lebling.  It was inspired by the ADVENTURE game of Crowther and Woods, and the long tradition of fantasy and science fiction adventure.  ZORK was originally written in MDL (alias MUDDLE).  The current version was translated from MDL into Inform by Ethan Dicks <erd@infinet.com>.\n\n    On-line information may be available using the HELP and INFO commands (most systems).\n\n    Direct inquiries, comments, etc. by Net mail to erd@infinet.com.\n\n    (c) Copyright 1978,1979 Massachusetts Institute of Technology. \n                     All rights reserved.\n\n>                                                                                                                                ClearingScore: 5Moves: 167",
+    "contexts": [
+      "Open small leaflet",
+      "open leaflet",
+      "read leaflet"
+    ],
+    "created_at": 1747665350.7513247,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Describes open field west of house",
+    "task": "Look around West of House",
+    "commands": [
+      "look"
+    ],
+    "result": "\nWest of House\nThis is an open field west of a white house, with a boarded front door.\nThere is a small mailbox here.\nA rubber mat saying 'Welcome to Zork!' lies by the door.\n\n>                                                                                                                                West of HouseScore: 5Moves: 202",
+    "contexts": [
+      "Look around West of House",
+      "look"
+    ],
+    "created_at": 1747665525.2839801,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers egg lacks any visible opening",
+    "task": "Examine jewel-encrusted egg",
+    "commands": [
+      "examine egg",
+      "look at jewel-encrusted egg",
+      "examine egg",
+      "open egg"
+    ],
+    "result": "\nThere is no obvious way to open the egg.\n\n>                                                                                                                                ClearingScore: 5Moves: 219",
+    "contexts": [
+      "Examine jewel-encrusted egg",
+      "examine egg",
+      "look at jewel-encrusted egg",
+      "examine egg",
+      "open egg"
+    ],
+    "created_at": 1747665597.6723092,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes small stream beneath canyon walls",
+    "task": "Examine the small stream",
+    "commands": [
+      "examine stream",
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 243",
+    "contexts": [
+      "Examine the small stream",
+      "examine stream",
+      "look"
+    ],
+    "created_at": 1747665729.2173629,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains at canyon bottom after blocked path",
+    "task": "Go southeast along the narrow path",
+    "commands": [
+      "southeast",
+      "southeast"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 258",
+    "contexts": [
+      "Go southeast along the narrow path",
+      "southeast",
+      "southeast"
+    ],
+    "created_at": 1747665789.3574705,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains at narrow path facing west barrier",
+    "task": "Go west along the narrow path",
+    "commands": [
+      "west"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 265",
+    "contexts": [
+      "Go west along the narrow path",
+      "west"
+    ],
+    "created_at": 1747665822.8564198,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Arrives at End of Rainbow beach",
+    "task": "Go north along the narrow path",
+    "commands": [
+      "north",
+      "southeast",
+      "north"
+    ],
+    "result": "\nEnd of Rainbow\nYou are on a small, rocky beach on the continuation of the Frigid River past the Falls.  The beach is narrow due to the presence of the White Cliffs.  The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the west and a narrow path continues to the southeast.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 278",
+    "contexts": [
+      "Go north along the narrow path",
+      "north",
+      "southeast",
+      "north"
+    ],
+    "created_at": 1747665884.2932673,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Arrives at End of Rainbow location",
+    "task": "Go west across the rainbow",
+    "commands": [
+      "west",
+      "cross rainbow"
+    ],
+    "result": "\nI only understood you as far as wanting to cross.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 279",
+    "contexts": [
+      "Go west across the rainbow",
+      "west",
+      "cross rainbow"
+    ],
+    "created_at": 1747665892.2720847,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Describes terrain and features at canyon bottom",
+    "task": "Examine canyon bottom",
+    "commands": [
+      "look"
+    ],
+    "result": "\nCanyon Bottom\nYou are beneath the walls of the river canyon which may be climbable here.  There is a small stream here, which is the lesser part of the runoff of Aragain Falls. To the north is a narrow path.\n\n>                                                                                                                                Canyon BottomScore: 5Moves: 310",
+    "contexts": [
+      "Examine canyon bottom",
+      "look"
+    ],
+    "created_at": 1747666058.942515,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Encounters impassable barrier southwest of rainbow",
+    "task": "Go southwest",
+    "commands": [
+      "south"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                End of RainbowScore: 5Moves: 313",
+    "contexts": [
+      "Go southwest",
+      "south"
+    ],
+    "created_at": 1747666077.235259,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Ascends canyon walls to rocky ledge",
+    "task": "Climb canyon walls",
+    "commands": [
+      "climb walls",
+      "up"
+    ],
+    "result": "\nRocky Ledge\n\n>                                                                                                                                Rocky LedgeScore: 5Moves: 338",
+    "contexts": [
+      "Climb canyon walls",
+      "climb walls",
+      "up"
+    ],
+    "created_at": 1747666201.3129017,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves east onto rocky canyon ledge",
+    "task": "Go east",
+    "commands": [
+      "look"
+    ],
+    "result": "\nRocky Ledge\nYou are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible to enter.  Below you is the canyon bottom.  Above you is more cliff, which still appears climbable.\n\n>                                                                                                                                Rocky LedgeScore: 5Moves: 340",
+    "contexts": [
+      "Go east",
+      "look"
+    ],
+    "created_at": 1747666210.4366772,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Ascends rocky cliff to canyon viewpoint",
+    "task": "Climb up the rocky cliff",
+    "commands": [
+      "up"
+    ],
+    "result": "\nCanyon View\nYou are at the top of the Great Canyon on its south wall.  From here there is a marvelous view of the Canyon and parts of the Frigid River upstream.  Across the canyon, the walls of the White Cliffs still appear to loom far above.  Following the Canyon upstream (north and northwest), Aragain Falls may be seen, complete with rainbow. Fortunately, my vision is better than average and I can discern the top of the Flood Control Dam #3 far to the distant north.  To the west and south can be seen an immense forest, stretching for miles around.  It is possible to climb down into the canyon from here.\n\n>                                                                                                                                Canyon ViewScore: 5Moves: 341",
+    "contexts": [
+      "Climb up the rocky cliff",
+      "up"
+    ],
+    "created_at": 1747666214.803774,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals hidden key beneath rubber mat",
+    "task": "Examine rubber mat",
+    "commands": [
+      "examine mat",
+      "look under mat",
+      "look at mat",
+      "examine rubber mat"
+    ],
+    "result": "\nWelcome to Zork!\n\n>                                                                                                                                West of HouseScore: 0Moves: 40",
+    "contexts": [
+      "Examine rubber mat",
+      "examine mat",
+      "look under mat",
+      "look at mat",
+      "examine rubber mat"
+    ],
+    "created_at": 1747666825.2507722,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals nothing beneath the welcome mat",
+    "task": "Look under the welcome mat",
+    "commands": [
+      "look under mat"
+    ],
+    "result": "\nThere is nothing interesting there.\n\n>                                                                                                                                West of HouseScore: 0Moves: 46",
+    "contexts": [
+      "Look under the welcome mat",
+      "look under mat"
+    ],
+    "created_at": 1747666854.7751436,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Moves north to area north of house",
+    "task": "Look north",
+    "commands": [
+      "look north",
+      "north"
+    ],
+    "result": "\nNorth of House\n\n>                                                                                                                                North of HouseScore: 0Moves: 47",
+    "contexts": [
+      "Look north",
+      "look north",
+      "north"
+    ],
+    "created_at": 1747666863.9629772,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Finds mailbox already open upon inspection",
+    "task": "Open the mailbox",
+    "commands": [
+      "open mailbox"
+    ],
+    "result": "\nThat's already open.\n\n>                                                                                                                                West of HouseScore: 0Moves: 49",
+    "contexts": [
+      "Open the mailbox",
+      "open mailbox"
+    ],
+    "created_at": 1747666873.9693785,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Views area south of the house",
+    "task": "Look south",
+    "commands": [
+      "look south",
+      "look south",
+      "south"
+    ],
+    "result": "\nSouth of House\n\n>                                                                                                                                South of HouseScore: 0Moves: 57",
+    "contexts": [
+      "Look south",
+      "look south",
+      "look south",
+      "south"
+    ],
+    "created_at": 1747666916.9034758,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys south side of house exterior",
+    "task": "Look around south of house",
+    "commands": [
+      "look"
+    ],
+    "result": "\nSouth of House\nYou are facing the south side of a white house.  There is no door here, and all the windows are barred.\n\n>                                                                                                                                South of HouseScore: 0Moves: 60",
+    "contexts": [
+      "Look around south of house",
+      "look"
+    ],
+    "created_at": 1747666930.7261908,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Surveys area behind house revealing open window",
+    "task": "Look around behind the house",
+    "commands": [
+      "look"
+    ],
+    "result": "\nBehind House\nYou are behind the white house.  In one corner of the house there is a small window which is open.\n\n>                                                                                                                                Behind HouseScore: 15Moves: 88",
+    "contexts": [
+      "Look around behind the house",
+      "look"
+    ],
+    "created_at": 1747667092.4194214,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals forest layout and eastern clearing",
+    "task": "Look around Forest",
+    "commands": [
+      "look"
+    ],
+    "result": "\nForest\nThis is a large forest, with trees obstructing all views except to the east, where a small clearing may be seen through the trees.\n\n>                                                                                                                                ForestScore: 15Moves: 131",
+    "contexts": [
+      "Look around Forest",
+      "look"
+    ],
+    "created_at": 1747667308.7943861,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens grating beneath cleared pile of leaves",
+    "task": "Open the grating",
+    "commands": [
+      "move leaves",
+      "open grating",
+      "examine grating",
+      "move leaves"
+    ],
+    "result": "\nDone.\n\n>                                                                                                                                ClearingScore: 15Moves: 163",
+    "contexts": [
+      "Open the grating",
+      "move leaves",
+      "open grating",
+      "examine grating",
+      "move leaves"
+    ],
+    "created_at": 1747667473.4656565,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Returns south to area south of house",
+    "task": "Go north",
+    "commands": [
+      "north",
+      "go north"
+    ],
+    "result": "\nThe windows are all barred.\n\n>                                                                                                                                South of HouseScore: 15Moves: 168",
+    "contexts": [
+      "Go north",
+      "north",
+      "go north"
+    ],
+    "created_at": 1747667496.812892,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals nothing under the welcome mat",
+    "task": "Lift the welcome mat",
+    "commands": [
+      "lift mat",
+      "look under mat"
+    ],
+    "result": "\nThere is nothing interesting there.\n\n>                                                                                                                                West of HouseScore: 15Moves: 173",
+    "contexts": [
+      "Lift the welcome mat",
+      "lift mat",
+      "look under mat"
+    ],
+    "created_at": 1747667524.1424282,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Knocks on door confirming no one answers",
+    "task": "Knock on the door",
+    "commands": [
+      "knock door",
+      "knock on door"
+    ],
+    "result": "\nI don't think that anybody's home.\n\n>                                                                                                                                West of HouseScore: 15Moves: 196",
+    "contexts": [
+      "Knock on the door",
+      "knock door",
+      "knock on door"
+    ],
+    "created_at": 1747667639.4221222,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Reveals nothing under the rubber mat",
+    "task": "Look under the rubber mat",
+    "commands": [
+      "look under mat"
+    ],
+    "result": "\nThere is nothing interesting there.\n\n>                                                                                                                                West of HouseScore: 15Moves: 225",
+    "contexts": [
+      "Look under the rubber mat",
+      "look under mat"
+    ],
+    "created_at": 1747667780.0463755,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Opens mailbox to access its contents",
+    "task": "Open the mailbox",
+    "commands": [
+      "open mailbox",
+      "north",
+      "open mailbox",
+      "west",
+      "open mailbox"
+    ],
+    "result": "\nThat's already open.\n\n>                                                                                                                                West of HouseScore: 15Moves: 230",
+    "contexts": [
+      "Open the mailbox",
+      "open mailbox",
+      "north",
+      "open mailbox",
+      "west",
+      "open mailbox"
+    ],
+    "created_at": 1747667810.1548293,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes rubber mat from West of House",
+    "task": "Take rubber mat",
+    "commands": [
+      "take mat"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                West of HouseScore: 15Moves: 233",
+    "contexts": [
+      "Take rubber mat",
+      "take mat"
+    ],
+    "created_at": 1747667828.0745106,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Places jewel-encrusted egg inside mailbox",
+    "task": "Put jewel-encrusted egg in mailbox",
+    "commands": [
+      "put egg in mailbox"
+    ],
+    "result": "\nYou put the jewel-encrusted egg into the mailbox.\n\n>                                                                                                                                West of HouseScore: 15Moves: 235",
+    "contexts": [
+      "Put jewel-encrusted egg in mailbox",
+      "put egg in mailbox"
+    ],
+    "created_at": 1747667840.2199268,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Takes jewel-encrusted egg from mailbox",
+    "task": "Take jewel-encrusted egg from mailbox",
+    "commands": [
+      "take egg"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                West of HouseScore: 15Moves: 240",
+    "contexts": [
+      "Take jewel-encrusted egg from mailbox",
+      "take egg"
+    ],
+    "created_at": 1747667870.5173876,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops welcome mat west of house",
+    "task": "Drop welcome mat",
+    "commands": [
+      "drop mat"
+    ],
+    "result": "\nDropped.\n\n>                                                                                                                                West of HouseScore: 15Moves: 241",
+    "contexts": [
+      "Drop welcome mat",
+      "drop mat"
+    ],
+    "created_at": 1747667874.3666937,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Discovers locked door east of house",
+    "task": "Go east",
+    "commands": [
+      "east",
+      "search area",
+      "e"
+    ],
+    "result": "\nThe door is locked, and there is evidently no key.\n\n>                                                                                                                                West of HouseScore: 15Moves: 243",
+    "contexts": [
+      "Go east",
+      "east",
+      "search area",
+      "e"
+    ],
+    "created_at": 1747667886.3517447,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops jewel-encrusted egg west of house",
+    "task": "Drop the jewel-encrusted egg",
+    "commands": [
+      "drop egg"
+    ],
+    "result": "\nDropped.\n\n>                                                                                                                                West of HouseScore: 15Moves: 256",
+    "contexts": [
+      "Drop the jewel-encrusted egg",
+      "drop egg"
+    ],
+    "created_at": 1747667942.9641287,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Drops birds nest west of house",
+    "task": "Drop the birds nest",
+    "commands": [
+      "drop birds nest"
+    ],
+    "result": "\nDropped.\n\n>                                                                                                                                West of HouseScore: 15Moves: 258",
+    "contexts": [
+      "Drop the birds nest",
+      "drop birds nest"
+    ],
+    "created_at": 1747667953.0885112,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Adds small leaflet to inventory list",
+    "task": "Take leaflet",
+    "commands": [
+      "inventory"
+    ],
+    "result": "\nYou are carrying:\nA small leaflet\n\n>                                                                                                                                West of HouseScore: 15Moves: 263",
+    "contexts": [
+      "Take leaflet",
+      "inventory"
+    ],
+    "created_at": 1747667976.4566267,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Observes barred windows north of house",
+    "task": "Examine north of house",
+    "commands": [
+      "look"
+    ],
+    "result": "\nNorth of House\nYou are facing the north side of a white house.  There is no door here, and all the windows are barred.\n\n>                                                                                                                                North of HouseScore: 15Moves: 291",
+    "contexts": [
+      "Examine north of house",
+      "look"
+    ],
+    "created_at": 1747668112.436437,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Removes welcome mat from house entrance",
+    "task": "Take welcome mat",
+    "commands": [
+      "take mat"
+    ],
+    "result": "\nTaken.\n\n>                                                                                                                                West of HouseScore: 15Moves: 309",
+    "contexts": [
+      "Take welcome mat",
+      "take mat"
+    ],
+    "created_at": 1747668213.5132887,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Enters clearing bordered by forest and grating",
+    "task": "Go east",
+    "commands": [
+      "east",
+      "go east"
+    ],
+    "result": "\nClearing\nYou are in a clearing, with a forest surrounding you on the west and south.\nThere is a grating securely fastened into the ground.\nThere is a pile of leaves on the ground.\n\n>                                                                                                                                ClearingScore: 15Moves: 319",
+    "contexts": [
+      "Go east",
+      "east",
+      "go east"
+    ],
+    "created_at": 1747668263.5898135,
+    "used_count": 0,
+    "success_count": 0
+  },
+  {
+    "description": "Remains atop large tree, descent blocked",
+    "task": "Climb down tree",
+    "commands": [
+      "down",
+      "down",
+      "climb down tree",
+      "climb down large tree"
+    ],
+    "result": "\nYou can't go that way.\n\n>                                                                                                                                ForestScore: 15Moves: 364",
+    "contexts": [
+      "Climb down tree",
+      "down",
+      "down",
+      "climb down tree",
+      "climb down large tree"
+    ],
+    "created_at": 1747668489.3843145,
+    "used_count": 0,
+    "success_count": 0
+  }
+]
