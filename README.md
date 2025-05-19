@@ -107,22 +107,10 @@ Available options:
 - `--game_config PATH`: Path to the game configuration file (default: `config/games.yaml`)
 - `--game GAME_NAME`: Specify the game to load (overrides config)
 - `--max_steps N`: Maximum number of steps (overrides config)
-- `--interactive`: Run in interactive mode (allows user input)
 - `--log_level LEVEL`: Set logging level (default: INFO)
 
-### Interactive Mode
 
-The interactive mode allows you to:
-- Review and modify proposed tasks
-- Accept, reject, or modify generated actions
-- Enter manual commands
-- See real-time agent observations and decisions
 
-Run in interactive mode:
-
-```
-python main.py --interactive
-```
 
 ### Run with Specific Game
 
@@ -132,13 +120,6 @@ Run the agent with a specific game:
 python main.py --game zork1
 ```
 
-### Simplified Runner
-
-For a more straightforward interface, use the run_agent.py script:
-
-```
-python run_agent.py --game zork1 --steps 200 --interactive
-```
 
 ## Architecture
 
