@@ -1,0 +1,4 @@
+game,experiment_name,duration_minutes,total_steps,final_score,tasks_proposed,tasks_completed,tasks_failed,skills_acquired,unique_objects,task_success_rate
+zork1,zork1_gpt-4.1_20250518_195029,29.059574099381766,400,0,252,233,19,233,5,0.9246031746031746
+detective,detective_gpt-4.1_20250518_211853,2.3143760760625205,34,70,21,20,1,20,2,0.9523809523809523
+detective,detective_gpt-4.1_20250518_212320,3.0017762502034504,400,70,383,380,3,380,2,0.9921671018276762

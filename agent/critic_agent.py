@@ -94,10 +94,11 @@ class CriticAgent:
         
         # Build the prompt
         prompt = f"""
-        You are an expert evaluator for text adventure games. Your task is to determine whether a specific objective 
-        has been successfully completed, based on the game's response.
+        You are a Critic Agent evaluating whether a player successfully completed a task in a text-based interactive fiction game (e.g., Zork). You will receive the task, player actions, final environment output, and current inventory.
 
-        TASK TO EVALUATE:
+        Be flexible and contextual. A task may be completed through indirect or differently worded commands. Consider the **final game state**, not just the last message.
+
+        TASK:
         {task}
 
         ACTIONS TAKEN:
@@ -109,54 +110,57 @@ class CriticAgent:
         INVENTORY:
         {inventory}
 
-        COMPREHENSIVE SUCCESS CRITERIA:
-        1. EXAMINATION TASKS (e.g., "Examine mailbox"):
-        - Success: The game provides a detailed description of the object
-        - Failure: "You can't see any such thing", "Nothing special" with no details, or no relevant information
-        
-        2. ACQUISITION TASKS (e.g., "Take leaflet"):
-        - Success: Object appears in inventory OR game confirms "Taken."
-        - Failure: "You can't see any such thing", "You can't take that", or object not in inventory
-        
-        3. MOVEMENT TASKS (e.g., "Go north"):
-        - Success: Description changes to new location
-        - Failure: "You can't go that way", no change in environment
-        
-        4. OPENING/CLOSING TASKS (e.g., "Open mailbox"):
-        - Success: Game confirms "Opened." or describes new state
-        - Failure: "You can't open that", "That's already open", "You can't see any such thing"
-        
-        5. READING TASKS (e.g., "Read leaflet"):
-        - Success: Game provides text content
-        - Failure: "You can't read that", "There's nothing written on it"
+        --- SUCCESS CRITERIA BY CATEGORY ---
 
-        DETERMINING SUCCESS:
-        - Success REQUIRES clear, affirmative evidence in the game's response
-        - The mere absence of an error message is NOT sufficient
-        - Pay close attention to the game's specific wording
-        - For tasks with multiple parts, ALL parts must be completed
+        1. EXAMINATION TASKS (e.g. "Examine mailbox"):
+        ✅ Success: Game reveals any specific description or new info
+        ❌ Failure: "You can't see any such thing", "Nothing special" without details
 
-        ANALYSIS FRAMEWORK:
-        1. EVIDENCE ANALYSIS:
-        - What was the specific task?
-        - What commands were used?
-        - What was the game's response?
-        - Does the response directly confirm task completion?
-        
-        2. COMMAND EFFECTIVENESS:
-        - Were the commands appropriate for the task?
-        - Did the game understand the commands?
-        - Did the game's response indicate progress?
-        
-        3. ALTERNATIVE APPROACHES:
-        - If the task failed, what specific command would work better?
-        - What different objects or directions could be tried?
-        - What specific verb would be more effective?
+        2. ACQUISITION TASKS (e.g. "Take leaflet"):
+        ✅ Success: "Taken." or item appears in inventory
+        ❌ Failure: Still not in inventory or blocked message
 
-        FORMAT YOUR RESPONSE STRICTLY AS:
-        Success: [true/false]
-        Reasoning: [1-2 sentences explaining your evaluation]
-        Critique: [ONLY IF Success is false, provide specific, actionable feedback with 1-2 alternative commands]
+        3. MOVEMENT TASKS (e.g. "Go north"):
+        Movement tasks are special.
+        ✅ Success: If moving in that direction is not possible. If location repeats after moving in that direction.
+        IF THE GAME ALLOWS MOVEMENT, WHICH MEANS THE LOCATION/OBSERVATION IS NOW DIFFERENT, THEN:
+            -With a random chance of 0.6 you consider the task to be not completed yet. Therefore FAILURE. So we advance again in that direction.
+            In this case the critique should tell the player to try the same again.
+            - With a random chance of 0.4 you consider the task to be completed. Therefore SUCCESS.
+        4. OPENING/CLOSING TASKS (e.g. "Open mailbox"):
+        ✅ Success: Game confirms it is open, *even if already open*
+        ❌ Failure: Still closed or invalid object
+
+        5. READING TASKS:
+        ✅ Success: Any readable content shown
+        ❌ Failure: "You can't read that", or generic rejection
+
+        --- EVALUATION FORMAT ---
+
+        Return your evaluation in this format:
+        Success: true | false  
+        Reasoning: Concise explanation grounded in the game’s actual response  
+        Critique: [only if Success=false] Give a specific, actionable suggestion (e.g., "Try 'look under mat'" or "Use 'go east' instead of 'enter window'")
+
+        Be forgiving with phrasing. If the task was effectively completed, mark it as success.
+
+        --- EXAMPLES ---
+
+        Task: "Open mailbox"  
+        Game says: "That's already open."  
+        ✅ → Success: true  
+        Reasoning: The mailbox is confirmed open. Objective achieved.
+
+        Task: "Enter house"  
+        Action: "go east"  
+        Response: "You are in the kitchen."  
+        ✅ → Success: true  
+        Reasoning: Player entered the house via alternate phrasing. Goal achieved.
+
+        Task: "Look at mat"  
+        Response: "Welcome to Zork!"  
+        ❌ → Success: false  
+        Critique: Try "look under mat" or "move mat" to trigger a more informative response.
         """
         
         return prompt

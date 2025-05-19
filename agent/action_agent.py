@@ -154,80 +154,58 @@ class ActionAgent:
         inventory = agent_state.get('inventory', '')
 
         # Build the prompt
-        prompt = f"""
-        You are a world-class expert at text adventure games. Your task is to generate 
-        EXACTLY ONE perfect command to accomplish a specific objective in the game '{self.game_name}'.
+        prompt = f"""You are a top-tier expert in text adventure games. Your task is to generate ONE precise command to achieve the following objective in the game '{self.game_name}'.
 
-        CURRENT TASK:
+        TASK:
         {task}
 
-        GAME STATE:
+        CURRENT GAME STATE:
         {observation}
 
         INVENTORY:
         {inventory}
 
-        CRITIC FEEDBACK (VERY IMPORTANT):
+        CRITIC FEEDBACK (IMPORTANT CONTEXT):
         {critique}
-            
-        KEY PRINCIPLES FROM FEEDBACK:
-        1. Do not repeat failed approaches
-        2. Be specific in commands
-        3. Pay attention to the game's responses
-        4. Try recommended alternatives from the critique
-        
-        
-        RELEVANT SKILLS PREVIOUSLY MASTERED:
+
+        RELEVANT SKILLS:
         {skills_context if skills else "No relevant skills available."}
 
-        TEXT ADVENTURE COMMAND SYNTAX - ESSENTIAL GUIDELINES:
-        1. TEXT ADVENTURE COMMANDS ARE SHORT: Most valid commands are 1-3 words.
-        2. VALID COMMAND PATTERNS:
-        - Single verb: "look", "inventory", "wait", "score"
-        - Verb + noun: "take leaflet", "examine house", "open mailbox"
-        - Verb + noun + preposition + noun: "put coin in slot", "attack troll with sword"
-        - Directional movement: "north", "south", "east", "west", "up", "down" (or n, s, e, w, u, d)
-        3. COMMON ABBREVIATIONS:
-        - "x" for "examine"
-        - "i" for "inventory"
-        - "l" for "look"
-        - n, s, e, w, u, d for directions
-        4. STRICT LIMITATIONS:
-        - NO complex sentences or multiple commands
-        - NO articles needed ("take leaflet" NOT "take the leaflet")
-        - NO explanations or commentary
-        - NO quotation marks
-        - NO commands not recognized by text adventures
-        
-        PROHIBITED COMMAND PATTERNS (NEVER USE THESE):
-        - "explore area" (too vague, use "look" instead)
-        - "search room" (too vague, examine specific objects instead)
-        - "check surroundings" (not a recognized command)
-        - "investigate object" (use "examine object" instead)
-        - "go to location" (use direction commands: "north", "south", etc.)
-        - "use object" (too vague, specify how: "open object", "read object")
-        - ANY command containing more than 4 words (too complex)
+        --- GUIDELINES FOR COMMAND GENERATION ---
 
-        LEARNING FROM CRITIQUE:
-        If the critique mentions better commands to try, USE THEM EXACTLY.
-        If the critique says an object doesn't exist, DO NOT try to interact with it again.
-        If the critique suggests a different verb, USE THAT VERB.
+        1. USEFUL COMMAND PATTERNS:
+        - [verb] → look, inventory, wait
+        - [verb] [noun] → take leaflet, open mailbox
+        - [verb] [noun] [prep] [noun] → put coin in slot
+        - [direction] → north, south, east, west, up, down
 
-        VALID COMMANDS FOR THIS SPECIFIC GAME:
+        2. PROHIBITED PHRASES OR STRUCTURES:
+        - NO full sentences or explanations
+        - NO vague commands like "explore", "use object", "go to location"
+        - NO commands longer than 4 words
+        - NO quotes, articles, or redundant modifiers ("take the leaflet" → ❌)
+
+        3. SPECIAL GAME COMMANDS:
         {', '.join(self.special_commands)}
 
-        YOUR RESPONSE MUST:
-        1. Contain EXACTLY ONE command
-        2. Follow valid text adventure syntax
-        3. Directly address the task
-        4. Be 1-4 words maximum
-        5. NOT include explanations, reasoning, or additional commentary
-        6. NOT repeat failed command patterns
+        4. CRITIQUE-DRIVEN ADAPTATION:
+        - Do NOT repeat failed actions
+        - Use *exactly* the improved verbs or objects recommended
+        - Do NOT interact with objects the game can't see
+        - Only act if the game's state suggests the object is present and relevant
+
+        --- OUTPUT FORMAT ---
+
+        Your response must:
+        - Be a **single command** (1-2 words max)
+        - Follow text adventure syntax strictly
+        - Match the current task context
+        - Contain **no explanations or extra text**
 
         YOUR COMMAND:
         """
-        
         return prompt
+    
     
     def _build_action_refinement_prompt(self, previous_action: str, task: str, 
                                        parsed_observation: Dict[str, Any], 

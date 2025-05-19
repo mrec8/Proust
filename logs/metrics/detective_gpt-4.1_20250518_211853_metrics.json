@@ -1,0 +1,597 @@
+{
+  "experiment_info": {
+    "name": "detective_gpt-4.1_20250518_211853",
+    "start_time": 1747595933.2828422,
+    "end_time": 1747596072.1454067,
+    "game": "detective",
+    "max_steps": 400,
+    "model": "gpt-4.1-nano"
+  },
+  "cumulative_metrics": {
+    "tasks_proposed": 21,
+    "tasks_completed": 20,
+    "tasks_failed": 1,
+    "skills_acquired": 20,
+    "commands_executed": 34,
+    "successful_commands": 0,
+    "total_score": 70,
+    "unique_objects_interacted": [
+      "door",
+      "paper"
+    ]
+  },
+  "timestep_metrics": [
+    {
+      "step": 0,
+      "action": "look",
+      "task": "Look around and examine your surroundings",
+      "score": 10,
+      "objects_in_scope": [
+        "paper"
+      ],
+      "timestamp": 1747595934.841017
+    },
+    {
+      "step": 1,
+      "action": "take paper",
+      "task": "Take white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747595940.0955386
+    },
+    {
+      "step": 2,
+      "action": "examine paper",
+      "task": "Examine piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747595944.3504808
+    },
+    {
+      "step": 3,
+      "action": "read paper",
+      "task": "Read piece of white paper",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747595948.7486117
+    },
+    {
+      "step": 4,
+      "action": "look",
+      "task": "Look for exits or directions",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747595952.9502518
+    },
+    {
+      "step": 5,
+      "action": "north",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747595956.968076
+    },
+    {
+      "step": 6,
+      "action": "north",
+      "task": "Go north",
+      "score": 20,
+      "objects_in_scope": [],
+      "timestamp": 1747595960.3339515
+    },
+    {
+      "step": 7,
+      "action": "west",
+      "task": "Go west",
+      "score": 30,
+      "objects_in_scope": [],
+      "timestamp": 1747595967.6916919
+    },
+    {
+      "step": 8,
+      "action": "east",
+      "task": "Go east to Mayor's home",
+      "score": 40,
+      "objects_in_scope": [],
+      "timestamp": 1747595972.626752
+    },
+    {
+      "step": 9,
+      "action": "look",
+      "task": "Look around mayor's house",
+      "score": 40,
+      "objects_in_scope": [],
+      "timestamp": 1747595976.9054573
+    },
+    {
+      "step": 10,
+      "action": "examine paper",
+      "task": "Examine piece of white paper",
+      "score": 40,
+      "objects_in_scope": [],
+      "timestamp": 1747595982.0869634
+    },
+    {
+      "step": 11,
+      "action": "look",
+      "task": "Look around",
+      "score": 40,
+      "objects_in_scope": [],
+      "timestamp": 1747595983.9750452
+    },
+    {
+      "step": 12,
+      "action": "north",
+      "task": "Go north",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747595988.6133003
+    },
+    {
+      "step": 13,
+      "action": "north",
+      "task": "Go north",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747595991.9595997
+    },
+    {
+      "step": 14,
+      "action": "north",
+      "task": "Go north",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747595995.036378
+    },
+    {
+      "step": 15,
+      "action": "south",
+      "task": "Go south",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747595998.8858123
+    },
+    {
+      "step": 16,
+      "action": "south",
+      "task": "Go south",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596002.1013157
+    },
+    {
+      "step": 17,
+      "action": "west",
+      "task": "Go west",
+      "score": 50,
+      "objects_in_scope": [
+        "door"
+      ],
+      "timestamp": 1747596006.7082932
+    },
+    {
+      "step": 18,
+      "action": "west",
+      "task": "Go west",
+      "score": 50,
+      "objects_in_scope": [
+        "door"
+      ],
+      "timestamp": 1747596010.1851037
+    },
+    {
+      "step": 19,
+      "action": "open door",
+      "task": "Open guests door",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596015.000372
+    },
+    {
+      "step": 20,
+      "action": "look",
+      "task": "Open guests door",
+      "score": 50,
+      "objects_in_scope": [
+        "door"
+      ],
+      "timestamp": 1747596018.4685512
+    },
+    {
+      "step": 21,
+      "action": "open guests door",
+      "task": "Open guests door",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596022.0707812
+    },
+    {
+      "step": 22,
+      "action": "look",
+      "task": "Open guests door",
+      "score": 50,
+      "objects_in_scope": [
+        "door"
+      ],
+      "timestamp": 1747596025.75336
+    },
+    {
+      "step": 23,
+      "action": "look at guests door",
+      "task": "Open guests door",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596029.4542217
+    },
+    {
+      "step": 24,
+      "action": "read paper",
+      "task": "Examine piece of white paper",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596033.7287443
+    },
+    {
+      "step": 25,
+      "action": "read paper",
+      "task": "Read piece of white paper",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596037.7399495
+    },
+    {
+      "step": 26,
+      "action": "look",
+      "task": "Look around",
+      "score": 50,
+      "objects_in_scope": [
+        "door"
+      ],
+      "timestamp": 1747596039.532401
+    },
+    {
+      "step": 27,
+      "action": "north",
+      "task": "Go north",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596044.1912098
+    },
+    {
+      "step": 28,
+      "action": "north",
+      "task": "Go north",
+      "score": 50,
+      "objects_in_scope": [],
+      "timestamp": 1747596047.5710204
+    },
+    {
+      "step": 29,
+      "action": "north",
+      "task": "Go north",
+      "score": 60,
+      "objects_in_scope": [],
+      "timestamp": 1747596050.9447472
+    },
+    {
+      "step": 30,
+      "action": "east",
+      "task": "Go east to video store",
+      "score": 60,
+      "objects_in_scope": [],
+      "timestamp": 1747596056.4746833
+    },
+    {
+      "step": 31,
+      "action": "east",
+      "task": "Go east",
+      "score": 70,
+      "objects_in_scope": [],
+      "timestamp": 1747596062.214688
+    },
+    {
+      "step": 32,
+      "action": "east",
+      "task": "Go east",
+      "score": 70,
+      "objects_in_scope": [],
+      "timestamp": 1747596065.3873584
+    },
+    {
+      "step": 33,
+      "action": "go east",
+      "task": "Go east",
+      "score": 70,
+      "objects_in_scope": [],
+      "timestamp": 1747596069.0851367
+    }
+  ],
+  "completed_tasks": [
+    {
+      "task": "Look around and examine your surroundings",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747595938.3125844
+    },
+    {
+      "task": "Take white paper",
+      "steps_taken": 1,
+      "commands": [
+        "take paper"
+      ],
+      "timestamp": 1747595942.4069798
+    },
+    {
+      "task": "Examine piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine paper"
+      ],
+      "timestamp": 1747595946.8052614
+    },
+    {
+      "task": "Read piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747595951.1233346
+    },
+    {
+      "task": "Look for exits or directions",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747595955.4043422
+    },
+    {
+      "task": "Go north",
+      "steps_taken": 2,
+      "commands": [
+        "north",
+        "north"
+      ],
+      "timestamp": 1747595965.8683915
+    },
+    {
+      "task": "Go west",
+      "steps_taken": 1,
+      "commands": [
+        "west"
+      ],
+      "timestamp": 1747595970.7644756
+    },
+    {
+      "task": "Go east to Mayor's home",
+      "steps_taken": 1,
+      "commands": [
+        "east"
+      ],
+      "timestamp": 1747595975.1562955
+    },
+    {
+      "task": "Look around mayor's house",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747595979.9933949
+    },
+    {
+      "task": "Examine piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "examine paper"
+      ],
+      "timestamp": 1747595982.0874856
+    },
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747595986.7584562
+    },
+    {
+      "task": "Go north",
+      "steps_taken": 3,
+      "commands": [
+        "north",
+        "north",
+        "north"
+      ],
+      "timestamp": 1747595997.196759
+    },
+    {
+      "task": "Go south",
+      "steps_taken": 2,
+      "commands": [
+        "south",
+        "south"
+      ],
+      "timestamp": 1747596004.8755221
+    },
+    {
+      "task": "Go west",
+      "steps_taken": 2,
+      "commands": [
+        "west",
+        "west"
+      ],
+      "timestamp": 1747596013.1785471
+    },
+    {
+      "task": "Examine piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747596036.0397785
+    },
+    {
+      "task": "Read piece of white paper",
+      "steps_taken": 1,
+      "commands": [
+        "read paper"
+      ],
+      "timestamp": 1747596037.7401183
+    },
+    {
+      "task": "Look around",
+      "steps_taken": 1,
+      "commands": [
+        "look"
+      ],
+      "timestamp": 1747596041.7279541
+    },
+    {
+      "task": "Go north",
+      "steps_taken": 3,
+      "commands": [
+        "north",
+        "north",
+        "north"
+      ],
+      "timestamp": 1747596053.6162395
+    },
+    {
+      "task": "Go east to video store",
+      "steps_taken": 1,
+      "commands": [
+        "east"
+      ],
+      "timestamp": 1747596059.8541756
+    },
+    {
+      "task": "Go east",
+      "steps_taken": 3,
+      "commands": [
+        "east",
+        "east",
+        "go east"
+      ],
+      "timestamp": 1747596072.145034
+    }
+  ],
+  "failed_tasks": [
+    {
+      "task": "Open guests door",
+      "steps_taken": 5,
+      "commands": [
+        "open door",
+        "look",
+        "open guests door",
+        "look",
+        "look at guests door"
+      ],
+      "reason": "Critique: Try exploring your surroundings to locate the guests door first, or use a different description such as \"open guest room door\" or \"open door to guest room\" if it might be named differently.",
+      "timestamp": 1747596031.625827
+    }
+  ],
+  "acquired_skills": [
+    {
+      "skill_description": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n\nYou can see a piece of white paper here.\n",
+      "task": "Look around and examine your surroundings",
+      "timestamp": 1747595938.3123653
+    },
+    {
+      "skill_description": "\nTaken.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Take white paper",
+      "timestamp": 1747595942.4067352
+    },
+    {
+      "skill_description": "\nIt is a piece of white paper.\n",
+      "task": "Examine piece of white paper",
+      "timestamp": 1747595946.8050182
+    },
+    {
+      "skill_description": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+      "task": "Read piece of white paper",
+      "timestamp": 1747595951.1231604
+    },
+    {
+      "skill_description": "\n\n<< Chief's office >>\nYou are standing in the Chief's office. He is telling you \"The Mayor was murdered yeaterday night at 12:03 am. I want you to solve it before we get any bad publicity or the FBI has to come in. \"Yessir!\" You reply. He hands you a sheet of paper. Once you have read it, go north or west.\n",
+      "task": "Look for exits or directions",
+      "timestamp": 1747595955.4043047
+    },
+    {
+      "skill_description": "\nYou can't go north from here!\n\n<< Outside >>\nYou are outside in the cold. To the east is a dead end. To the west is the rest of the street. Papers are blowing around. It's amazingly cold for this time of year.\n",
+      "task": "Go north",
+      "timestamp": 1747595965.868357
+    },
+    {
+      "skill_description": "\n\n<< Outside >>\nYou are still on the streets. To the north is a restraunt where the mayor ate often. To the east is the Mayor's home.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Go west",
+      "timestamp": 1747595970.7644281
+    },
+    {
+      "skill_description": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Go east to Mayor's home",
+      "timestamp": 1747595975.156234
+    },
+    {
+      "skill_description": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n",
+      "task": "Look around mayor's house",
+      "timestamp": 1747595979.9933405
+    },
+    {
+      "skill_description": "\nIt is a piece of white paper.\n",
+      "task": "Examine piece of white paper",
+      "timestamp": 1747595982.0874002
+    },
+    {
+      "skill_description": "\n\n<< Mayor's house >>\nYou are in the house, at the scene of the crime. You enter and flash your badge before a cop. He admits you. To the north is the upstairs. To the east is the living room and to the west is the dining room.\n",
+      "task": "Look around",
+      "timestamp": 1747595986.7583854
+    },
+    {
+      "skill_description": "\n\n<< Closet >>\nYou are in a closet. There is no reason to be in here. Go south.\n",
+      "task": "Go north",
+      "timestamp": 1747595997.1967185
+    },
+    {
+      "skill_description": "\nYou can't go south from here!\n\n<< Hallway >>\nYou are at the end of the hallway. To the north is a room, while to the west is the rest of the hallway.\n",
+      "task": "Go south",
+      "timestamp": 1747596004.8754783
+    },
+    {
+      "skill_description": "\nYou can't go west from here!\n\n<< Hallway >>\nYou are in the hallway. To the north is more hallway, and to the east is a door marked \"Guests\".\n",
+      "task": "Go west",
+      "timestamp": 1747596013.1785123
+    },
+    {
+      "skill_description": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+      "task": "Examine piece of white paper",
+      "timestamp": 1747596036.0397403
+    },
+    {
+      "skill_description": "\nCONFIDENTIAL:\nDetective was created by Matt Barringer.\nHe has worked hard on this so you better enjoy it.\nI did have fun making it though. But I'd REALLY appreciate it if you were kind enough to send a postcard or... dare I even say it?... money... to:\nMatt Barringer\n325 Olive Ave\nPiedmont\nCA 94611\nJust tell me if you like it or not.\nIf you want to talk to me over a BBS call the Ghostbuster Central BBS at (510)208-5657.\nThere is an Exile Games file area. Have fun. I WILL give hints out over the BBS to any of my games.\n",
+      "task": "Read piece of white paper",
+      "timestamp": 1747596037.7400873
+    },
+    {
+      "skill_description": "\n\n<< Hallway >>\nYou are in the hallway. To the north is more hallway, and to the east is a door marked \"Guests\".\n",
+      "task": "Look around",
+      "timestamp": 1747596041.7279127
+    },
+    {
+      "skill_description": "\n\n<< Outside >>\nYou pass the guard. He nods at you. You are now outside standing on the street. You can go north and east, your choice. To the north is more of the street, and to the east is a video store.\n\n[Your score has just gone up by ten points.]\n",
+      "task": "Go north",
+      "timestamp": 1747596053.6160119
+    },
+    {
+      "skill_description": "\n\n<< Video Store >>\nYou are in a video store called Brickbuster Video. There are about 3,000 videos here. You can go north, or east.\n",
+      "task": "Go east to video store",
+      "timestamp": 1747596059.8541014
+    },
+    {
+      "skill_description": "\n\n<< House >>\nYou enter the house. A man charges down the stairs. Before you even have time to say anything, he shoots you. You lose!\n\n\n    *** You have died ***\n\n\nIn that game you scored 70 out of a possible 360, in 31 turns.\n\nWould you like to RESTART, RESTORE a saved game, give the FULL score for that game or QUIT?",
+      "task": "Go east",
+      "timestamp": 1747596072.144732
+    }
+  ]
+}

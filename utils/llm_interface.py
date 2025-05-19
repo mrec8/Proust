@@ -58,7 +58,7 @@ class LLMInterface:
         self.cache = {}
 
         # Configure rate limit parameters
-        self.rate_limit_per_minute = llm_config.get('rate_limit_per_minute', 200)
+        self.rate_limit_per_minute = llm_config.get('rate_limit_per_minute', 2000)
         self.last_call_timestamp = 0
 
         self.logger.info(f"LLM interface initialized with model: {self.model}")
